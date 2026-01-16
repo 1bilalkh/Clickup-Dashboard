@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 import TaskIcon from "@mui/icons-material/CheckCircleOutline";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
@@ -26,16 +26,18 @@ function Sidebar() {
     {id: 2, text: <Typography variant="body2">Tasks</Typography>, icon: <TaskIcon />, path: "/tasks" },
     {id: 3, text: <Typography variant="body2">Calendar</Typography>, icon: <CalendarMonthOutlinedIcon />, path: "/calendar" },
     {id: 4, text: <Typography variant="body2">Projects</Typography>, icon: <FolderOpenOutlinedIcon />, path: "/projects" },
-    {id: 5, text: <Typography variant="body2">Inbox</Typography>, icon: <MailOutlinedIcon />, path: "/projects" },
-    {id: 6, text: <Typography variant="body2">AI</Typography>, icon: <AttractionsOutlinedIcon />, path: "/projects" },
-    {id: 7, text: <Typography variant="body2">Teams</Typography>, icon: <PeopleOutlineOutlinedIcon />, path: "/projects" },
-    {id: 8, text: <Typography variant="body2">Forms</Typography>, icon: <IntegrationInstructionsOutlinedIcon />, path: "/projects" },
+    {id: 5, text: <Typography variant="body2">Inbox</Typography>, icon: <MailOutlinedIcon />, path: "/inbox" },
+    {id: 6, text: <Typography variant="body2">AI</Typography>, icon: <AttractionsOutlinedIcon />, path: "/ai" },
+    {id: 7, text: <Typography variant="body2">Teams</Typography>, icon: <PeopleOutlineOutlinedIcon />, path: "/teams" },
+    {id: 8, text: <Typography variant="body2">Forms</Typography>, icon: <IntegrationInstructionsOutlinedIcon />, path: "/forms" },
   ];
 
   const bottomItems = [
       { text: "Settings", icon: <SettingsIcon />, path: "/settings" },
       { text: "Logout", icon: <LogoutIcon />, path: "/logout" },
   ];
+
+  const location = useLocation();
 
   return (
     <Box
@@ -50,7 +52,7 @@ function Sidebar() {
         {menuItems.map((item, index) => (
           <ListItemButton
             key={item.id}
-            selected={selectedIndex === index}
+            selected={location.pathname === item.path}
             onClick={() => handleListItemClick(index)}
             component={Link}   // Make it a Link
             to={item.path}      // Link target

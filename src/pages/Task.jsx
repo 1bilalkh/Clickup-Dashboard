@@ -1,8 +1,10 @@
-import React from 'react'
+import TasksContent from "./taskcomponent/TaskComponent"
 
 function Tasks() {
   return (
-    <div>Task</div>
+    <>
+        <TasksContent />
+    </>
   )
 }
 

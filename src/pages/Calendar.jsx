@@ -5,7 +5,7 @@ function Calendar() {
   
   return (
     <>
-    <CalendarPage />;
+    <CalendarPage />
     </>
   )
 }
