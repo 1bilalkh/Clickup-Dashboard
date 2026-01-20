@@ -17,14 +17,14 @@ function SignOut() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
+
   const handleClose = () => setAnchorEl(null);
 
   return (
     <Box>
       {/* Icon to open menu */}
       <Tooltip title="Settings">
-        <IconButton onClick={handleClick}>
+        <IconButton>
           <SettingsIcon sx={{ fontSize: "16px" }} />
         </IconButton>
       </Tooltip>

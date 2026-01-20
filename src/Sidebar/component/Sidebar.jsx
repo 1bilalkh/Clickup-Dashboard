@@ -10,12 +10,16 @@ import AttractionsOutlinedIcon from '@mui/icons-material/AttractionsOutlined';
 import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import { Typography } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutIcon from "@mui/icons-material/Logout";
 
 
-function Sidebar() {
+function Sidebar( ) {
+    
+ 
+
   const [selectedIndex, setSelectedIndex] = useState(0);
+
 
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
@@ -33,21 +37,16 @@ function Sidebar() {
   ];
 
   const bottomItems = [
-      { text: "Settings", icon: <SettingsIcon />, path: "/settings" },
-      { text: "Logout", icon: <LogoutIcon />, path: "/logout" },
+      { text: <Typography variant="body2">Settings</Typography> , icon: <SettingsOutlinedIcon />, path: "/settings" },
+      { text: <Typography variant="body2">Logout</Typography>, icon: <LogoutIcon />, path: "/logout" },
   ];
 
   const location = useLocation();
-
+  
   return (
-    <Box
-      sx={{
-        width: 200,
-        bgcolor: "#fdfdfd",
-        height: "100vh",
-        borderRight: "1px solid #e0e0e0"
-      }}
-    >
+    <Box sx={{
+        width: "250px", 
+        height: "100vh", }}>
       <List>
         {menuItems.map((item, index) => (
           <ListItemButton
@@ -101,24 +100,17 @@ function Sidebar() {
               display: "flex",
               padding: "0px 3px",
               color: "#000000",
-              fontSize: "10px",
               flexDirection: "row",
-              "&.Mui-selected": {
-                bgcolor: "#e0e0e0",
-                color: "#000000",
-                "& .MuiListItemIcon-root": {
-                  color: "#000000",
-                },
-              },
+              
               "&:hover": {
                 bgcolor: "#f0f0f0",
               },
             }}
           >
-            <ListItemIcon sx={{ minWidth: 32, color: "inherit", fontSize: "10px"}}>
+            <ListItemIcon sx={{ minWidth: 32, color: "inherit", pr: -1}}>
               {item.icon}
             </ListItemIcon>
-            <ListItemText primary={item.text} sx={{fontSize: "10px" }} />
+            <ListItemText primary={item.text} sx={{fontSize: "10px", pr: 1 }} />
           </ListItemButton>
         ))}
       </List>

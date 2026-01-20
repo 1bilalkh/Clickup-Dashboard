@@ -1,9 +1,13 @@
-import React from 'react'
+
 
 function Forms() {
-  return (
-    <div>Forms</div>
-  )
+
+return (
+    <>
+      <h4>Forms</h4>
+    </>
+  );
 }
 
+  
 export default Forms

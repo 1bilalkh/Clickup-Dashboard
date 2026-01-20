@@ -14,52 +14,88 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import PageGrid from "../grid-component/Grids"
 
-function Teams() {
+function TeamComp() {
+  const [team, setTeam] = useState([
+    {
+      id: 1,
+      name: "Bilal Khan",
+      role: "Frontend Developer",
+      avatar: "https://i.pravatar.cc/150?img=3",
+      status: "Active",
+    },
+    {
+      id: 2,
+      name: "Ali Ahmed",
+      role: "UI/UX Designer",
+      avatar: "https://i.pravatar.cc/150?img=5",
+      status: "Active",
+    },
+    {
+      id: 3,
+      name: "Sara Malik",
+      role: "Project Manager",
+      avatar: "https://i.pravatar.cc/150?img=8",
+      status: "Offline",
+    },
+    {
+      id: 4,
+      name: "John Doe",
+      role: "UI/UX Developer",
+      avatar: "https://i.pravatar.cc/150?img=11",
+      status: "Active",
+    },
+  ]);
 
-    const [team, setTeam] = useState([
-        {
-          id: 1,
-          name: "Bilal Khan",
-          role: "Frontend Developer",
-          avatar: "https://i.pravatar.cc/150?img=3",
-          status: "Active",
-        },
-        {
-          id: 2,
-          name: "Ali Ahmed",
-          role: "UI/UX Designer",
-          avatar: "https://i.pravatar.cc/150?img=5",
-          status: "Active",
-        },
-        {
-          id: 3,
-          name: "Sara Malik",
-          role: "Project Manager",
-          avatar: "https://i.pravatar.cc/150?img=8",
-          status: "Offline",
-        },
-        {
-          id: 4,
-          name: "John Doe",
-          role: "UI/UX Developer",
-          avatar: "https://i.pravatar.cc/150?img=11",
-          status: "Active",
-        },
-      ]);
+    // ✅ Delete member (uses setTeam → warning fixed)
+    const handleDelete = (id) => {
+        setTeam((prev) => prev.filter((member) => member.id !== id));
+    };
 
-      
-
+  // ✅ Add member example
+  const handleAddMember = () => {
+    setTeam((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: "New Member",
+        role: "Developer",
+        avatar: "https://i.pravatar.cc/150?img=12",
+        status: "Active",
+      },
+    ]);
+  };
 
   return (
-    <>
-      {team.map((member) => (
+    <Box>
+      {/* Header */}
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
+        <Typography variant="h5">Team</Typography>
+
+        <Button
+          variant="contained"
+          startIcon={<GroupAddIcon />}
+          onClick={handleAddMember}
+        >
+          Add Member
+        </Button>
+      </Box>
+
+      {/* Team List */}
+      <Grid container spacing={2}>
+            <PageGrid>
+        {team.map((member) => (
           <Grid
-            key={member.id} sx={{display: 'flex'}}   // ✅ correct key placement
+            key={member.id}   // ✅ correct key placement
            >
             <Card
               sx={{
-                width: '25%',
                 transition: "0.3s",
                 "&:hover": { boxShadow: 6 },
               }}
@@ -143,10 +179,12 @@ function Teams() {
                 </Box>
               </CardContent>
             </Card>
-           </Grid>
-      ))}
-    </>
-  )
+          </Grid>
+        ))}
+            </PageGrid>    
+      </Grid>
+    </Box>
+  );
 }
 
-export default Teams
+export default TeamComp;

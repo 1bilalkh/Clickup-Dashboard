@@ -7,7 +7,8 @@ function ChooseTemplate({icon,title,text}) {
         
             <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="flex-start"
-                    flexDirection={{ xs: "column", sm: "column" }}
+                    flexDirection={{ xs: "column", sm: "column",
+                    }}
                 >
                 
                 <Box
@@ -19,6 +20,7 @@ function ChooseTemplate({icon,title,text}) {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    
                   }}
           >
       <DashboardIcon sx={{ fontSize: 20 }} />

@@ -37,7 +37,7 @@ function PaginatedUsers() {
       >
         Project Users ({page})
       </Typography>
-        <List sx={{ width: '950px', maxWidth: "350px", bgcolor: 'background.paper' }}>
+        <List sx={{ width: '100%', maxWidth: "100%", bgcolor: 'background.paper' }}>
        {data.map((user,index) => (
         <React.Fragment key={user.id}>
       <ListItem alignItems="flex-start" key={user.id}

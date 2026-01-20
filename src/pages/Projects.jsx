@@ -1,11 +1,22 @@
 //import Userlist from "./dashboard-component/Userlist"
 import PaginatedUsers from "./dashboard-component/PaginatedList"
+import BarChartPage from "./project-component/Projectchart"
+import PageGrid from "./grid-component/Grids.jsx"
+import { Box } from "@mui/material";
+
 
 function Project() {
   return (
     <>
       {/* <Userlist /> */}
-      <PaginatedUsers />
+      <PageGrid>
+      <Box flex={1} minWidth={300}>
+        <PaginatedUsers />
+      </Box>
+        <Box flex={1} minWidth={300}>
+        <BarChartPage />
+      </Box>
+      </PageGrid>
     </>
   )
 }

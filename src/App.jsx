@@ -1,3 +1,4 @@
+
 import TopBar from './TopBar';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from './Sidebar/component/Sidebar';
@@ -10,17 +11,19 @@ import AI from "./pages/AI.jsx"
 import Teams from "./pages/Teams.jsx"
 import Forms from "./pages/Forms.jsx"
 import { Box } from "@mui/material";
-
+import { useMediaQuery } from "@mui/material";
 
 
 
 function App() {
+  const isMobile = useMediaQuery("(min-width:600px)"); // mobile + tablet
   return (
     <>
     <Router>
       <TopBar />
       <Box sx={{ display: "flex" }}>
-      <Sidebar />
+        {isMobile && <Sidebar /> } 
+      
       <Box sx={{ flex: 1, p: 3,flexGrow: 1,
           height: "100vh",
           overflowY: "auto" // space for right sidebar

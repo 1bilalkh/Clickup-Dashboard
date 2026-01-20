@@ -94,7 +94,10 @@ const boxicon = {
       {/* Boxes */}
       <Grid container spacing={2}>
         {boxData.map((item) => (
-          <Grid size={4} item xs={6} sm={4} key={item.id}>
+          <Grid
+              size={{ xs: 12, sm: 12, md: 4 }}
+              key={item.id}
+            >
             <Box
               onClick={() => handleOpen(item)}
               sx={{
