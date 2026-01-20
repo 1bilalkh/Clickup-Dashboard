@@ -67,7 +67,11 @@ function Sidebar({ closeSidebar }) {
             selected={location.pathname === item.path}
             sx={{
               mx: 1,
-              my: 0.5,
+              my: 0.2,
+              p: 0.3,
+              pl: 0.8,
+              boxShadow: "0 1px 0 0 #ccc",   // bottom border
+              borderRadius: "0px",  
               "&.Mui-selected": {
                 bgcolor: "#e0e0e0",
                 "& .MuiListItemIcon-root": { color: "#000" },
@@ -75,8 +79,8 @@ function Sidebar({ closeSidebar }) {
               "&:hover": { bgcolor: "#f0f0f0" },
             }}
           >
-            <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />
+            <ListItemIcon sx={{ minWidth: 36, color: "#000" }}>{item.icon}</ListItemIcon>
+            <ListItemText sx={{color: "#000", p:0,}} primary={<Typography variant="body2">{item.text}</Typography>} />
           </ListItemButton>
         ))}
       </List>
