@@ -1,116 +1,101 @@
-import React, { useState } from "react";
-import { Box, List, ListItemButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
+import React from "react";
+import {
+  Box,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Typography,
+} from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
-import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
+
+import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 import TaskIcon from "@mui/icons-material/CheckCircleOutline";
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined';
-import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
-import AttractionsOutlinedIcon from '@mui/icons-material/AttractionsOutlined';
-import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
-import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
-import { Typography } from "@mui/material";
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
+import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
+import AttractionsOutlinedIcon from "@mui/icons-material/AttractionsOutlined";
+import IntegrationInstructionsOutlinedIcon from "@mui/icons-material/IntegrationInstructionsOutlined";
+import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-
-function Sidebar( ) {
-    
- 
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-
-  const handleListItemClick = (index) => {
-    setSelectedIndex(index);
-  };
+function Sidebar({ closeSidebar }) {
+  const location = useLocation();
 
   const menuItems = [
-    {id: 1, text: <Typography variant="body2">Dashboard</Typography>, icon: <DashboardCustomizeOutlinedIcon />, path: "/" },
-    {id: 2, text: <Typography variant="body2">Tasks</Typography>, icon: <TaskIcon />, path: "/tasks" },
-    {id: 3, text: <Typography variant="body2">Calendar</Typography>, icon: <CalendarMonthOutlinedIcon />, path: "/calendar" },
-    {id: 4, text: <Typography variant="body2">Projects</Typography>, icon: <FolderOpenOutlinedIcon />, path: "/projects" },
-    {id: 5, text: <Typography variant="body2">Inbox</Typography>, icon: <MailOutlinedIcon />, path: "/inbox" },
-    {id: 6, text: <Typography variant="body2">AI</Typography>, icon: <AttractionsOutlinedIcon />, path: "/ai" },
-    {id: 7, text: <Typography variant="body2">Teams</Typography>, icon: <PeopleOutlineOutlinedIcon />, path: "/teams" },
-    {id: 8, text: <Typography variant="body2">Forms</Typography>, icon: <IntegrationInstructionsOutlinedIcon />, path: "/forms" },
+    { id: 1, text: "Dashboard", icon: <DashboardCustomizeOutlinedIcon />, path: "/" },
+    { id: 2, text: "Tasks", icon: <TaskIcon />, path: "/tasks" },
+    { id: 3, text: "Calendar", icon: <CalendarMonthOutlinedIcon />, path: "/calendar" },
+    { id: 4, text: "Projects", icon: <FolderOpenOutlinedIcon />, path: "/projects" },
+    { id: 5, text: "Inbox", icon: <MailOutlinedIcon />, path: "/inbox" },
+    { id: 6, text: "AI", icon: <AttractionsOutlinedIcon />, path: "/ai" },
+    { id: 7, text: "Teams", icon: <PeopleOutlineOutlinedIcon />, path: "/teams" },
+    { id: 8, text: "Forms", icon: <IntegrationInstructionsOutlinedIcon />, path: "/forms" },
   ];
 
   const bottomItems = [
-      { text: <Typography variant="body2">Settings</Typography> , icon: <SettingsOutlinedIcon />, path: "/settings" },
-      { text: <Typography variant="body2">Logout</Typography>, icon: <LogoutIcon />, path: "/logout" },
+    { text: "Settings", icon: <SettingsOutlinedIcon />, path: "/settings" },
+    { text: "Logout", icon: <LogoutIcon />, path: "/logout" },
   ];
 
-  const location = useLocation();
-  
+  // Function to handle link clicks
+  const handleLinkClick = () => {
+    if (closeSidebar) closeSidebar(); // Close sidebar only on link click
+  };
+
   return (
-    <Box sx={{
-        width: "250px", 
-        height: "100vh", }}>
+    <Box
+      sx={{
+        width: 250,
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        borderRight: "1px solid #ddd",
+      }}
+      onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside sidebar
+    >
+      {/* TOP MENU */}
       <List>
-        {menuItems.map((item, index) => (
+        {menuItems.map((item) => (
           <ListItemButton
             key={item.id}
+            component={Link}
+            to={item.path}
+            onClick={handleLinkClick} // <-- close on link click
             selected={location.pathname === item.path}
-            onClick={() => handleListItemClick(index)}
-            component={Link}   // Make it a Link
-            to={item.path}      // Link target
             sx={{
-              margin: "2px 12px",
-              borderBottom: "1px solid #ddd",
-              p: "2px 6px", 
-              borderRadius: "0px",
+              mx: 1,
+              my: 0.5,
               "&.Mui-selected": {
                 bgcolor: "#e0e0e0",
-                color: "#000000",
-                "& .MuiListItemIcon-root": {
-                  color: "#000000",
-                },
+                "& .MuiListItemIcon-root": { color: "#000" },
               },
-              "&:hover": {
-                bgcolor: "#eaeaea",
-              },
+              "&:hover": { bgcolor: "#f0f0f0" },
             }}
           >
-            <ListItemIcon sx={{ minWidth: 35, color: "inherit" }}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText
-              primary={item.text}
-              primaryTypographyProps={{ fontSize: "0.875rem" }}
-            />
+            <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
+            <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />
           </ListItemButton>
         ))}
       </List>
-          <Divider sx={{mt: 5}} />
-          <List
-        sx={{
-          display: "flex",
-          position: "fixed", bottom: 0, left: 0
-        }}
-      >
+
+      <Box sx={{ flexGrow: 1 }} />
+      <Divider />
+
+      {/* BOTTOM MENU */}
+      <List>
         {bottomItems.map((item) => (
           <ListItemButton
             key={item.text}
             component={Link}
             to={item.path}
-            
-            sx={{
-              width: "100%",
-              display: "flex",
-              padding: "0px 3px",
-              color: "#000000",
-              flexDirection: "row",
-              
-              "&:hover": {
-                bgcolor: "#f0f0f0",
-              },
-            }}
+            onClick={handleLinkClick} // <-- close on link click
+            sx={{ "&:hover": { bgcolor: "#f0f0f0" } }}
           >
-            <ListItemIcon sx={{ minWidth: 32, color: "inherit", pr: -1}}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText primary={item.text} sx={{fontSize: "10px", pr: 1 }} />
+            <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
+            <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />
           </ListItemButton>
         ))}
       </List>
