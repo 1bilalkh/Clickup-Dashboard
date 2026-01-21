@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Box, Grid, Modal, Typography, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
-
-
+import DropdownModal from "./DropdownModal"
 
 const modalStyle = {
   position: "absolute",
@@ -24,6 +23,7 @@ const boxData = [
     title: "Users",
     short: "Manage all users",
     details: "Here you can create, edit, and delete users from the system.",
+    dropdownmodal: <DropdownModal />
     
   },
   {
@@ -31,7 +31,8 @@ const boxData = [
     icon: <DashboardCustomizeOutlinedIcon />,
     title: "Tasks",
     short: "Track daily work",
-    details: "View, assign, and update tasks for your team."
+    details: "View, assign, and update tasks for your team.",
+    dropdownmodal: <DropdownModal />
   },
   {
     id: 3,
@@ -127,6 +128,7 @@ const boxicon = {
               <Typography variant="body2" color="text.secondary">
                 {item.short}
               </Typography>
+             
             </Box>
           </Grid>
         ))}
@@ -134,7 +136,7 @@ const boxicon = {
 
       {/* Modal */}
       <Modal open={open} onClose={handleClose}>
-        <Box sx={modalStyle} onClick={handleClose}>
+        <Box sx={modalStyle} onClick={(e) => e.stopPropagation()}>
           <Typography variant="h6">
             {activeBox?.title}
           </Typography>
@@ -166,6 +168,7 @@ const boxicon = {
           >
             <CloseIcon fontSize="small" />
           </Button>
+           <DropdownModal />
         </Box>
       </Modal>
     </>

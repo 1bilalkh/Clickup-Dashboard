@@ -23,7 +23,7 @@ function TopBar() {
             
            
             >
-            <div><Typography variant="h6body2" sx={{pb:0}}>Dashboard WorkSpace</Typography></div>
+            <div><Typography variant="body3" sx={{pb:0, backgroundColor: "#f5f5f5", p: 0.5, fontWeight: 500, borderRadius: "4px" }}>Dashboard WorkSpace</Typography></div>
             <div><SearchBar /></div>
             <div><Logout /></div>
             </Box>

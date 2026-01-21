@@ -8,7 +8,10 @@ import {
   IconButton,
   Button,
   Grid,
+  Paper
+  
 } from "@mui/material";
+import { styled } from '@mui/material/styles';
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -48,23 +51,27 @@ function Teams() {
         },
       ]);
 
-      
+ const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: (theme.vars ?? theme).palette.text.secondary,
+  ...theme.applyStyles('dark', {
+    backgroundColor: '#1A2027',
+  }),
+}));     
 
 
   return (
     <>
-      {team.map((member) => (
-          <Grid
-            key={member.id} sx={{display: 'flex'}}   // ✅ correct key placement
-           >
-            <Card
-              sx={{
-                width: '25%',
-                transition: "0.3s",
-                "&:hover": { boxShadow: 6 },
-              }}
-            >
-              <CardContent>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+            {team.map((member) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+               
+                    <Card>
+                        <CardContent>
                 {/* Top */}
                 <Box display="flex" alignItems="center" gap={2} mb={2}>
                   <Avatar
@@ -142,9 +149,17 @@ function Teams() {
                   </Box>
                 </Box>
               </CardContent>
-            </Card>
-           </Grid>
-      ))}
+                    </Card>
+                
+              </Grid>
+               ))}
+            </Grid>
+    </Box>
+
+
+
+
+      
     </>
   )
 }

@@ -17,14 +17,14 @@ function SearchBar() {
         ),
       }}
       sx={{
-        borderRadius: "50px",          // Rounded corners
+        borderRadius: "100px",          // Rounded corners
         "& .MuiOutlinedInput-root": {
-          borderRadius: "50px",
-          height: 36,        // Make input field round
+          borderRadius: "100px",
+          height: 30,        // Make input field round
           backgroundColor: "#fff",
-          border: "1px solid #ccc",    // Grey border
+           borderColor: "divider",    // Grey border
           "&:hover": {
-            borderColor: "#999",       // Darker grey on hover
+            borderColor: "#f0f0f0",       // Darker grey on hover
           },
         },
       }}
