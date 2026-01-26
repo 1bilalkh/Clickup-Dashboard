@@ -4,7 +4,7 @@ import ChooseTemplate from "./dashboard-component/ChooseTemplate"
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+import UpdateBox from "./dashboard-component/Update"
 import DashboardBoxes from "./dashboard-component/DashboardModal"
 
 
@@ -31,6 +31,7 @@ function Dashboard() {
   
   return (
     <>
+      <UpdateBox />
       <Typography variant="h6">Choose a Dashboard template</Typography>
       <Typography variant="body2">Get started with a Dashboard template or create a custom Dashboard to fit your exact needs.</Typography>
       <br />

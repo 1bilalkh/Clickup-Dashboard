@@ -1,10 +1,15 @@
-
+import Box from '@mui/material/Box';
+import FormBoxes from "./formscomponent/TopBoxes"
+import TableComponentComplete from "./formscomponent/DynamicTable.jsx"
 
 function Forms() {
 
 return (
     <>
-      <h4>Forms</h4>
+      <FormBoxes />
+      <Box sx={{ mt: 3 }}>
+        <TableComponentComplete />
+      </Box>
     </>
   );
 }

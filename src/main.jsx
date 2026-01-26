@@ -5,6 +5,7 @@ import App from './App.jsx'
 import './App.css'
 import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CenteredBox from "./pages/inbox-component/CenteredBox"
 
 
 const theme = createTheme({

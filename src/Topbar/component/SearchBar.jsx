@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 function SearchBar() {
   return (
     <TextField
-      placeholder="Search..."
+      placeholder="Search items,categories..."
       variant="outlined"
       size="small"
       fullWidth

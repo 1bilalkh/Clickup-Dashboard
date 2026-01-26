@@ -3,6 +3,7 @@ import { Box, Grid, Modal, Typography, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 import DropdownModal from "./DropdownModal"
+import SparklineChart from "./DashboardChart"
 
 const modalStyle = {
   position: "absolute",
@@ -14,7 +15,8 @@ const modalStyle = {
   borderRadius: "8px",
   boxShadow: 24,
   p: 3,
-};
+}
+
 
 const boxData = [
   {
@@ -87,7 +89,8 @@ const boxicon = {
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
-    marginTop: 10
+    marginTop: 10,
+    color: '#673ab7'
   };
   return (
     
@@ -105,9 +108,9 @@ const boxicon = {
                 p: 2,
                 height: 'auto',
                 border: "1px solid #ddd",
-                borderRadius: 1,
+                borderRadius: 2,
                 cursor: "pointer",
-                bgcolor: "#fafafa",
+                bgcolor: "#fff",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -116,6 +119,7 @@ const boxicon = {
                 },
               }}
             >
+            <Box sx={{display: 'none'}}>
               {item.userlistshow}
               <Typography fontWeight="600">
                 <span style={boxicon}>{item.icon}</span>
@@ -128,7 +132,10 @@ const boxicon = {
               <Typography variant="body2" color="text.secondary">
                 {item.short}
               </Typography>
-             
+              </Box>
+              <Box sx={{width: '100%'}}>
+             <SparklineChart />
+             </Box>
             </Box>
           </Grid>
         ))}

@@ -1,8 +1,10 @@
-import React from 'react'
+//import CenteredBox from "./inbox-component/CenteredBox"
 
 function Inbox() {
   return (
-    <div>Inbox</div>
+    <>
+      {/* <CenteredBox /> */}
+    </>
   )
 }
 

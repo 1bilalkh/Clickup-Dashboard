@@ -53,6 +53,7 @@ function Sidebar({ closeSidebar }) {
         display: "flex",
         flexDirection: "column",
         borderRight: "1px solid #ddd",
+        background: '#f5f5f5'
       }}
       onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside sidebar
     >
@@ -69,14 +70,10 @@ function Sidebar({ closeSidebar }) {
               mx: 1,
               my: 0.2,
               p: 0.3,
-              pl: 0.8,
-              boxShadow: "0 1px 0 0 #ccc",   // bottom border
-              borderRadius: "0px",  
+              pl: 0.8, 
               "&.Mui-selected": {
-                bgcolor: "#e0e0e0",
-                "& .MuiListItemIcon-root": { color: "#000" },
-              },
-              "&:hover": { bgcolor: "#f0f0f0" },
+                "& .MuiListItemIcon-root": { color: "#000" }
+              }
             }}
           >
             <ListItemIcon sx={{ minWidth: 36, color: "#000" }}>{item.icon}</ListItemIcon>
@@ -89,14 +86,14 @@ function Sidebar({ closeSidebar }) {
       <Divider />
 
       {/* BOTTOM MENU */}
-      <List>
+      <List style={{display: "flex" }}>
         {bottomItems.map((item) => (
           <ListItemButton
             key={item.text}
             component={Link}
             to={item.path}
             onClick={handleLinkClick} // <-- close on link click
-            sx={{ "&:hover": { bgcolor: "#f0f0f0" } }}
+            sx={{ justifyContent: "flex-start", display: 'flex',  "&:hover": { bgcolor: "#beb3b3" } }}
           >
             <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
             <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />
