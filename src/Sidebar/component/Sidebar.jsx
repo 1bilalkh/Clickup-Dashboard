@@ -29,11 +29,17 @@ function Sidebar({ closeSidebar }) {
     { id: 2, text: "Tasks", icon: <TaskIcon />, path: "/tasks" },
     { id: 3, text: "Calendar", icon: <CalendarMonthOutlinedIcon />, path: "/calendar" },
     { id: 4, text: "Projects", icon: <FolderOpenOutlinedIcon />, path: "/projects" },
+  ];
+
+  const menuItemsCenter = [
     { id: 5, text: "Inbox", icon: <MailOutlinedIcon />, path: "/inbox" },
     { id: 6, text: "AI", icon: <AttractionsOutlinedIcon />, path: "/ai" },
     { id: 7, text: "Teams", icon: <PeopleOutlineOutlinedIcon />, path: "/teams" },
     { id: 8, text: "Forms", icon: <IntegrationInstructionsOutlinedIcon />, path: "/forms" },
-  ];
+  ]
+
+
+
 
   const bottomItems = [
     { text: "Settings", icon: <SettingsOutlinedIcon />, path: "/settings" },
@@ -81,6 +87,36 @@ function Sidebar({ closeSidebar }) {
           </ListItemButton>
         ))}
       </List>
+
+
+          <Divider sx={{pt: '10px', mb: '10px', display: 'block'}} /> 
+
+          <List>
+        {menuItemsCenter.map((item) => (
+          <ListItemButton
+            key={item.id}
+            component={Link}
+            to={item.path}
+            onClick={handleLinkClick} // <-- close on link click
+            selected={location.pathname === item.path}
+            sx={{
+              mx: 1,
+              my: 0.2,
+              p: 0.3,
+              pl: 0.8, 
+              "&.Mui-selected": {
+                "& .MuiListItemIcon-root": { color: "#000" }
+              }
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 36, color: "#000" }}>{item.icon}</ListItemIcon>
+            <ListItemText sx={{color: "#000", p:0,}} primary={<Typography variant="body2">{item.text}</Typography>} />
+          </ListItemButton>
+        ))}
+      </List>
+
+
+
 
       <Box sx={{ flexGrow: 1 }} />
       <Divider />

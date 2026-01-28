@@ -3,10 +3,12 @@ import { Typography } from "@mui/material";
 import ChooseTemplate from "./dashboard-component/ChooseTemplate"
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import UpdateBox from "./dashboard-component/Update"
 import DashboardBoxes from "./dashboard-component/DashboardModal"
-
+import DifferentLength from "./dashboard-component/DashboardBigChart"
+import PieChartWithCustomizedLabel from "./dashboard-component/Dashboard-pie.jsx"
 
 
 
@@ -36,6 +38,18 @@ function Dashboard() {
       <Typography variant="body2">Get started with a Dashboard template or create a custom Dashboard to fit your exact needs.</Typography>
       <br />
       <DashboardBoxes />
+      <Box sx={{ flexGrow: 1, mt: 2 }}>
+      <Grid container spacing={2}>
+        <Grid size={8}>
+          <Item><DifferentLength /></Item>
+        </Grid>
+        <Grid size={4}>
+          <Item><PieChartWithCustomizedLabel /></Item>
+        </Grid>
+        
+      </Grid>
+    </Box>
+      
        
     </>
     
