@@ -9,6 +9,7 @@ import UpdateBox from "./dashboard-component/Update"
 import DashboardBoxes from "./dashboard-component/DashboardModal"
 import DifferentLength from "./dashboard-component/DashboardBigChart"
 import PieChartWithCustomizedLabel from "./dashboard-component/Dashboard-pie.jsx"
+import TableComponentComplete from "./formscomponent/DynamicTable.jsx"
 
 
 
@@ -49,6 +50,9 @@ function Dashboard() {
         
       </Grid>
     </Box>
+      <Box sx={{ mt: 3 }}>
+        <TableComponentComplete />
+      </Box>
       
        
     </>

@@ -57,9 +57,12 @@ function Sidebar({ closeSidebar }) {
         width: 250,
         height: "100vh",
         display: "flex",
+        position: "sticky",
         flexDirection: "column",
         borderRight: "1px solid #ddd",
-        background: '#f5f5f5'
+        background: '#f5f5f5',
+        overflowY: "auto",
+        top: 0
       }}
       onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside sidebar
     >

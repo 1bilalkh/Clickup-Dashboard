@@ -6,6 +6,7 @@ import './App.css'
 import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CenteredBox from "./pages/inbox-component/CenteredBox"
+import Toolbar from '@mui/material/Toolbar';
 
 
 const theme = createTheme({
@@ -21,7 +22,8 @@ createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
       <CssBaseline />
-          <App />
+      <Toolbar sx={{ height: {xs: '120px', sm: "70px"}  }} /> 
+          <App sx={{ mt: { xs: "256px", sm: "64px" } }} />
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>,

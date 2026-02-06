@@ -46,7 +46,7 @@ export default function TableComponentComplete() {
   ];
 
   return (
-    <Box sx={{ mt: 5 }}>
+    <Box sx={{ mt: 5 }} className="tableown">
       <TanStackDataTable columns={columns} data={data} sx={{ borderRadius: 2 }} />
     </Box>
   );
