@@ -16,18 +16,36 @@ function SearchBar() {
           </InputAdornment>
         ),
       }}
-      sx={{
-        borderRadius: "100px",          // Rounded corners
-        "& .MuiOutlinedInput-root": {
-          borderRadius: "100px",
-          height: 30,        // Make input field round
-          backgroundColor: "#fff",
-           borderColor: "divider",    // Grey border
-          "&:hover": {
-            borderColor: "#f0f0f0",       // Darker grey on hover
-          },
-        },
-      }}
+       sx={{
+  borderRadius: "100px",
+
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "100px",
+    height: 30,
+    bgcolor: "background.paper",
+
+    // normal
+    "& fieldset": {
+      borderColor: "divider",
+    },
+
+    // hover
+    "&:hover fieldset": {
+      borderColor: "text.primary",
+    },
+
+    // focus
+    "&.Mui-focused fieldset": {
+      borderColor: "primary.main",
+      borderWidth: 2,
+    },
+  },
+
+  "& input::placeholder": {
+    color: "text.secondary",
+    opacity: 1,
+  },
+}}
     />
   );
 }

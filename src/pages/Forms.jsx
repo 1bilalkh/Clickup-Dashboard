@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
-import FormBoxes from "./formscomponent/TopBoxes"
-import TableComponentComplete from "./formscomponent/DynamicTable.jsx"
+import FormBoxes from "../component/formscomponent/TopBoxes"
+import TableComponentComplete from "../component/formscomponent/DynamicTable.jsx"
 
 function Forms() {
 

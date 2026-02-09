@@ -24,8 +24,8 @@ function SignOut() {
     <Box>
       {/* Icon to open menu */}
       <Tooltip title="Settings">
-        <IconButton>
-          <SettingsIcon sx={{ fontSize: "16px" }} />
+        <IconButton color="inherit">
+          <SettingsIcon sx={{ fontSize: "16px" }}  />
         </IconButton>
       </Tooltip>
 

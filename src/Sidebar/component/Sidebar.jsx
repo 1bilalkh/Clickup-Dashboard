@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   List,
@@ -18,6 +17,7 @@ import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
 import AttractionsOutlinedIcon from "@mui/icons-material/AttractionsOutlined";
 import IntegrationInstructionsOutlinedIcon from "@mui/icons-material/IntegrationInstructionsOutlined";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -36,14 +36,15 @@ function Sidebar({ closeSidebar }) {
     { id: 6, text: "AI", icon: <AttractionsOutlinedIcon />, path: "/ai" },
     { id: 7, text: "Teams", icon: <PeopleOutlineOutlinedIcon />, path: "/teams" },
     { id: 8, text: "Forms", icon: <IntegrationInstructionsOutlinedIcon />, path: "/forms" },
+    { id: 9, text: "Invoice", icon: <DescriptionOutlinedIcon />, path: "/invoice" },
   ]
 
 
 
 
   const bottomItems = [
-    { text: "Settings", icon: <SettingsOutlinedIcon />, path: "/settings" },
-    { text: "Logout", icon: <LogoutIcon />, path: "/logout" },
+    {id: 10, text: "Settings", icon: <SettingsOutlinedIcon />, path: "/settings" },
+    {id: 11, text: "Logout", icon: <LogoutIcon />, path: "/logout" },
   ];
 
   // Function to handle link clicks
@@ -60,7 +61,8 @@ function Sidebar({ closeSidebar }) {
         position: "sticky",
         flexDirection: "column",
         borderRight: "1px solid #ddd",
-        background: '#f5f5f5',
+        bgcolor: "background.paper",
+        color: "text.primary",
         overflowY: "auto",
         top: 0
       }}
@@ -79,14 +81,19 @@ function Sidebar({ closeSidebar }) {
               mx: 1,
               my: 0.2,
               p: 0.3,
-              pl: 0.8, 
+              pl: 0.8,
+
               "&.Mui-selected": {
-                "& .MuiListItemIcon-root": { color: "#000" }
-              }
+                bgcolor: "action.selected",
+                "& .MuiListItemIcon-root": {
+                  color: "#6c5cf5",
+                },
+              },
             }}
+
           >
-            <ListItemIcon sx={{ minWidth: 36, color: "#000" }}>{item.icon}</ListItemIcon>
-            <ListItemText sx={{color: "#000", p:0,}} primary={<Typography variant="body2">{item.text}</Typography>} />
+            <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
+            <ListItemText  primary={<Typography variant="body2">{item.text}</Typography>} />
           </ListItemButton>
         ))}
       </List>
@@ -108,12 +115,15 @@ function Sidebar({ closeSidebar }) {
               p: 0.3,
               pl: 0.8, 
               "&.Mui-selected": {
-                "& .MuiListItemIcon-root": { color: "#000" }
-              }
+                bgcolor: "action.selected",
+                "& .MuiListItemIcon-root": {
+                  color: "#6c5cf5",
+                },
+              },
             }}
           >
-            <ListItemIcon sx={{ minWidth: 36, color: "#000" }}>{item.icon}</ListItemIcon>
-            <ListItemText sx={{color: "#000", p:0,}} primary={<Typography variant="body2">{item.text}</Typography>} />
+            <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
+            <ListItemText sx={{ p:0,}} primary={<Typography variant="body2">{item.text}</Typography>} />
           </ListItemButton>
         ))}
       </List>
@@ -132,7 +142,7 @@ function Sidebar({ closeSidebar }) {
             component={Link}
             to={item.path}
             onClick={handleLinkClick} // <-- close on link click
-            sx={{ justifyContent: "flex-start", display: 'flex',  "&:hover": { bgcolor: "#beb3b3" } }}
+            sx={{ justifyContent: "flex-start", display: 'flex' }}
           >
             <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
             <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />

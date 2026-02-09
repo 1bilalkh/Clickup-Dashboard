@@ -10,13 +10,18 @@ import Inbox from "./pages/Inbox.jsx"
 import AI from "./pages/AI.jsx"
 import Teams from "./pages/Teams.jsx"
 import Forms from "./pages/Forms.jsx"
+import Invoice from "./pages/invoice.jsx"
 import { Box } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
+import UpdateBox from "./component/dashboard-component/Update.jsx"
 
 
 
 function App() {
+  
+   
   const isMobile = useMediaQuery("(min-width:600px)"); // mobile + tablet
+  
   return (
     <>
     <Router>
@@ -28,6 +33,9 @@ function App() {
           height: "100vh",
           overflowY: "auto" // space for right sidebar
            }}>
+           
+            <UpdateBox />
+          
          <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/Tasks" element={<Tasks />} />
@@ -37,6 +45,7 @@ function App() {
             <Route path="/AI" element={<AI />} />
             <Route path="/Teams" element={<Teams />} />
             <Route path="/Forms" element={<Forms />} />
+            <Route path="/invoice" element={<Invoice />} />
           </Routes>
           </Box>
           </Box>

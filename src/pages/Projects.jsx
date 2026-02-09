@@ -1,7 +1,7 @@
 //import Userlist from "./dashboard-component/Userlist"
-import PaginatedUsers from "./dashboard-component/PaginatedList"
-import BarChartPage from "./project-component/Projectchart"
-import PageGrid from "./grid-component/Grids.jsx"
+import PaginatedUsers from "../component/dashboard-component/PaginatedList"
+import BarChartPage from "../component/project-component/Projectchart"
+import PageGrid from "../component/grid-component/Grids.jsx"
 import { Box } from "@mui/material";
 
 
