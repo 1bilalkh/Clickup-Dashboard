@@ -5,14 +5,11 @@ import {
   TableCell,
   TableBody,
   Typography,
-  Box
+  Box,
 } from "@mui/material";
 
 const InvoiceTable = ({ client, items }) => {
-  const subtotal = items.reduce(
-    (sum, item) => sum + item.qty * item.price,
-    0
-  );
+  const subtotal = items.reduce((sum, item) => sum + item.qty * item.price, 0);
 
   return (
     <Box mt={2}>

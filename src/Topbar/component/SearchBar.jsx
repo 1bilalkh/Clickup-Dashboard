@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 function SearchBar() {
   return (
     <TextField
-      placeholder="Search items,categories..."
+      placeholder="Ask AI anything about request, projects"
       variant="outlined"
       size="small"
       fullWidth
@@ -16,36 +16,39 @@ function SearchBar() {
           </InputAdornment>
         ),
       }}
-       sx={{
-  borderRadius: "100px",
+      sx={{
+        borderRadius: "100px",
+        border: "none",
 
-  "& .MuiOutlinedInput-root": {
-    borderRadius: "100px",
-    height: 30,
-    bgcolor: "background.paper",
+        "& .MuiOutlinedInput-root": {
+          borderRadius: "10px",
+          height: 40,
+          width: "100%",
+          border: "none",
+          bgcolor: "background.paper",
 
-    // normal
-    "& fieldset": {
-      borderColor: "divider",
-    },
+          // normal
+          "& fieldset": {
+            borderColor: "divider",
+          },
 
-    // hover
-    "&:hover fieldset": {
-      borderColor: "text.primary",
-    },
+          // hover
+          "&:hover fieldset": {
+            borderColor: "text.primary",
+          },
 
-    // focus
-    "&.Mui-focused fieldset": {
-      borderColor: "primary.main",
-      borderWidth: 2,
-    },
-  },
+          // focus
+          "&.Mui-focused fieldset": {
+            borderColor: "primary.main",
+            borderWidth: 0,
+          },
+        },
 
-  "& input::placeholder": {
-    color: "text.secondary",
-    opacity: 1,
-  },
-}}
+        "& input::placeholder": {
+          color: "text.secondary",
+          opacity: 1,
+        },
+      }}
     />
   );
 }

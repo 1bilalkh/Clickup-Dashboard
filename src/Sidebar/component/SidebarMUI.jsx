@@ -10,15 +10,11 @@ function SidebarDrawer() {
 
   return (
     <>
-      <IconButton onClick={() => toggleDrawer(true)}>
+      <IconButton color="inherit" onClick={() => toggleDrawer(true)}>
         <MenuIcon />
       </IconButton>
 
-      <Drawer
-        anchor="left"
-        open={open}
-        onClose={() => toggleDrawer(false)}
-      >
+      <Drawer anchor="left" open={open} onClose={() => toggleDrawer(false)}>
         <Sidebar closeSidebar={() => toggleDrawer(false)} />
       </Drawer>
     </>

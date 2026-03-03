@@ -1,6 +1,7 @@
 import React from "react";
 import TanStackDataTable from "./FormTable";
 import { Box, Button } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 export default function TableComponentComplete() {
   const data = [
@@ -35,6 +36,13 @@ export default function TableComponentComplete() {
       header: "Actions",
       cell: ({ row }) => (
         <Button
+          sx={{
+            background: "linear-gradient(45deg, #2196F3 30%, #0D47A1 90%)",
+            color: "#fff",
+            px: 5,
+            py: "2px 3px",
+            borderRadius: 2,
+          }}
           variant="contained"
           size="small"
           onClick={() => alert(`Edit ${row.original.name}`)}
@@ -46,8 +54,15 @@ export default function TableComponentComplete() {
   ];
 
   return (
-    <Box sx={{ mt: 5 }} className="tableown">
-      <TanStackDataTable columns={columns} data={data} sx={{ borderRadius: 2 }} />
+    <Box sx={{ mt: 1 }} className="table-wrapper">
+      <Typography variant="h6" gutterBottom sx={{ pb: 2 }}>
+        Project List
+      </Typography>
+      <TanStackDataTable
+        columns={columns}
+        data={data}
+        sx={{ borderRadius: 2 }}
+      />
     </Box>
   );
 }

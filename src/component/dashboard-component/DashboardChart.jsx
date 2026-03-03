@@ -1,22 +1,19 @@
-import { Box, Typography,  useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { SparkLineChart } from "@mui/x-charts/SparkLineChart";
 
-export default function SparklineChart() {
+export default function SparklineChart({ activeuser, username }) {
   const theme = useTheme();
   return (
-    <Box
-      sx={{
-      }}
-    >
+    <Box sx={{}}>
       <Typography variant="body2" color="text.secondary">
-        Active Users
+        {activeuser}
       </Typography>
 
       <Typography variant="h6" fontWeight={800}>
-        124,512
+        {username}
       </Typography>
 
-      <SparkLineChart 
+      <SparkLineChart
         data={[100, 140, 135, 160, 105, 190, 125]}
         height={50}
         curve="smooth"

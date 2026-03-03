@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Box, Grid, Modal, Typography, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
-import DropdownModal from "./DropdownModal"
-import SparklineChart from "./DashboardChart"
+import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
+import Person3OutlinedIcon from "@mui/icons-material/Person3Outlined";
+import TaskIcon from "@mui/icons-material/CheckCircleOutline";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
+import DropdownModal from "./DropdownModal";
+import SparklineChart from "./DashboardChart";
 
 const modalStyle = {
   position: "absolute",
@@ -15,55 +19,53 @@ const modalStyle = {
   borderRadius: "8px",
   boxShadow: 24,
   p: 3,
-}
-
+};
 
 const boxData = [
   {
     id: 1,
-    icon: <DashboardCustomizeOutlinedIcon />,
+    icon: <Person3OutlinedIcon />,
     title: "Users",
     short: "Manage all users",
     details: "Here you can create, edit, and delete users from the system.",
-    dropdownmodal: <DropdownModal />
-    
+    dropdownmodal: <DropdownModal />,
   },
   {
     id: 2,
-    icon: <DashboardCustomizeOutlinedIcon />,
+    icon: <TaskIcon />,
     title: "Tasks",
     short: "Track daily work",
     details: "View, assign, and update tasks for your team.",
-    dropdownmodal: <DropdownModal />
+    dropdownmodal: <DropdownModal />,
   },
   {
     id: 3,
-    icon: <DashboardCustomizeOutlinedIcon />,
+    icon: <CalendarMonthOutlinedIcon />,
     title: "Calendar",
     short: "Check schedules",
-    details: "Manage events, deadlines, and important dates."
+    details: "Manage events, deadlines, and important dates.",
   },
   {
     id: 4,
-    icon: <DashboardCustomizeOutlinedIcon />,
+    icon: <FolderOpenOutlinedIcon />,
     title: "Projects",
     short: "All active projects",
-    details: "Create, monitor, and manage project progress."
+    details: "Create, monitor, and manage project progress.",
   },
-  {
-    id: 5,
-    icon: <DashboardCustomizeOutlinedIcon />,
-    title: "Messages",
-    short: "View inbox",
-    details: "Read and send messages to your team members."
-  },
-  {
-    id: 6,
-    icon: <DashboardCustomizeOutlinedIcon />,
-    title: "Settings",
-    short: "System preferences",
-    details: "Update application configuration and preferences."
-  },
+  // {
+  //   id: 5,
+  //   icon: <DashboardCustomizeOutlinedIcon />,
+  //   title: "Messages",
+  //   short: "View inbox",
+  //   details: "Read and send messages to your team members.",
+  // },
+  // {
+  //   id: 6,
+  //   icon: <DashboardCustomizeOutlinedIcon />,
+  //   title: "Settings",
+  //   short: "System preferences",
+  //   details: "Update application configuration and preferences.",
+  // },
 ];
 
 function DashboardBoxes() {
@@ -79,7 +81,7 @@ function DashboardBoxes() {
     setOpen(false);
     setActiveBox(null);
   };
-const boxicon = {
+  const boxicon = {
     width: "40px",
     height: "40px",
     backgroundColor: "#f1f1f1",
@@ -90,28 +92,24 @@ const boxicon = {
     justifyContent: "center",
     marginBottom: 10,
     marginTop: 10,
-    color: '#673ab7'
+    color: "#673ab7",
   };
   return (
-    
     <>
       {/* Boxes */}
       <Grid container spacing={2}>
         {boxData.map((item) => (
-          <Grid
-              size={{ xs: 12, sm: 12, md: 4 }}
-              key={item.id}
-            >
+          <Grid size={{ xs: 12, sm: 12, md: 3 }} key={item.id}>
             <Box
               onClick={() => handleOpen(item)}
-                sx={{
+              sx={{
                 p: 2,
                 height: "auto",
                 border: "1px solid",
                 borderColor: "divider",
                 borderRadius: 2,
                 cursor: "pointer",
-                bgcolor: "background.paper",
+                bgcolor: "#f4f7fe",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -120,23 +118,31 @@ const boxicon = {
                 },
               }}
             >
-            <Box sx={{display: 'none'}}>
-              {item.userlistshow}
-              <Typography fontWeight="600">
-                <span style={boxicon}>{item.icon}</span>
-              </Typography>
-              <Typography fontWeight="600">
-                {item.title}
-              </Typography>
+              <Box sx={{ display: "block" }}>
+                {item.userlistshow}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <span>
+                    {item.title}
+                    <Typography variant="body2" color="text.secondary">
+                      {item.short}
+                    </Typography>
+                  </span>
+                  <span>
+                    <span style={boxicon}>{item.icon}</span>
+                  </span>
+                </Box>
 
-              {/* Short content */}
-              <Typography variant="body2" color="text.secondary">
-                {item.short}
-              </Typography>
+                {/* Short content */}
               </Box>
-              <Box sx={{width: '100%'}}>
-             <SparklineChart />
-             </Box>
+              <Box sx={{ width: "100%" }}>
+                <SparklineChart />
+              </Box>
             </Box>
           </Grid>
         ))}
@@ -145,9 +151,7 @@ const boxicon = {
       {/* Modal */}
       <Modal open={open} onClose={handleClose}>
         <Box sx={modalStyle} onClick={(e) => e.stopPropagation()}>
-          <Typography variant="h6">
-            {activeBox?.title}
-          </Typography>
+          <Typography variant="h6">{activeBox?.title}</Typography>
 
           <Typography variant="body2" sx={{ mt: 1 }}>
             {activeBox?.details}
@@ -157,26 +161,26 @@ const boxicon = {
             size="small"
             onClick={handleClose}
             className="mui-close-btn"
-              sx={{
-                position: "absolute",
-                top: 8,
-                right: 8,
-                color: "#000",
-                p: 0,
-                width: 32,
-                height: 32,
-                minWidth: 32,
-                minHeight: 32,
-                  borderRadius: "50%",
-                  bgcolor: "#f1f1f1",
-                  "&:hover": {
-                    bgcolor: "#e0e0e0",
-                  },
-                }}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              color: "#000",
+              p: 0,
+              width: 32,
+              height: 32,
+              minWidth: 32,
+              minHeight: 32,
+              borderRadius: "50%",
+              bgcolor: "#f1f1f1",
+              "&:hover": {
+                bgcolor: "#e0e0e0",
+              },
+            }}
           >
             <CloseIcon fontSize="small" />
           </Button>
-           <DropdownModal />
+          <DropdownModal />
         </Box>
       </Modal>
     </>

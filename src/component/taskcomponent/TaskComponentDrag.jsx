@@ -29,7 +29,7 @@ export default function KanbanBoard() {
   const [tasks, setTasks] = useState(initialTasks);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
   );
 
   const findColumn = (taskId) => {
@@ -87,7 +87,10 @@ function Column({ id, tasks }) {
       <h3 style={{ textTransform: "capitalize" }}>{id}</h3>
 
       {/* SortableContext for animation */}
-      <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
+      <SortableContext
+        items={tasks.map((t) => t.id)}
+        strategy={verticalListSortingStrategy}
+      >
         {tasks.map((task) => (
           <Task key={task.id} id={task.id} title={task.title} />
         ))}
@@ -97,7 +100,8 @@ function Column({ id, tasks }) {
 }
 
 function Task({ id, title }) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
 
   const style = {
     transform: CSS.Transform.toString(transform),

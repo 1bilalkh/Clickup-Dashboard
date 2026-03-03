@@ -17,6 +17,9 @@ function SignOut() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => setAnchorEl(null);
 
@@ -24,8 +27,18 @@ function SignOut() {
     <Box>
       {/* Icon to open menu */}
       <Tooltip title="Settings">
-        <IconButton color="inherit">
-          <SettingsIcon sx={{ fontSize: "16px" }}  />
+        <IconButton
+          color="inherit"
+          sx={{
+            bgcolor: "#f0f0f2",
+            width: 30,
+            height: 30,
+            color: "#747980",
+            borderRadius: "10px",
+          }}
+          onClick={handleClick}
+        >
+          <SettingsIcon sx={{ fontSize: "16px" }} />
         </IconButton>
       </Tooltip>
 

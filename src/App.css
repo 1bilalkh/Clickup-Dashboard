@@ -1,7 +1,27 @@
-
-body{
+body {
   font-family: "Inter", sans-serif;
 }
-.tableown td.css-1qwh8hb-MuiTableCell-root{
-  padding:0px !important;
+/* .table-wrapper th.MuiTableCell-root {
+  padding: 3px 0 0 13px;
+} */
+.MuiTabs-indicator {
+  background: #2a5298 !important;
+}
+/* ===== Table Wrapper ===== */
+.table-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+.table-wrapper .css-1qwh8hb-MuiTableCell-root {
+  padding: 0px 0 0 13px;
+}
+.schedule .fc-col-header-cell-cushion{
+  padding: 5px 8px;
+    font-size: 12px;
+}
+.schedule .fc-toolbar-title{
+  font-size: 1em;
 }

@@ -1,9 +1,6 @@
 import { Box } from "@mui/material";
 
-function PageGrid({
-  children,
-  wrap = true,
-}) {
+function PageGrid({ children, wrap = true }) {
   return (
     <Box
       sx={{

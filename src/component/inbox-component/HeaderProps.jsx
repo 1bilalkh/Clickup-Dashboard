@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
-function HeaderProps({titleown,para}) {
+function HeaderProps({ titleown, para }) {
   return (
-    <div>{titleown}{para}</div>
-  )
+    <div>
+      {titleown}
+      {para}
+    </div>
+  );
 }
 
-export default HeaderProps
+export default HeaderProps;

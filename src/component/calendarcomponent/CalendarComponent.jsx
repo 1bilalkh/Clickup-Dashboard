@@ -32,15 +32,15 @@ function CalendarPage() {
       <h2>My Calendar</h2>
       <FullCalendar
         plugins={[dayGridPlugin]}
-      initialView="dayGridMonth"
-      events={[
-        { title: "Meeting", date: "2026-01-10" },
-        { title: "Deadline", date: "2026-01-15" },
-        { title: "Late Sitting", date: "2026-01-20" },
-      ]}
-      dateClick={(info) => {
-        alert("Clicked date: " + info.dateStr);
-      }}
+        initialView="dayGridMonth"
+        events={[
+          { title: "Meeting", date: "2026-01-10" },
+          { title: "Deadline", date: "2026-01-15" },
+          { title: "Late Sitting", date: "2026-01-20" },
+        ]}
+        dateClick={(info) => {
+          alert("Clicked date: " + info.dateStr);
+        }}
       />
     </div>
   );

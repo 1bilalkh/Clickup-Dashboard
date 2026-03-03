@@ -1,15 +1,14 @@
 //import TasksContent from "../component/taskcomponent/TaskComponent"
-import KanbanBoard from "../component/taskcomponent/TaskComponentDrag"
- 
+import KanbanBoard from "../component/taskcomponent/TaskComponentDrag";
 
 function Tasks() {
   return (
     <>
       <KanbanBoard />
-     
-        {/* <TasksContent /> */}
+
+      {/* <TasksContent /> */}
     </>
-  )
+  );
 }
 
-export default Tasks
+export default Tasks;

@@ -5,7 +5,7 @@ import {
   CardContent,
   Typography,
   Grid,
-  Button
+  Button,
 } from "@mui/material";
 import InvoiceForm from "../component/invoice-component/InvoiceForm";
 import InvoiceTable from "../component/invoice-component/InvoiceTable";
@@ -18,7 +18,7 @@ const Invoice = () => {
   const [client, setClient] = useState({
     name: "",
     email: "",
-    address: ""
+    address: "",
   });
 
   const [items, setItems] = useState([]);
@@ -37,35 +37,30 @@ const Invoice = () => {
 
   return (
     <>
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              
-              <Grid size={6}>
-                   <InvoiceForm
-                client={client}
-                setClient={setClient}
-                items={items}
-                setItems={setItems}
-              />
-              </Grid>
-              <Grid size={6}>
-                  <Card ref={invoiceRef}>
-                <CardContent>
-                  <Typography variant="h6">Invoice Preview</Typography>
-                  <InvoiceTable client={client} items={items} />
-                </CardContent>
-              </Card>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <Grid size={6}>
+            <InvoiceForm
+              client={client}
+              setClient={setClient}
+              items={items}
+              setItems={setItems}
+            />
+          </Grid>
+          <Grid size={6}>
+            <Card ref={invoiceRef}>
+              <CardContent>
+                <Typography variant="h6">Invoice Preview</Typography>
+                <InvoiceTable client={client} items={items} />
+              </CardContent>
+            </Card>
 
-              <Button
-                variant="contained"
-                sx={{ mt: 2 }}
-                onClick={downloadPDF}
-              >
-                Download PDF
-              </Button>
-              </Grid>
-           </Grid>
-        </Box>
+            <Button variant="contained" sx={{ mt: 2 }} onClick={downloadPDF}>
+              Download PDF
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
     </>
   );
 };

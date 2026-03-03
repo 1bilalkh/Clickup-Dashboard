@@ -1,17 +1,11 @@
 import { useState } from "react";
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Card, CardContent, Button } from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LoopIcon from "@mui/icons-material/Loop";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 function TasksContent() {
-const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState([
     { id: 1, title: "Design Dashboard UI", status: "todo" },
     { id: 2, title: "Fix API Bugs", status: "inprogress" },
     { id: 3, title: "Deploy App", status: "done" },
@@ -21,8 +15,8 @@ const [tasks, setTasks] = useState([
   const moveTask = (id, newStatus) => {
     setTasks((prev) =>
       prev.map((task) =>
-        task.id === id ? { ...task, status: newStatus } : task
-      )
+        task.id === id ? { ...task, status: newStatus } : task,
+      ),
     );
   };
 

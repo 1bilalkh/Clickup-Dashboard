@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function AI() {
-  return (
-    <div>AI</div>
-  )
+  return <div>AI</div>;
 }
 
-export default AI
+export default AI;

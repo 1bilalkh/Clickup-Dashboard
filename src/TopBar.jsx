@@ -1,13 +1,15 @@
-import React from 'react'
+import React from "react";
 import { Box } from "@mui/material";
 import SearchBar from "./Topbar/component/SearchBar";
 import { Typography } from "@mui/material";
 import Logout from "./Topbar/component/Logout";
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import ElevateAppBar from "./FixedBar"
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import PropTypes from "prop-types";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+//import ElevateAppBar from "./FixedBar"
+
+//import logo from "./assets/logo.png"
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -36,46 +38,58 @@ ElevationScroll.propTypes = {
   window: PropTypes.func,
 };
 
-
-
-
-function TopBar(props) {
-
-
+function TopBar() {
   return (
     <>
-  
-          <AppBar position="fixed" sx={{
-    backgroundColor: "#fff", color: '#000' }}>
-            <Toolbar>
-              <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  width= '100%'
-                  sx={{  p: 1,
-                    flexDirection: {
-                      xs: "column",   // mobile
-                      sm: "column",   // small tablets
-                      md: "row", gap: '5px',
-                      zIndex: 1200  // 
-                  },
-                  
-                  
-                  
-                  }}
-                  
-                
-                  >
-                  <div><Typography variant="body3" sx={{pb:0, backgroundColor: "#f5f5f5", p: 0.5, fontWeight: 500, borderRadius: "4px" }}>Dashboard WorkSpace</Typography></div>
-                  <div><SearchBar /></div>
-                  <div><Logout /></div>
-                </Box>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: "#e2ebfa",
+          color: "#000",
+          boxShadow: "none",
+        }}
+      >
+        <Toolbar
+          sx={{
+            backgroundColor: "#e2ebfa",
+          }}
+        >
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            width="100%"
+            sx={{
+              py: 1,
+              px: 2,
+              mt: 2,
+              mb: 2,
+              borderRadius: "20px",
+              flexDirection: {
+                background: "#ffff",
+                height: "auto",
+                xs: "column", // mobile
+                sm: "column", // small tablets
+                md: "row",
+                gap: "5px",
+                zIndex: 1200, //
+              },
+            }}
+          >
+            <div>
+              <Typography variant="body3">Dashboard WorkSpace</Typography>
+            </div>
+            <div style={{ width: "50%" }}>
+              <SearchBar />
+            </div>
+            <div>
+              <Logout />
+            </div>
+          </Box>
         </Toolbar>
       </AppBar>
-           
     </>
-  )
+  );
 }
 
-export default TopBar
+export default TopBar;

@@ -9,16 +9,21 @@ export default function ThemeWrapper({ children }) {
   const theme = React.useMemo(
     () =>
       createTheme({
-        palette: { mode,
-            primary: {
-                main: mode === "light" ? "#000000" : "#020202",
-            },
-         },
+        palette: {
+          mode,
+          primary: {
+            main: mode === "light" ? "#251d34" : "#ffffff",
+          },
+          background: {
+            default: mode === "light" ? "#e2ebfa" : "#251d34",
+            paper: mode === "light" ? "#e2ebfa" : "#251d34",
+          },
+        },
         typography: {
           fontFamily: `"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif`,
         },
       }),
-    [mode]
+    [mode],
   );
 
   const toggleTheme = () => {

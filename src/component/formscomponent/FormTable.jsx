@@ -44,8 +44,9 @@ export default function TanStackDataTable({ columns, data, sx }) {
   // Filtered and paginated data
   const filteredRows = table.getFilteredRowModel().rows;
   const paginatedRows = useMemo(
-    () => filteredRows.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize),
-    [filteredRows, pageIndex, pageSize]
+    () =>
+      filteredRows.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize),
+    [filteredRows, pageIndex, pageSize],
   );
 
   return (
@@ -71,10 +72,12 @@ export default function TanStackDataTable({ columns, data, sx }) {
                   <Checkbox
                     indeterminate={
                       table.getSelectedRowModel().rows.length > 0 &&
-                      table.getSelectedRowModel().rows.length < table.getRowModel().rows.length
+                      table.getSelectedRowModel().rows.length <
+                        table.getRowModel().rows.length
                     }
                     checked={
-                      table.getSelectedRowModel().rows.length === table.getRowModel().rows.length
+                      table.getSelectedRowModel().rows.length ===
+                      table.getRowModel().rows.length
                     }
                     onChange={(e) => {
                       table.toggleAllRowsSelected(e.target.checked);
@@ -90,10 +93,16 @@ export default function TanStackDataTable({ columns, data, sx }) {
                         direction={header.column.getIsSorted() || "asc"}
                         onClick={header.column.getToggleSortingHandler()}
                       >
-                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                       </TableSortLabel>
                     ) : (
-                      flexRender(header.column.columnDef.header, header.getContext())
+                      flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )
                     )}
                   </TableCell>
                 ))}

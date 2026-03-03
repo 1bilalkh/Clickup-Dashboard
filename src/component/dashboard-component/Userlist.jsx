@@ -19,10 +19,8 @@ function UserList() {
     <div>
       {data.slice(0, 150).map((user) => (
         <p key={user.id}>
-          {user.name} ({user.username})
-          <p>{user.email}</p>
+          {user.name} ({user.username})<p>{user.email}</p>
         </p>
-        
       ))}
     </div>
   );
