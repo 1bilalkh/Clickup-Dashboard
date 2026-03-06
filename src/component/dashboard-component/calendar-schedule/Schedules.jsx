@@ -8,40 +8,33 @@ export default function Schedules() {
   return (
     <Card className="schedule" sx={{ borderRadius: 3, boxShadow: 3 }}>
       <CardContent>
-        
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridFiveDay"
-
           views={{
             dayGridFiveDay: {
               type: "dayGrid",
               duration: { days: 5 }, // 👈 only 5 days
-            }
+            },
           }}
-
           headerToolbar={{
-            left: "prev,next",   // 👈 arrows
+            left: "prev,next", // 👈 arrows
             center: "title",
-            right: ""
+            right: "",
           }}
-
           height="auto"
           selectable={true}
-
           events={[
             {
               title: "Meeting",
-              start: new Date().toISOString().split("T")[0]
+              start: new Date().toISOString().split("T")[0],
             },
             {
               title: "Client Call",
-              start: new Date(
-                new Date().setDate(new Date().getDate() + 2)
-              )
+              start: new Date(new Date().setDate(new Date().getDate() + 2))
                 .toISOString()
-                .split("T")[0]
-            }
+                .split("T")[0],
+            },
           ]}
         />
       </CardContent>

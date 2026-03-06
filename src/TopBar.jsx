@@ -79,9 +79,14 @@ function TopBar() {
             <div>
               <Typography variant="body3">Dashboard WorkSpace</Typography>
             </div>
-            <div style={{ width: "50%" }}>
+            <Box sx={{
+                width:{
+                  xs:"100%",
+                  md:"50%"
+                },
+            }}>
               <SearchBar />
-            </div>
+            </Box>
             <div>
               <Logout />
             </div>

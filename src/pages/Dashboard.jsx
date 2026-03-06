@@ -16,6 +16,9 @@ import WelcomeSection from "../Welcom.jsx";
 import AnimatedTabs from "../component/dashboard-component/Tabs-Component.jsx";
 import QuickActions from "../component/dashboard-component/quick-actions/QuickActions.jsx";
 import Schedule from "../component/dashboard-component/calendar-schedule/Schedules.jsx";
+import UpcomingMeeting from "../component/dashboard-component/upcoming/UpcomingMeetings.jsx";
+import UpcomingEvents from "../component/dashboard-component/upcomingevents/Upcomingevents.jsx";
+import InnovationPerformance from "../component/dashboard-component/innovation/InnovationPerformance.jsx";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -36,8 +39,14 @@ function Dashboard() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-
+            
             flexGrow: 1,
+            flexDirection:{
+              md: 'row',
+              xs: 'column'
+            }, 
+
+           
           }}
         >
           <Box sx={{ textAlign: "left" }}>
@@ -54,6 +63,10 @@ function Dashboard() {
               justifyContent: "space-between",
               gap: 1,
               alignItems: "center",
+              mt:{
+                xs: 3,
+                md: 0
+              },
             }}
           >
             <Button
@@ -115,7 +128,6 @@ function Dashboard() {
                     p: 0,
                   }}
                 >
-                 
                   <WelcomeSection />
                 </Item>
               </Grid>
@@ -129,7 +141,7 @@ function Dashboard() {
                     borderColor: "divider",
                     borderRadius: 4,
                     bgcolor: "#f4f9fd",
-                    mt: 3
+                    mt: 3,
                   }}
                 >
                   <Typography
@@ -166,12 +178,33 @@ function Dashboard() {
                   <QuickActions />
                 </Box>
               </Grid>
-              <Grid size={{ xs: 12, md: 12}}>
-                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2  }}>
+              <Grid size={{ xs: 12, md: 12 }}>
+                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2 }}>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     My Schedules
                   </Typography>
-                   <Schedule />
+                  <Schedule />
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 12, md: 12 }}>
+                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2 }}>
+                  <Typography variant="h6" sx={{ mb: 2 }}>
+                    UpComing Meetings
+                  </Typography>
+                  <UpcomingMeeting />
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 12, md: 12 }}>
+                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2 }}>
+                  <Typography variant="h6" sx={{ mb: 2 }}>
+                    UpComing Events
+                  </Typography>
+                  <UpcomingEvents />
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 12, md: 12 }}>
+                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2 }}>
+                  <InnovationPerformance />
                 </Box>
               </Grid>
             </Grid>

@@ -25,7 +25,14 @@ function App() {
           {isMobile && <Sidebar />}
 
           <Box
-            sx={{ flex: 1, p: 3, flexGrow: 1, mt: 3, marginLeft: "16.25rem;" }}
+            sx={{ flex: 1, p: 3, flexGrow: 1, mt: 3, 
+              ml: {
+              xs: 0,   // mobile
+              sm: 0,   // tablet
+              md: '16.25rem',  // desktop
+            },
+              width: '100%'
+           }}
           >
             {/* <UpdateBox /> */}
 
