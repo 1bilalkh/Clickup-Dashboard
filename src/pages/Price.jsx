@@ -21,7 +21,6 @@ function PricePage() {
           },
           bgcolor: "background.paper",
           borderRadius: 1,
-          mt: 5,
           mb: 5,
           flexDirection: { xs: "column", sm: "column", md: "row" },
         }}

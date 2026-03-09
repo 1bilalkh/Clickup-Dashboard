@@ -136,7 +136,6 @@ function Sidebar({ closeSidebar }) {
       <Box
         sx={{
           width: 250,
-          height: "calc(100vh - 104px)",
           display: "flex",
           position: "fixed",
           flexDirection: "column",
@@ -145,11 +144,46 @@ function Sidebar({ closeSidebar }) {
           color: "text.primary",
           top: 0,
           overflowY: "auto",
-          marginTop: "88px",
-          marginBottom: "20px",
-          borderRadius: "20px",
-          paddingTop: "2px",
-          marginLeft: "20px",
+              height: {
+                xs: "calc(100vh - 0px)",
+                sm: "calc(100vh - 0px)",
+                md: "calc(100vh - 104px)"
+              },
+          mt: {
+            xs: 0,
+            sm: 0,
+            md: "88px",
+            lg: "88px"
+          },
+          ml: {
+            xs: 0,
+            sm: 0,
+            md: "20px",
+            lg: "20px"
+          },
+          mb: {
+            xs: 0,
+            sm: 0,
+            md: "20px",
+            lg: "20px"
+          },
+          pt: {
+            xs: 0,
+            sm: 0,
+            md: "2px",
+            lg: "2px"
+          },
+          borderRadius: {
+            xs: "0px",
+            sm: "0px",
+            md: "20px",
+            lg: "20px"
+          },
+
+
+
+
+
         }}
         onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside sidebar
       >
