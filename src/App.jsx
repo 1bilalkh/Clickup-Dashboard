@@ -35,6 +35,11 @@ function App() {
                 sm: 0, // tablet
                 md: "16.25rem", // desktop
               },
+               mt: {
+                xs: "30px", // mobile
+                sm: 0, // tablet
+                md: 0, // desktop
+              },
               width: "100%",
             }}
           >
