@@ -39,14 +39,12 @@ function Dashboard() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            
-            flexGrow: 1,
-            flexDirection:{
-              md: 'row',
-              xs: 'column'
-            }, 
 
-           
+            flexGrow: 1,
+            flexDirection: {
+              md: "row",
+              xs: "column",
+            },
           }}
         >
           <Box sx={{ textAlign: "left" }}>
@@ -63,9 +61,9 @@ function Dashboard() {
               justifyContent: "space-between",
               gap: 1,
               alignItems: "center",
-              mt:{
+              mt: {
                 xs: 3,
-                md: 0
+                md: 0,
               },
             }}
           >

@@ -79,12 +79,14 @@ function TopBar() {
             <div>
               <Typography variant="body3">Dashboard WorkSpace</Typography>
             </div>
-            <Box sx={{
-                width:{
-                  xs:"100%",
-                  md:"50%"
+            <Box
+              sx={{
+                width: {
+                  xs: "100%",
+                  md: "50%",
                 },
-            }}>
+              }}
+            >
               <SearchBar />
             </Box>
             <div>

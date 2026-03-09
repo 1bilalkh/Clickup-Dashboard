@@ -14,7 +14,7 @@ const GradientLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 function CustomizedProgressBars() {
-   const progressData = [
+  const progressData = [
     { label: "Ideas Accepted", value: 15 },
     { label: "Ideas Under Review", value: 45 },
     { label: "Ideas Implemented", value: 75 },
@@ -35,7 +35,7 @@ function CustomizedProgressBars() {
     return () => clearInterval(timer);
   }, []);
   return (
-        <>
+    <>
       {progressData.map((item, index) => (
         <Box key={index} sx={{ width: "100%", pt: 2 }}>
           <Typography
@@ -50,7 +50,7 @@ function CustomizedProgressBars() {
             <span>{item.value}%</span>
           </Typography>
 
-         <GradientLinearProgress
+          <GradientLinearProgress
             variant="determinate"
             value={item.value}
             sx={{

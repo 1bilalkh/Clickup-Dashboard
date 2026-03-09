@@ -20,6 +20,7 @@ import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -107,6 +108,12 @@ function Sidebar({ closeSidebar }) {
       icon: <DescriptionOutlinedIcon />,
       path: "/invoice",
     },
+    {
+      id: 10,
+      text: "Price",
+      icon: <AttachMoneyIcon />,
+      path: "/Price",
+    },
   ];
 
   const bottomItems = [
@@ -129,19 +136,19 @@ function Sidebar({ closeSidebar }) {
       <Box
         sx={{
           width: 250,
-          height: "calc(100vh - 24px)",
+          height: "calc(100vh - 104px)",
           display: "flex",
           position: "fixed",
           flexDirection: "column",
           borderRight: "1px solid #ddd",
           background: "linear-gradient(to right, #ffffff, #e0f7ff)",
           color: "text.primary",
-          overflowY: "auto",
           top: 0,
-          marginTop: "40px",
+          overflowY: "auto",
+          marginTop: "88px",
           marginBottom: "20px",
           borderRadius: "20px",
-          paddingTop: "50px",
+          paddingTop: "2px",
           marginLeft: "20px",
         }}
         onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside sidebar
@@ -249,9 +256,23 @@ function Sidebar({ closeSidebar }) {
             </ListItemButton>
           ))}
         </List>
-
-        <Box sx={{ flexGrow: 1 }} />
-        <Divider />
+          <Box sx={{display: 'flex', width: '100%', justifyContent:'center', flexDirection:'column', alignItems:'center', py:2}}>
+               <Typography
+                variant="body2"
+                sx={{ display: "flex", alignItems: "center" }}
+                >
+                Points Earned
+              </Typography>
+               <Typography
+                variant="h6"
+                fontWeight={800}
+                sx={{ display: "flex", alignItems: "center", color: '#0068a7' }}
+                >
+                2,450
+              </Typography>
+          </Box>
+          <Box sx={{ flexGrow: 1 }} />
+          <Divider />
 
         {/* BOTTOM MENU */}
         <List style={{ display: "flex" }}>
@@ -274,6 +295,7 @@ function Sidebar({ closeSidebar }) {
             </ListItemButton>
           ))}
         </List>
+       
       </Box>
     </>
   );
