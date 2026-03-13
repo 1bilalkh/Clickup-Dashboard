@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import { GlobalStyles } from "@mui/material";
 
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 import TaskIcon from "@mui/icons-material/CheckCircleOutline";
@@ -51,12 +52,12 @@ function Sidebar({ closeSidebar }) {
         {
           id: 12,
           text: "Task Employee",
-          path: "/add-product",
+          path: "/TaskEmployee",
         },
         {
           id: 13,
           text: "Task Manager",
-          path: "/all-products",
+          path: "/TaskManager",
         },
       ],
       path: "/tasks",
@@ -75,12 +76,12 @@ function Sidebar({ closeSidebar }) {
         {
           id: 12,
           text: "Project One",
-          path: "/add-product",
+          path: "/Projectone",
         },
         {
           id: 13,
           text: "Project Two",
-          path: "/all-products",
+          path: "/Projecttwo",
         },
       ],
       path: "/projects",
@@ -144,49 +145,61 @@ function Sidebar({ closeSidebar }) {
           color: "text.primary",
           top: 0,
           overflowY: "auto",
-              height: {
-                xs: "calc(100vh - 0px)",
-                sm: "calc(100vh - 0px)",
-                md: "calc(100vh - 104px)"
-              },
+          height: {
+            xs: "calc(100vh - 0px)",
+            sm: "calc(100vh - 0px)",
+            md: "calc(100vh - 104px)",
+          },
           mt: {
             xs: 0,
             sm: 0,
             md: "88px",
-            lg: "88px"
+            lg: "88px",
           },
           ml: {
             xs: 0,
             sm: 0,
             md: "20px",
-            lg: "20px"
+            lg: "20px",
           },
           mb: {
             xs: 0,
             sm: 0,
             md: "20px",
-            lg: "20px"
+            lg: "20px",
           },
           pt: {
             xs: 0,
             sm: 0,
             md: "2px",
-            lg: "2px"
+            lg: "2px",
           },
           borderRadius: {
             xs: "0px",
             sm: "0px",
             md: "20px",
-            lg: "20px"
+            lg: "20px",
           },
-
-
-
-
-
         }}
         onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside sidebar
       >
+        <GlobalStyles
+          styles={{
+            "*::-webkit-scrollbar": {
+              width: "6px",
+            },
+            "*::-webkit-scrollbar-track": {
+              background: "#f1f1f1",
+            },
+            "*::-webkit-scrollbar-thumb": {
+              background: "linear-gradient(to right, #6d8cc2, #778fb8);",
+              borderRadius: "30px",
+            },
+            "*::-webkit-scrollbar-thumb:hover": {
+              backgroundColor: "#888",
+            },
+          }}
+        />
         {/* TOP MENU */}
         <List>
           {menuItems.map((item) => (
@@ -290,23 +303,32 @@ function Sidebar({ closeSidebar }) {
             </ListItemButton>
           ))}
         </List>
-          <Box sx={{display: 'flex', width: '100%', justifyContent:'center', flexDirection:'column', alignItems:'center', py:2}}>
-               <Typography
-                variant="body2"
-                sx={{ display: "flex", alignItems: "center" }}
-                >
-                Points Earned
-              </Typography>
-               <Typography
-                variant="h6"
-                fontWeight={800}
-                sx={{ display: "flex", alignItems: "center", color: '#0068a7' }}
-                >
-                2,450
-              </Typography>
-          </Box>
-          <Box sx={{ flexGrow: 1 }} />
-          <Divider />
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            py: 2,
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{ display: "flex", alignItems: "center" }}
+          >
+            Points Earned
+          </Typography>
+          <Typography
+            variant="h6"
+            fontWeight={800}
+            sx={{ display: "flex", alignItems: "center", color: "#0068a7" }}
+          >
+            2,450
+          </Typography>
+        </Box>
+        <Box sx={{ flexGrow: 1 }} />
+        <Divider />
 
         {/* BOTTOM MENU */}
         <List style={{ display: "flex" }}>
@@ -329,7 +351,6 @@ function Sidebar({ closeSidebar }) {
             </ListItemButton>
           ))}
         </List>
-       
       </Box>
     </>
   );

@@ -28,8 +28,7 @@ function CalendarPage() {
   if (error) return <p>Error loading events</p>;
 
   return (
-    <div>
-      <h2>My Calendar</h2>
+    <>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
@@ -42,7 +41,7 @@ function CalendarPage() {
           alert("Clicked date: " + info.dateStr);
         }}
       />
-    </div>
+    </>
   );
 }
 

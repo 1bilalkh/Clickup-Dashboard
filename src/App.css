@@ -25,3 +25,9 @@ body {
 .schedule .fc-toolbar-title {
   font-size: 1em;
 }
+
+@media screen and (max-width: 480px) {
+  .schedule .fc-toolbar-title {
+    font-size: 14px;
+  }
+}

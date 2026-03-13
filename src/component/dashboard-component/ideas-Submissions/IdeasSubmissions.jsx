@@ -75,6 +75,11 @@ export default function Display() {
             display: "flex",
             alignItems: "center",
             gap: 1,
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "row",
+            },
           }}
         >
           <Typography variant="body2">Registered Project</Typography>
@@ -87,6 +92,11 @@ export default function Display() {
             display: "flex",
             alignItems: "center",
             gap: 1,
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "row",
+            },
           }}
         >
           <Typography variant="body2">Recent New Project</Typography>
@@ -102,6 +112,11 @@ export default function Display() {
             mt: 2,
             justifyContent: "space-between",
             bgcolor: "#f3f4f6",
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "row",
+            },
           }}
         >
           <Box>
@@ -126,6 +141,11 @@ export default function Display() {
                 "&:hover": {
                   background:
                     "linear-gradient(45deg, #1E88E5 30%, #08306B 90%)",
+                },
+                mt: {
+                  xs: 2,
+                  sm: 2,
+                  md: 0,
                 },
               }}
             >

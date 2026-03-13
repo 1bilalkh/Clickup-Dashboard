@@ -16,6 +16,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import CustomButton from "../common/Button";
 
 function Teams() {
   const [team, setTeam] = useState([
@@ -66,23 +67,8 @@ function Teams() {
         <Grid container spacing={2}>
           {team.map((member) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-              <Card>
+              <Card sx={{ backgroundColor: "#f9fafc", borderRadius: 2 }}>
                 <CardContent>
-                  {/* Top */}
-                  <Box display="flex" alignItems="center" gap={2} mb={2}>
-                    <Avatar
-                      src={member.avatar}
-                      sx={{ width: 56, height: 56 }}
-                    />
-
-                    <Box>
-                      <Typography fontWeight="bold">{member.name}</Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {member.role}
-                      </Typography>
-                    </Box>
-                  </Box>
-
                   {/* Status */}
                   <Box
                     display="flex"
@@ -90,7 +76,11 @@ function Teams() {
                     alignItems="center"
                     mb={2}
                   >
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      fontWeight={600}
+                      color="text.secondary"
+                    >
                       Status
                     </Typography>
 
@@ -110,14 +100,33 @@ function Teams() {
                       {member.status}
                     </Box>
                   </Box>
+                  {/* Top */}
+                  <Box display="flex" alignItems="center" gap={2} mb={2}>
+                    <Avatar
+                      src={member.avatar}
+                      sx={{ width: 56, height: 56 }}
+                    />
+
+                    <Box>
+                      <Typography fontWeight="bold">{member.name}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {member.role}
+                      </Typography>
+                    </Box>
+                  </Box>
 
                   {/* Actions */}
                   <Box
                     display="flex"
                     justifyContent="space-between"
                     alignItems="center"
+                    sx={{ background: "#f3f4f6", p: 1, borderRadius: "8px" }}
                   >
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      fontWeight={700}
+                      color="text.secondary"
+                    >
                       Actions
                     </Typography>
 
@@ -144,6 +153,9 @@ function Teams() {
                       </IconButton>
                     </Box>
                   </Box>
+                  <CustomButton sx={{ mt: 3 }} fullWidth>
+                    Learn More
+                  </CustomButton>
                 </CardContent>
               </Card>
             </Grid>

@@ -19,6 +19,7 @@ import Schedule from "../component/dashboard-component/calendar-schedule/Schedul
 import UpcomingMeeting from "../component/dashboard-component/upcoming/UpcomingMeetings.jsx";
 import UpcomingEvents from "../component/dashboard-component/upcomingevents/Upcomingevents.jsx";
 import InnovationPerformance from "../component/dashboard-component/innovation/InnovationPerformance.jsx";
+import CustomButton from "../common/Button.jsx";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -67,46 +68,12 @@ function Dashboard() {
               },
             }}
           >
-            <Button
-              variant="contained"
-              sx={{
-                background: "linear-gradient(45deg, #2196F3 30%, #0D47A1 90%)",
-                color: "#fff",
-                px: 3,
-                py: 1,
-                borderRadius: 2,
-                textTransform: "none",
-                fontWeight: 600,
-                boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-                "&:hover": {
-                  background:
-                    "linear-gradient(45deg, #1E88E5 30%, #08306B 90%)",
-                },
-              }}
-              startIcon={<CalendarMonthIcon />}
-            >
+            <CustomButton startIcon={<CalendarMonthIcon />}>
               Book Consultation
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                background: "linear-gradient(45deg, #2196F3 30%, #0D47A1 90%)",
-                color: "#fff",
-                px: 3,
-                py: 1,
-                borderRadius: 2,
-                textTransform: "none",
-                fontWeight: 600,
-                boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-                "&:hover": {
-                  background:
-                    "linear-gradient(45deg, #1E88E5 30%, #08306B 90%)",
-                },
-              }}
-              startIcon={<PermContactCalendarIcon />}
-            >
+            </CustomButton>
+            <CustomButton startIcon={<PermContactCalendarIcon />}>
               Register Program
-            </Button>
+            </CustomButton>
           </Box>
         </Box>
 

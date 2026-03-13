@@ -21,7 +21,7 @@ function SearchBar() {
         border: "none",
 
         "& .MuiOutlinedInput-root": {
-          borderRadius: "10px",
+          borderRadius: "30px",
           height: 40,
           width: "100%",
           border: "none",
