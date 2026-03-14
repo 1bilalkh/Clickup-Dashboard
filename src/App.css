@@ -1,9 +1,9 @@
 body {
   font-family: "Inter", sans-serif;
 }
-/* .table-wrapper th.MuiTableCell-root {
+.table-wrapper th.MuiTableCell-root {
   padding: 3px 0 0 13px;
-} */
+}
 .MuiTabs-indicator {
   background: #2a5298 !important;
 }
