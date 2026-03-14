@@ -55,6 +55,8 @@ function CalendarPage() {
 
   return (
     <>
+    <div className="owncalender">
+
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin]}
         initialView="dayGridMonth"
@@ -68,6 +70,7 @@ function CalendarPage() {
           alert("Clicked date: " + info.dateStr);
         }}
       />
+    </div>
     </>
   );
 }
