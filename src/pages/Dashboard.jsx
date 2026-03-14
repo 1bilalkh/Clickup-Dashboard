@@ -20,6 +20,7 @@ import UpcomingMeeting from "../component/dashboard-component/upcoming/UpcomingM
 import UpcomingEvents from "../component/dashboard-component/upcomingevents/Upcomingevents.jsx";
 import InnovationPerformance from "../component/dashboard-component/innovation/InnovationPerformance.jsx";
 import CustomButton from "../common/Button.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -32,6 +33,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Dashboard() {
+  const navigate = useNavigate();
   return (
     <>
       <Box>
@@ -68,10 +70,16 @@ function Dashboard() {
               },
             }}
           >
-            <CustomButton startIcon={<CalendarMonthIcon />}>
+            <CustomButton
+              startIcon={<CalendarMonthIcon />}
+              onClick={() => navigate("/BookConsultation")}
+            >
               Book Consultation
             </CustomButton>
-            <CustomButton startIcon={<PermContactCalendarIcon />}>
+
+            <CustomButton startIcon={<PermContactCalendarIcon />}
+              onClick={() => navigate("/RegisterProgram")}
+            >
               Register Program
             </CustomButton>
           </Box>

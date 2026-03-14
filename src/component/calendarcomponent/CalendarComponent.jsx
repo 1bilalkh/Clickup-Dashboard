@@ -18,6 +18,21 @@ const fetchEvents = async () => {
   }));
 };
 
+const meetings = [
+  {
+    title: "Client Meeting",
+    date: "2026-03-10",
+  },
+  {
+    title: "Project Discussion",
+    date: "2026-03-14",
+  },
+  {
+    title: "Team Standup",
+    date: "2026-03-20",
+  },
+];
+
 function CalendarPage() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["events"],
@@ -27,16 +42,28 @@ function CalendarPage() {
   if (isLoading) return <p>Loading calendar...</p>;
   if (error) return <p>Error loading events</p>;
 
+  const today = new Date();
+
+  const events = meetings.map((meeting) => {
+    const meetingDate = new Date(meeting.date);
+
+    return {
+      ...meeting,
+      color: meetingDate < today ? "#9e9e9e" : "#1976d2",
+    };
+  });
+
   return (
     <>
       <FullCalendar
-        plugins={[dayGridPlugin]}
+        plugins={[dayGridPlugin, timeGridPlugin]}
         initialView="dayGridMonth"
-        events={[
-          { title: "Meeting", date: "2026-01-10" },
-          { title: "Deadline", date: "2026-01-15" },
-          { title: "Late Sitting", date: "2026-01-20" },
-        ]}
+        headerToolbar={{
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
+        }}
+        events={events}
         dateClick={(info) => {
           alert("Clicked date: " + info.dateStr);
         }}

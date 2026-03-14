@@ -16,8 +16,10 @@ const TaskEmployee = lazy(() => import("./pages/TaskEmployee.jsx"));
 const TaskManager = lazy(() => import("./pages/TaskManager.jsx"));
 const Projectone = lazy(() => import("./pages/Projectone.jsx"));
 const Projecttwo = lazy(() => import("./pages/Projecttwo.jsx"));
+const BookConsultation = lazy(() => import("./pages/BookConsultation.jsx"));
 import { useMediaQuery } from "@mui/material";
-import { CircularProgress, Box } from "@mui/material";
+import { Box } from "@mui/material";
+const RegisterProgram = lazy(() => import("./pages/RegisterProgram.jsx"));
 
 function App() {
   const isMobile = useMediaQuery("(min-width:900px)"); // mobile + tablet
@@ -64,6 +66,11 @@ function App() {
                 <Route path="/TaskManager" element={<TaskManager />} />
                 <Route path="/Projectone" element={<Projectone />} />
                 <Route path="/Projecttwo" element={<Projecttwo />} />
+                <Route
+                  path="/BookConsultation"
+                  element={<BookConsultation />}
+                />
+                <Route path="/RegisterProgram" element={<RegisterProgram />} />
               </Routes>
             </Suspense>
           </Box>
