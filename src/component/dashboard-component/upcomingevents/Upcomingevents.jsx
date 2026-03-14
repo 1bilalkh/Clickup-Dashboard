@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, Button, Typography } from "@mui/material";
 import eventimg1 from "./images/event1.jpg";
@@ -41,24 +41,18 @@ const slides = [
 export default function UpcomingEvents() {
   const [index, setIndex] = useState(0);
 
-  const nextSlide = () => {
-    setIndex((prev) => (prev + 1) % slides.length);
-  };
+  // Auto-slide every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, 5000); // 5000ms = 5 seconds
 
-  const prevSlide = () => {
-    setIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <Box sx={{ width: "100%" }}>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.5 }}
-        >
+      
           <Box sx={{ position: "relative" }}>
             <Box>
               <Box
@@ -108,8 +102,7 @@ export default function UpcomingEvents() {
               ))}
             </Box>
           </Box>
-        </motion.div>
-      </AnimatePresence>
+       
 
       <Box sx={{ mt: 2, textAlign: "center" }}>
         {slides.map((_, i) => (

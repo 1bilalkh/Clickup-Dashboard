@@ -34,7 +34,7 @@ export default function BookConsultation() {
         </Typography>
 
         <Grid container spacing={2}>
-          <Grid size={4}>
+         <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               label="Full Name"
               name="name"
@@ -43,7 +43,7 @@ export default function BookConsultation() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid size={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               label="Email"
               name="email"
@@ -53,7 +53,7 @@ export default function BookConsultation() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid size={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               label="Phone Number"
               name="phone"
@@ -62,7 +62,7 @@ export default function BookConsultation() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid size={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               label="Consultation Date"
               name="date"
@@ -73,7 +73,7 @@ export default function BookConsultation() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid size={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               select
               label="Time Slot"
@@ -88,7 +88,7 @@ export default function BookConsultation() {
               <MenuItem value="5pm">5:00 PM</MenuItem>
             </TextField>
           </Grid>
-          <Grid size={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               select
               label="Consultation Type"
@@ -102,7 +102,7 @@ export default function BookConsultation() {
               <MenuItem value="offline">Offline</MenuItem>
             </TextField>
           </Grid>
-          <Grid size={12}>
+          <Grid size={{ xs: 12, md: 12 }}>
             <TextField
               label="Message"
               name="message"

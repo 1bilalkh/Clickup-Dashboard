@@ -22,6 +22,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { IconButton } from "@mui/material";
 
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -74,12 +75,12 @@ function Sidebar({ closeSidebar }) {
       icon: <FolderOpenOutlinedIcon />,
       children: [
         {
-          id: 12,
+          id: 14,
           text: "Project One",
           path: "/Projectone",
         },
         {
-          id: 13,
+          id: 15,
           text: "Project Two",
           path: "/Projecttwo",
         },
@@ -131,14 +132,24 @@ function Sidebar({ closeSidebar }) {
   const handleLinkClick = () => {
     if (closeSidebar) closeSidebar(); // Close sidebar only on link click
   };
+  const sidebarWidth = 250;
 
   return (
     <>
       <Box
         sx={{
-          width: 250,
+          width: sidebarWidth,
           display: "flex",
-          position: "fixed",
+          position: {
+            xs: "fixed",
+            md: "fixed",
+          },
+          left: {
+            xs: closeSidebar ? 0 : "-260px",
+            md: 0,
+          },
+          transition: "0.3s",
+          zIndex: 1200,
           flexDirection: "column",
           borderRight: "1px solid #ddd",
           background: "linear-gradient(to right, #ffffff, #e0f7ff)",
@@ -210,7 +221,7 @@ function Sidebar({ closeSidebar }) {
                 onClick={() =>
                   item.children ? handleToggle(item.id) : handleLinkClick()
                 }
-                selected={location.pathname === item.path}
+                selected={location.pathname.startsWith(item.path)}
                 sx={{
                   mx: 1,
                   my: 0.2,

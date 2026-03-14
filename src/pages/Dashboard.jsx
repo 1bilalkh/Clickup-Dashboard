@@ -77,7 +77,8 @@ function Dashboard() {
               Book Consultation
             </CustomButton>
 
-            <CustomButton startIcon={<PermContactCalendarIcon />}
+            <CustomButton
+              startIcon={<PermContactCalendarIcon />}
               onClick={() => navigate("/RegisterProgram")}
             >
               Register Program
