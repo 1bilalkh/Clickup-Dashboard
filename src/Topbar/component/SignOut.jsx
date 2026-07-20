@@ -26,6 +26,7 @@ function SignOut() {
   return (
     <Box>
       {/* Icon to open menu */}
+      
       <Tooltip title="Settings">
         <IconButton
           color="inherit"

@@ -24,11 +24,12 @@ function Logout() {
           display: "flex", // space between icons
           alignItems: "center",
           gap: "5px",
+          justifyContent: "space-between",
         }}
       >
         {isMobile && <TemporaryDrawer />}
 
-        {/* <p>Current Mode: {mode}</p> */}
+        <Box>{/* <p>Current Mode: {mode}</p> */}
         <Tooltip title="Theme Mode">
           <IconButton
             onClick={toggleTheme}
@@ -108,6 +109,8 @@ function Logout() {
             <HelpOutlineIcon sx={{ fontSize: "20px" }} />
           </IconButton>
         </Tooltip>
+            </Box>
+        
         <SignOut />
       </Box>
     </>
