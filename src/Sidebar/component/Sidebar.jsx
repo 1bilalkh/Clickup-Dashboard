@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { GlobalStyles } from "@mui/material";
+import { useClerk } from "@clerk/react";
 
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 import TaskIcon from "@mui/icons-material/CheckCircleOutline";
@@ -33,6 +34,7 @@ function Sidebar({ closeSidebar }) {
   const location = useLocation();
 
   const [openId, setOpenId] = useState(null);
+  const { signOut } = useClerk();
 
   const handleToggle = (id) => {
     setOpenId(openId === id ? null : id);
@@ -125,7 +127,12 @@ function Sidebar({ closeSidebar }) {
       icon: <SettingsOutlinedIcon />,
       path: "/settings",
     },
-    { id: 11, text: "Logout", icon: <LogoutIcon />, path: "/logout" },
+    // { 
+    //   id: 11, 
+    //   text: "Logout", 
+    //   icon: <LogoutIcon />, 
+    //   action: () => signOut({ redirectUrl: "/signin" })
+    // },
   ];
 
   // Function to handle link clicks
@@ -342,26 +349,61 @@ function Sidebar({ closeSidebar }) {
         <Divider />
 
         {/* BOTTOM MENU */}
-        <List style={{ display: "flex" }}>
-          {bottomItems.map((item) => (
-            <ListItemButton
-              key={item.text}
-              component={Link}
-              to={item.path}
-              onClick={handleLinkClick} // <-- close on link click
-              sx={{
-                justifyContent: "flex-start",
-                display: "flex",
-                marginBottom: "8px",
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
-              <ListItemText
-                primary={<Typography variant="body2">{item.text}</Typography>}
-              />
-            </ListItemButton>
-          ))}
-        </List>
+       <List sx={{ display: "flex", flexDirection: "column" }}>
+
+  {/* Settings */}
+  {bottomItems.map((item) => (
+    <ListItemButton
+      key={item.text}
+      component={Link}
+      to={item.path}
+      onClick={handleLinkClick}
+      sx={{
+        justifyContent: "flex-start",
+        display: "flex",
+        marginBottom: "8px",
+      }}
+    >
+      <ListItemIcon sx={{ minWidth: 36 }}>
+        {item.icon}
+      </ListItemIcon>
+
+      <ListItemText
+        primary={
+          <Typography variant="body2">
+            {item.text}
+          </Typography>
+        }
+      />
+    </ListItemButton>
+  ))}
+
+  {/* Sign Out */}
+  <ListItemButton
+    onClick={() => {
+      handleLinkClick();
+      signOut({ redirectUrl: "/signin" });
+    }}
+    sx={{
+      justifyContent: "flex-start",
+      display: "flex",
+      marginBottom: "8px",
+    }}
+  >
+    <ListItemIcon sx={{ minWidth: 36 }}>
+      <LogoutIcon />
+    </ListItemIcon>
+
+    <ListItemText
+      primary={
+        <Typography variant="body2">
+          Sign Out
+        </Typography>
+      }
+    />
+  </ListItemButton>
+
+</List>
       </Box>
     </>
   );

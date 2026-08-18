@@ -29,88 +29,96 @@ function Logout() {
       >
         {isMobile && <TemporaryDrawer />}
 
-        <Box>{/* <p>Current Mode: {mode}</p> */}
-        <Tooltip title="Theme Mode">
-          <IconButton
-            onClick={toggleTheme}
-            color="inherit"
-            sx={{
-              bgcolor: "#f0f0f2",
-              width: 30,
-              height: 30,
-              color: "#747980",
-              borderRadius: "10px",
-            }}
-          >
-            {mode === "light" ? (
-              <DarkModeIcon sx={{ fontSize: "20px" }} />
-            ) : (
-              <LightModeIcon sx={{ fontSize: "20px" }} />
-            )}
-          </IconButton>
-        </Tooltip>
+        <Box
+          sx={{
+            display: "flex", // space between icons
+            alignItems: "center",
+            gap: "8px",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* <p>Current Mode: {mode}</p> */}
+          <Tooltip title="Theme Mode">
+            <IconButton
+              onClick={toggleTheme}
+              color="inherit"
+              sx={{
+                bgcolor: "#f0f0f2",
+                width: 30,
+                height: 30,
+                color: "#747980",
+                borderRadius: "10px",
+              }}
+            >
+              {mode === "light" ? (
+                <DarkModeIcon sx={{ fontSize: "20px" }} />
+              ) : (
+                <LightModeIcon sx={{ fontSize: "20px" }} />
+              )}
+            </IconButton>
+          </Tooltip>
 
-        <Tooltip title="Notifications">
-          <IconButton
-            color="inherit"
-            sx={{
-              bgcolor: "#f0f0f2",
-              width: 30,
-              height: 30,
-              color: "#747980",
-              borderRadius: "10px",
-            }}
-          >
-            <NotificationsOutlinedIcon sx={{ fontSize: "20px" }} />
-          </IconButton>
-        </Tooltip>
+          <Tooltip title="Notifications">
+            <IconButton
+              color="inherit"
+              sx={{
+                bgcolor: "#f0f0f2",
+                width: 30,
+                height: 30,
+                color: "#747980",
+                borderRadius: "10px",
+              }}
+            >
+              <NotificationsOutlinedIcon sx={{ fontSize: "20px" }} />
+            </IconButton>
+          </Tooltip>
 
-        <Tooltip title="Profile">
-          <IconButton
-            color="inherit"
-            sx={{
-              bgcolor: "#f0f0f2",
-              width: 30,
-              height: 30,
-              color: "#747980",
-              borderRadius: "10px",
-            }}
-          >
-            <PersonOutlineOutlinedIcon sx={{ fontSize: "20px" }} />
-          </IconButton>
-        </Tooltip>
+          <Tooltip title="Profile">
+            <IconButton
+              color="inherit"
+              sx={{
+                bgcolor: "#f0f0f2",
+                width: 30,
+                height: 30,
+                color: "#747980",
+                borderRadius: "10px",
+              }}
+            >
+              <PersonOutlineOutlinedIcon sx={{ fontSize: "20px" }} />
+            </IconButton>
+          </Tooltip>
 
-        <Tooltip title="Settings">
-          <IconButton
-            color="inherit"
-            sx={{
-              bgcolor: "#f0f0f2",
-              width: 30,
-              height: 30,
-              color: "#747980",
-              borderRadius: "10px",
-            }}
-          >
-            <SettingsOutlinedIcon sx={{ fontSize: "20px" }} />
-          </IconButton>
-        </Tooltip>
+          <Tooltip title="Settings">
+            <IconButton
+              color="inherit"
+              sx={{
+                bgcolor: "#f0f0f2",
+                width: 30,
+                height: 30,
+                color: "#747980",
+                borderRadius: "10px",
+              }}
+            >
+              <SettingsOutlinedIcon sx={{ fontSize: "20px" }} />
+            </IconButton>
+          </Tooltip>
 
-        <Tooltip title="Help">
-          <IconButton
-            color="inherit"
-            sx={{
-              bgcolor: "#f0f0f2",
-              width: 30,
-              height: 30,
-              color: "#747980",
-              borderRadius: "10px",
-            }}
-          >
-            <HelpOutlineIcon sx={{ fontSize: "20px" }} />
-          </IconButton>
-        </Tooltip>
-            </Box>
-        
+          <Tooltip title="Help">
+            <IconButton
+              color="inherit"
+              sx={{
+                bgcolor: "#f0f0f2",
+                width: 30,
+                height: 30,
+                color: "#747980",
+                borderRadius: "10px",
+              }}
+            >
+              <HelpOutlineIcon sx={{ fontSize: "20px" }} />
+            </IconButton>
+          </Tooltip>
+        </Box>
+
         <SignOut />
       </Box>
     </>

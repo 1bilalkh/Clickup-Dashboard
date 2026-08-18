@@ -1,7 +1,14 @@
 import { Grid, Box, Typography, IconButton, Paper } from "@mui/material";
 import NorthEastOutlinedIcon from "@mui/icons-material/NorthEastOutlined";
+import { useUser } from "@clerk/react";
 
 export default function WelcomeSection() {
+  const { user } = useUser();
+   const displayName =
+  user?.firstName ||
+  user?.username ||
+  user?.emailAddresses?.[0]?.emailAddress ||
+  "User";
   return (
     <Grid item xs={12} md={12}>
       <Paper
@@ -21,7 +28,7 @@ export default function WelcomeSection() {
           </Typography>
 
           <Typography variant="h5" fontWeight="700">
-            Welcome, Dashboard
+            Welcome, {displayName} CRM Dashboard
           </Typography>
         </Box>
 

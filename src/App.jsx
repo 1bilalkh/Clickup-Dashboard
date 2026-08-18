@@ -1,7 +1,15 @@
 import React, { Suspense, lazy } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "@clerk/react";
+
 import TopBar from "./TopBar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./Sidebar/component/Sidebar";
+import { Box, useMediaQuery } from "@mui/material";
+
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+const Profile = lazy(() => import("./pages/Profile.jsx"));
+
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 const Tasks = lazy(() => import("./pages/Task.jsx"));
 const Calendar = lazy(() => import("./pages/Calendar.jsx"));
@@ -16,67 +24,81 @@ const TaskEmployee = lazy(() => import("./pages/TaskEmployee.jsx"));
 const TaskManager = lazy(() => import("./pages/TaskManager.jsx"));
 const Projectone = lazy(() => import("./pages/Projectone.jsx"));
 const Projecttwo = lazy(() => import("./pages/Projecttwo.jsx"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword.jsx"));
 const BookConsultation = lazy(() => import("./pages/BookConsultation.jsx"));
-import { useMediaQuery } from "@mui/material";
-import { Box } from "@mui/material";
 const RegisterProgram = lazy(() => import("./pages/RegisterProgram.jsx"));
 
-function App() {
-  const isMobile = useMediaQuery("(min-width:900px)"); // mobile + tablet
+function DashboardLayout() {
+  const isDesktop = useMediaQuery("(min-width:900px)");
 
   return (
     <>
-      <Router>
-        <TopBar />
-        <Box sx={{ display: "flex" }}>
-          {isMobile && <Sidebar />}
+      <TopBar />
 
-          <Box
-            sx={{
-              flex: 1,
-              p: 3,
-              flexGrow: 1,
-              ml: {
-                xs: 0, // mobile
-                sm: 0, // tablet
-                md: "16.25rem", // desktop
-              },
-              mt: {
-                xs: "30px", // mobile
-                sm: 0, // tablet
-                md: 0, // desktop
-              },
-              width: "100%",
-            }}
-          >
-            {/* <UpdateBox /> */}
-            <Suspense fallback={<div>Loading...</div>}>
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/Tasks" element={<Tasks />} />
-                <Route path="/Calendar" element={<Calendar />} />
-                <Route path="/Projects" element={<Project />} />
-                <Route path="/Inbox" element={<Inbox />} />
-                <Route path="/AI" element={<AI />} />
-                <Route path="/Teams" element={<Teams />} />
-                <Route path="/Forms" element={<Forms />} />
-                <Route path="/invoice" element={<Invoice />} />
-                <Route path="/Price" element={<PricePage />} />
-                <Route path="/TaskEmployee" element={<TaskEmployee />} />
-                <Route path="/TaskManager" element={<TaskManager />} />
-                <Route path="/Projectone" element={<Projectone />} />
-                <Route path="/Projecttwo" element={<Projecttwo />} />
-                <Route
-                  path="/BookConsultation"
-                  element={<BookConsultation />}
-                />
-                <Route path="/RegisterProgram" element={<RegisterProgram />} />
-              </Routes>
-            </Suspense>
-          </Box>
+      <Box sx={{ display: "flex" }}>
+        {isDesktop && <Sidebar />}
+
+        <Box
+          sx={{
+            flex: 1,
+            p: 3,
+            width: "100%",
+            ml: {
+              xs: 0,
+              sm: 0,
+              md: "16.25rem",
+            },
+          }}
+        >
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/Tasks" element={<Tasks />} />
+              <Route path="/Calendar" element={<Calendar />} />
+              <Route path="/Projects" element={<Project />} />
+              <Route path="/Inbox" element={<Inbox />} />
+              <Route path="/AI" element={<AI />} />
+              <Route path="/Teams" element={<Teams />} />
+              <Route path="/Forms" element={<Forms />} />
+              <Route path="/invoice" element={<Invoice />} />
+              <Route path="/Price" element={<PricePage />} />
+              <Route path="/TaskEmployee" element={<TaskEmployee />} />
+              <Route path="/TaskManager" element={<TaskManager />} />
+              <Route path="/Projectone" element={<Projectone />} />
+              <Route path="/Projecttwo" element={<Projecttwo />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/BookConsultation" element={<BookConsultation />} />
+              <Route path="/RegisterProgram" element={<RegisterProgram />} />
+            </Routes>
+          </Suspense>
         </Box>
-      </Router>
+      </Box>
     </>
+  );
+}
+
+function App() {
+  const { isLoaded, isSignedIn } = useAuth();
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* PUBLIC */}
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        {/* DASHBOARD */}
+        <Route
+          path="/*"
+          element={
+            isSignedIn ? <DashboardLayout /> : <Navigate to="/signin" replace />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

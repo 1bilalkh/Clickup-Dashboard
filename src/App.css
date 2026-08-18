@@ -32,11 +32,39 @@ body {
   }
   .owncalender .fc .fc-toolbar-title {
     font-size: 1em;
-}
-.owncalender .fc .fc-toolbar{
+  }
+  .owncalender .fc .fc-toolbar {
     flex-direction: column;
     gap: 10px;
+  }
 }
+.grd-btn {
+  background: linear-gradient(90deg, #c43cf2, #8b2cf5, #2d0cb8);
+  color: #fff !important;
 }
-
-
+.grd-btn:hover {
+  background: linear-gradient(90deg, #2d0cb8, #8b2cf5, #c43cf2);
+}
+.svgiconstyle {
+  user-select: none;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  flex-shrink: 0;
+  fill: currentcolor;
+  font-size: 1.5rem;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.icon_circle {
+  width: 40px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 10;
+  color: #673ab7;
+}

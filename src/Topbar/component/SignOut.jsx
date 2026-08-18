@@ -12,10 +12,14 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useClerk, useUser } from "@clerk/react";
+import { Link } from "react-router-dom";
 
 function SignOut() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+    const { signOut } = useClerk();
+    const { isSignedIn } = useUser();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -56,21 +60,27 @@ function SignOut() {
           <ListItemIcon>
             <PersonIcon fontSize="small" />
           </ListItemIcon>
-          <Typography variant="inherit">Profile</Typography>
-        </MenuItem>
-
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <AccountCircleIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit">Account</Typography>
+          <Typography
+  component={Link}
+  to="/profile"
+  sx={{
+    textDecoration: "none",
+    color: "inherit",
+    cursor: "pointer",
+  }}
+>
+  Profile
+</Typography>
         </MenuItem>
 
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
           </ListItemIcon>
-          <Typography variant="inherit">Logout</Typography>
+          {isSignedIn && (
+            <Typography variant="inherit"  onClick={() => signOut({ redirectUrl: "/signin" })}>Sign Out</Typography>
+          
+      )}
         </MenuItem>
       </Menu>
     </Box>

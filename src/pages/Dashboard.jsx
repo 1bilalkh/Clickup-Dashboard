@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
 import ChooseTemplate from "../component/dashboard-component/ChooseTemplate";
@@ -21,6 +21,7 @@ import UpcomingEvents from "../component/dashboard-component/upcomingevents/Upco
 import InnovationPerformance from "../component/dashboard-component/innovation/InnovationPerformance.jsx";
 import CustomButton from "../common/Button.jsx";
 import { useNavigate } from "react-router-dom";
+import { getUsers } from "../services/api";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -34,6 +35,26 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Dashboard() {
   const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await getUsers();
+
+        console.log("Users from Express:", data);
+
+        setUsers(data.users);
+      } catch (error) {
+        console.error("API Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
   return (
     <>
       <Box>
@@ -57,6 +78,7 @@ function Dashboard() {
               to fit your exact needs.
             </Typography>
           </Box>
+          
 
           <Box
             sx={{

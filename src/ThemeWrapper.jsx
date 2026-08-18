@@ -1,6 +1,6 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import ThemeContext from "./ThemeContext";
 
 export default function ThemeWrapper({ children }) {
@@ -34,7 +34,13 @@ export default function ThemeWrapper({ children }) {
     <ThemeContext.Provider value={{ mode, toggleTheme }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {children}
+        <Box
+          style={{
+            marginTop: "70px"
+          }}
+        >
+          {children}
+        </Box>
       </ThemeProvider>
     </ThemeContext.Provider>
   );

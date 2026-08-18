@@ -7,11 +7,13 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
+
 //import ElevateAppBar from "./FixedBar"
 
 //import logo from "./assets/logo.png"
 
 function ElevationScroll(props) {
+  
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
@@ -21,6 +23,7 @@ function ElevationScroll(props) {
     threshold: 0,
     target: window ? window() : undefined,
   });
+  
 
   return children
     ? React.cloneElement(children, {
@@ -38,7 +41,10 @@ ElevationScroll.propTypes = {
   window: PropTypes.func,
 };
 
+
+
 function TopBar() {
+
   return (
     <>
       <AppBar
@@ -77,7 +83,7 @@ function TopBar() {
             }}
           >
             <div>
-              <Typography variant="body3">Dashboard WorkSpace</Typography>
+              <Typography variant="h5"><strong>CRM Dashboard</strong></Typography>
             </div>
             <Box
               sx={{
@@ -92,6 +98,7 @@ function TopBar() {
             <div>
               <Logout />
             </div>
+            
           </Box>
         </Toolbar>
       </AppBar>
