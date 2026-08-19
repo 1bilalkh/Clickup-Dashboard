@@ -19,117 +19,205 @@ import {
 import { useSignUp } from "@clerk/react";
 import { Link, useNavigate } from "react-router-dom";
 
-function SignUpPage() {
-  const { signUp, errors, fetchStatus } = useSignUp();
+function SignUp() {
+  const { signUp, fetchStatus } = useSignUp();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [code, setCode] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
   const [verificationStep, setVerificationStep] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const loading = fetchStatus === "fetching";
 
-  // -----------------------------
-  // STEP 1: CREATE ACCOUNT
-  // -----------------------------
+  // ==========================================
+  // CREATE ACCOUNT
+  // ==========================================
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     setErrorMessage("");
+    setSuccessMessage("");
 
-    const { error } = await signUp.password({
-      emailAddress: email,
-      password,
-    });
+    try {
+      const result = await signUp.password({
+        emailAddress: email,
+        password,
+      });
 
-    if (error) {
-      console.error(error);
+      if (result.error) {
+        setErrorMessage(
+          result.error.message || "Unable to create your account."
+        );
+        return;
+      }
+
+      // Send email verification code
+      const verification =
+        await signUp.verifications.sendEmailCode();
+
+      if (verification.error) {
+        setErrorMessage(
+          verification.error.message ||
+            "Unable to send verification code."
+        );
+        return;
+      }
+
+      // IMPORTANT:
+      // Show verification page after code is sent
+      setVerificationStep(true);
+      setSuccessMessage(
+        `Verification code sent to ${email}`
+      );
+    } catch (error) {
+      console.error("Signup error:", error);
 
       setErrorMessage(
-        error.message || "Unable to create your account."
+        error?.message ||
+          "Something went wrong while creating your account."
       );
-
-      return;
     }
-
-    // Send verification code
-    const verificationResult =
-      await signUp.verifications.sendEmailCode();
-
-    if (verificationResult.error) {
-      setErrorMessage(
-        verificationResult.error.message ||
-          "Unable to send verification code."
-      );
-
-      return;
-    }
-
-    setVerificationStep(true);
   };
 
-  // -----------------------------
-  // STEP 2: VERIFY EMAIL
-  // -----------------------------
+  // ==========================================
+  // VERIFY EMAIL
+  // ==========================================
   const handleVerify = async (event) => {
     event.preventDefault();
 
     setErrorMessage("");
+    setSuccessMessage("");
 
-    const { error } =
-      await signUp.verifications.verifyEmailCode({
-        code,
-      });
+    try {
+      const result =
+        await signUp.verifications.verifyEmailCode({
+          code,
+        });
 
-    if (error) {
-      console.error(error);
+      if (result.error) {
+        setErrorMessage(
+          result.error.message ||
+            "Invalid verification code."
+        );
+        return;
+      }
 
-      setErrorMessage(
-        error.message || "Invalid verification code."
+      console.log(
+        "Verification successful:",
+        result.status
       );
 
-      return;
-    }
+      // Check Clerk signup status
+      if (result.status === "complete") {
+        await signUp.finalize({
+          navigate: ({ session, decorateUrl }) => {
+            if (session?.currentTask) {
+              console.log(
+                "Current session task:",
+                session.currentTask
+              );
+              return;
+            }
 
-    if (signUp.status === "complete") {
-      await signUp.finalize({
-        navigate: ({ session, decorateUrl }) => {
-          if (session?.currentTask) {
-            console.log(session.currentTask);
-            return;
-          }
+            const url = decorateUrl("/");
 
-          const url = decorateUrl("/");
+            if (url.startsWith("http")) {
+              window.location.href = url;
+            } else {
+              navigate("/", {
+                replace: true,
+              });
+            }
+          },
+        });
 
-          if (url.startsWith("http")) {
-            window.location.href = url;
-          } else {
-            navigate("/", { replace: true });
-          }
-        },
-      });
+        return;
+      }
+
+      setSuccessMessage(
+        "Email verified successfully."
+      );
+    } catch (error) {
+      console.error(
+        "Verification error:",
+        error
+      );
+
+      setErrorMessage(
+        error?.message ||
+          "Unable to verify the email."
+      );
     }
   };
 
-  // -----------------------------
+  // ==========================================
+  // RESEND CODE
+  // ==========================================
+  const handleResendCode = async () => {
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    try {
+      const result =
+        await signUp.verifications.sendEmailCode();
+
+      if (result.error) {
+        setErrorMessage(
+          result.error.message ||
+            "Unable to resend verification code."
+        );
+        return;
+      }
+
+      setSuccessMessage(
+        `A new verification code was sent to ${email}`
+      );
+    } catch (error) {
+      console.error(
+        "Resend code error:",
+        error
+      );
+
+      setErrorMessage(
+        error?.message ||
+          "Unable to resend verification code."
+      );
+    }
+  };
+
+  // ==========================================
   // GOOGLE SIGN UP
-  // -----------------------------
+  // ==========================================
   const handleGoogleSignUp = async () => {
     setErrorMessage("");
 
-    await signUp.authenticateWithRedirect({
-      strategy: "oauth_google",
-      redirectUrl: "/signup/sso-callback",
-      redirectUrlComplete: "/",
-    });
+    try {
+      await signUp.authenticateWithRedirect({
+        strategy: "oauth_google",
+        redirectUrl: "/signup/sso-callback",
+        redirectUrlComplete: "/",
+      });
+    } catch (error) {
+      console.error(
+        "Google signup error:",
+        error
+      );
+
+      setErrorMessage(
+        error?.message ||
+          "Unable to continue with Google."
+      );
+    }
   };
 
-  // -----------------------------
-  // VERIFICATION SCREEN
-  // -----------------------------
+  // ==========================================
+  // VERIFICATION PAGE
+  // ==========================================
   if (verificationStep) {
     return (
       <Box
@@ -155,8 +243,18 @@ function SignUpPage() {
               "0 10px 35px rgba(0,0,0,0.08)",
           }}
         >
-          <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
-            <Box textAlign="center" mb={4}>
+          <CardContent
+            sx={{
+              p: {
+                xs: 3,
+                sm: 4,
+              },
+            }}
+          >
+            <Box
+              textAlign="center"
+              mb={4}
+            >
               <Typography
                 variant="h4"
                 fontWeight={700}
@@ -183,8 +281,20 @@ function SignUpPage() {
             </Box>
 
             {errorMessage && (
-              <Alert severity="error" sx={{ mb: 3 }}>
+              <Alert
+                severity="error"
+                sx={{ mb: 3 }}
+              >
                 {errorMessage}
+              </Alert>
+            )}
+
+            {successMessage && (
+              <Alert
+                severity="success"
+                sx={{ mb: 3 }}
+              >
+                {successMessage}
               </Alert>
             )}
 
@@ -201,6 +311,9 @@ function SignUpPage() {
                   setCode(event.target.value)
                 }
                 autoComplete="one-time-code"
+                inputProps={{
+                  maxLength: 6,
+                }}
                 required
               />
 
@@ -209,7 +322,10 @@ function SignUpPage() {
                 type="submit"
                 variant="contained"
                 size="large"
-                disabled={loading || !code}
+                disabled={
+                  loading ||
+                  code.length === 0
+                }
                 sx={{
                   mt: 3,
                   height: 48,
@@ -229,16 +345,7 @@ function SignUpPage() {
               fullWidth
               variant="text"
               disabled={loading}
-              onClick={async () => {
-                const { error } =
-                  await signUp.verifications.sendEmailCode();
-
-                if (error) {
-                  setErrorMessage(error.message);
-                } else {
-                  setErrorMessage("");
-                }
-              }}
+              onClick={handleResendCode}
               sx={{
                 mt: 2,
                 textTransform: "none",
@@ -246,15 +353,32 @@ function SignUpPage() {
             >
               Resend verification code
             </Button>
+
+            <Button
+              fullWidth
+              variant="text"
+              disabled={loading}
+              onClick={() => {
+                setVerificationStep(false);
+                setCode("");
+                setErrorMessage("");
+                setSuccessMessage("");
+              }}
+              sx={{
+                textTransform: "none",
+              }}
+            >
+              Back to sign up
+            </Button>
           </CardContent>
         </Card>
       </Box>
     );
   }
 
-  // -----------------------------
-  // SIGN UP SCREEN
-  // -----------------------------
+  // ==========================================
+  // SIGN UP PAGE
+  // ==========================================
   return (
     <Box
       sx={{
@@ -279,9 +403,19 @@ function SignUpPage() {
             "0 10px 35px rgba(0,0,0,0.08)",
         }}
       >
-        <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
+        <CardContent
+          sx={{
+            p: {
+              xs: 3,
+              sm: 4,
+            },
+          }}
+        >
           {/* BRAND */}
-          <Box textAlign="center" mb={4}>
+          <Box
+            textAlign="center"
+            mb={4}
+          >
             <Typography
               variant="h4"
               fontWeight={700}
@@ -300,7 +434,10 @@ function SignUpPage() {
           </Box>
 
           {errorMessage && (
-            <Alert severity="error" sx={{ mb: 3 }}>
+            <Alert
+              severity="error"
+              sx={{ mb: 3 }}
+            >
               {errorMessage}
             </Alert>
           )}
@@ -319,8 +456,11 @@ function SignUpPage() {
               textTransform: "none",
               fontSize: 15,
               fontWeight: 500,
-             backgroundColor: "black",
-              color: '#fff'
+              backgroundColor: "black",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#222",
+              },
             }}
           >
             Continue with Google
@@ -335,7 +475,7 @@ function SignUpPage() {
             </Typography>
           </Divider>
 
-          {/* FORM */}
+          {/* SIGN UP FORM */}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -359,7 +499,9 @@ function SignUpPage() {
               label="Password"
               placeholder="Create a password"
               type={
-                showPassword ? "text" : "password"
+                showPassword
+                  ? "text"
+                  : "password"
               }
               value={password}
               onChange={(event) =>
@@ -374,7 +516,8 @@ function SignUpPage() {
                       <IconButton
                         onClick={() =>
                           setShowPassword(
-                            (value) => !value
+                            (value) =>
+                              !value
                           )
                         }
                         edge="end"
@@ -443,4 +586,4 @@ function SignUpPage() {
   );
 }
 
-export default SignUpPage;
+export default SignUp;
