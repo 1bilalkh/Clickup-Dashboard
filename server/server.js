@@ -2,8 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dns from "dns";
 import dotenv from "dotenv";
-import userRoutes from "./routes/userRoutes.js";
 import cors from "cors";
+
+import userRoutes from "./routes/userRoutes.js";
+import clerkWebhook from "./routes/clerkWebhook.js";
 
 dotenv.config();
 
@@ -14,23 +16,55 @@ dns.setServers([
 
 const app = express();
 
-app.use(cors());
+// =========================
+// CORS
+// =========================
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "ngrok-skip-browser-warning",
+    ],
+    credentials: true,
+  })
+);
+
+// =========================
+// Clerk Webhook
+// =========================
+app.use(
+  "/api/webhooks/clerk",
+  express.raw({ type: "application/json" }),
+  clerkWebhook
+);
+
+// =========================
+// Normal JSON requests
+// =========================
 app.use(express.json());
 
+// =========================
+// Routes
+// =========================
 app.use("/api/users", userRoutes);
-// app.use(express.json());
 
+// =========================
+// Test CORS
+// =========================
 app.get("/test-cors", (req, res) => {
   res.json({
     message: "CORS is working",
   });
 });
 
-app.use("/api/users", userRoutes);
-
-
 console.log("🔵 Starting server...");
 
+// =========================
+// MongoDB
+// =========================
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -41,6 +75,18 @@ mongoose
     console.log(error.message);
   });
 
-app.listen(5000, () => {
-  console.log("🚀 Express server running on http://localhost:5000");
-});
+// =========================
+// Local Development Server
+// =========================
+if (process.env.NODE_ENV !== "production") {
+  app.listen(5000, () => {
+    console.log(
+      "🚀 Express server running on http://localhost:5000"
+    );
+  });
+}
+
+// =========================
+// Export for Vercel
+// =========================
+export default app;
