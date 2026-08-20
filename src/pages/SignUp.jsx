@@ -29,6 +29,7 @@ function SignUp() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [verificationStep, setVerificationStep] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -43,39 +44,65 @@ function SignUp() {
     setErrorMessage("");
     setSuccessMessage("");
 
+    if (!email || !password) {
+      setErrorMessage(
+        "Please enter your email address and password."
+      );
+      return;
+    }
+
     try {
-      const result = await signUp.password({
-        emailAddress: email,
+      // Create the Clerk signup
+      const { error } = await signUp.password({
+        emailAddress: email.trim(),
         password,
       });
 
-      if (result.error) {
+      if (error) {
+        console.error("Signup error:", error);
+
         setErrorMessage(
-          result.error.message || "Unable to create your account."
+          error.message ||
+            "Unable to create your account."
         );
+
         return;
       }
 
-      // Send email verification code
-      const verification =
-        await signUp.verifications.sendEmailCode();
+      // ==========================================
+      // SEND EMAIL VERIFICATION CODE
+      // ==========================================
+      const {
+        error: verificationError,
+      } = await signUp.verifications.sendEmailCode();
 
-      if (verification.error) {
+      if (verificationError) {
+        console.error(
+          "Verification email error:",
+          verificationError
+        );
+
         setErrorMessage(
-          verification.error.message ||
+          verificationError.message ||
             "Unable to send verification code."
         );
+
         return;
       }
 
-      // IMPORTANT:
-      // Show verification page after code is sent
+      // ==========================================
+      // SHOW VERIFICATION SCREEN
+      // ==========================================
       setVerificationStep(true);
+
       setSuccessMessage(
         `Verification code sent to ${email}`
       );
     } catch (error) {
-      console.error("Signup error:", error);
+      console.error(
+        "Signup error:",
+        error
+      );
 
       setErrorMessage(
         error?.message ||
@@ -93,34 +120,61 @@ function SignUp() {
     setErrorMessage("");
     setSuccessMessage("");
 
-    try {
-      const result =
-        await signUp.verifications.verifyEmailCode({
-          code,
-        });
+    if (!code) {
+      setErrorMessage(
+        "Please enter the verification code."
+      );
+      return;
+    }
 
-      if (result.error) {
+    try {
+      const {
+        error: verificationError,
+      } = await signUp.verifications.verifyEmailCode({
+        code: code.trim(),
+      });
+
+      if (verificationError) {
+        console.error(
+          "Verification error:",
+          verificationError
+        );
+
         setErrorMessage(
-          result.error.message ||
+          verificationError.message ||
             "Invalid verification code."
         );
+
         return;
       }
 
       console.log(
-        "Verification successful:",
-        result.status
+        "Email verification successful."
       );
 
-      // Check Clerk signup status
-      if (result.status === "complete") {
-        await signUp.finalize({
-          navigate: ({ session, decorateUrl }) => {
+      console.log(
+        "Current signup status:",
+        signUp.status
+      );
+
+      // ==========================================
+      // COMPLETE SIGNUP
+      // ==========================================
+      if (signUp.status === "complete") {
+        const {
+          error: finalizeError,
+        } = await signUp.finalize({
+          navigate: ({
+            session,
+            decorateUrl,
+          }) => {
+            // Handle any Clerk task
             if (session?.currentTask) {
               console.log(
                 "Current session task:",
                 session.currentTask
               );
+
               return;
             }
 
@@ -136,11 +190,28 @@ function SignUp() {
           },
         });
 
+        if (finalizeError) {
+          console.error(
+            "Finalize error:",
+            finalizeError
+          );
+
+          setErrorMessage(
+            finalizeError.message ||
+              "Unable to complete your account setup."
+          );
+
+          return;
+        }
+
         return;
       }
 
+      // ==========================================
+      // VERIFIED BUT SIGNUP NOT COMPLETE
+      // ==========================================
       setSuccessMessage(
-        "Email verified successfully."
+        "Email verified successfully. Completing your account..."
       );
     } catch (error) {
       console.error(
@@ -156,21 +227,28 @@ function SignUp() {
   };
 
   // ==========================================
-  // RESEND CODE
+  // RESEND VERIFICATION CODE
   // ==========================================
   const handleResendCode = async () => {
     setErrorMessage("");
     setSuccessMessage("");
 
     try {
-      const result =
-        await signUp.verifications.sendEmailCode();
+      const {
+        error: resendError,
+      } = await signUp.verifications.sendEmailCode();
 
-      if (result.error) {
+      if (resendError) {
+        console.error(
+          "Resend verification error:",
+          resendError
+        );
+
         setErrorMessage(
-          result.error.message ||
+          resendError.message ||
             "Unable to resend verification code."
         );
+
         return;
       }
 
@@ -195,6 +273,7 @@ function SignUp() {
   // ==========================================
   const handleGoogleSignUp = async () => {
     setErrorMessage("");
+    setSuccessMessage("");
 
     try {
       await signUp.authenticateWithRedirect({
@@ -216,7 +295,17 @@ function SignUp() {
   };
 
   // ==========================================
-  // VERIFICATION PAGE
+  // BACK TO SIGN UP
+  // ==========================================
+  const handleBackToSignup = () => {
+    setVerificationStep(false);
+    setCode("");
+    setErrorMessage("");
+    setSuccessMessage("");
+  };
+
+  // ==========================================
+  // VERIFICATION SCREEN
   // ==========================================
   if (verificationStep) {
     return (
@@ -251,6 +340,7 @@ function SignUp() {
               },
             }}
           >
+            {/* HEADER */}
             <Box
               textAlign="center"
               mb={4}
@@ -274,12 +364,16 @@ function SignUp() {
               <Typography
                 variant="body2"
                 fontWeight={600}
-                sx={{ mt: 0.5 }}
+                sx={{
+                  mt: 0.5,
+                  wordBreak: "break-word",
+                }}
               >
                 {email}
               </Typography>
             </Box>
 
+            {/* ERROR */}
             {errorMessage && (
               <Alert
                 severity="error"
@@ -289,6 +383,7 @@ function SignUp() {
               </Alert>
             )}
 
+            {/* SUCCESS */}
             {successMessage && (
               <Alert
                 severity="success"
@@ -298,6 +393,7 @@ function SignUp() {
               </Alert>
             )}
 
+            {/* VERIFICATION FORM */}
             <Box
               component="form"
               onSubmit={handleVerify}
@@ -307,11 +403,17 @@ function SignUp() {
                 label="Verification code"
                 placeholder="Enter 6-digit code"
                 value={code}
-                onChange={(event) =>
-                  setCode(event.target.value)
-                }
+                onChange={(event) => {
+                  const value =
+                    event.target.value
+                      .replace(/\D/g, "")
+                      .slice(0, 6);
+
+                  setCode(value);
+                }}
                 autoComplete="one-time-code"
                 inputProps={{
+                  inputMode: "numeric",
                   maxLength: 6,
                 }}
                 required
@@ -324,7 +426,7 @@ function SignUp() {
                 size="large"
                 disabled={
                   loading ||
-                  code.length === 0
+                  code.length !== 6
                 }
                 sx={{
                   mt: 3,
@@ -341,6 +443,7 @@ function SignUp() {
               </Button>
             </Box>
 
+            {/* RESEND */}
             <Button
               fullWidth
               variant="text"
@@ -354,16 +457,12 @@ function SignUp() {
               Resend verification code
             </Button>
 
+            {/* BACK */}
             <Button
               fullWidth
               variant="text"
               disabled={loading}
-              onClick={() => {
-                setVerificationStep(false);
-                setCode("");
-                setErrorMessage("");
-                setSuccessMessage("");
-              }}
+              onClick={handleBackToSignup}
               sx={{
                 textTransform: "none",
               }}
@@ -377,7 +476,7 @@ function SignUp() {
   }
 
   // ==========================================
-  // SIGN UP PAGE
+  // SIGN UP SCREEN
   // ==========================================
   return (
     <Box
@@ -433,6 +532,7 @@ function SignUp() {
             </Typography>
           </Box>
 
+          {/* ERROR */}
           {errorMessage && (
             <Alert
               severity="error"
@@ -458,14 +558,17 @@ function SignUp() {
               fontWeight: 500,
               backgroundColor: "black",
               color: "#fff",
+              borderColor: "black",
               "&:hover": {
                 backgroundColor: "#222",
+                borderColor: "#222",
               },
             }}
           >
             Continue with Google
           </Button>
 
+          {/* DIVIDER */}
           <Divider sx={{ my: 3 }}>
             <Typography
               variant="body2"
@@ -480,6 +583,7 @@ function SignUp() {
             component="form"
             onSubmit={handleSubmit}
           >
+            {/* EMAIL */}
             <TextField
               fullWidth
               label="Email address"
@@ -494,6 +598,7 @@ function SignUp() {
               sx={{ mb: 2 }}
             />
 
+            {/* PASSWORD */}
             <TextField
               fullWidth
               label="Password"
@@ -514,13 +619,18 @@ function SignUp() {
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
+                        type="button"
                         onClick={() =>
                           setShowPassword(
-                            (value) =>
-                              !value
+                            (value) => !value
                           )
                         }
                         edge="end"
+                        aria-label={
+                          showPassword
+                            ? "Hide password"
+                            : "Show password"
+                        }
                       >
                         {showPassword ? (
                           <VisibilityOff />
@@ -534,6 +644,7 @@ function SignUp() {
               }}
             />
 
+            {/* CREATE ACCOUNT */}
             <Button
               className="grd-btn"
               fullWidth
