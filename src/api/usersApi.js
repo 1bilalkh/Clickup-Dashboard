@@ -1,15 +1,10 @@
 import axios from "axios";
 
-const API_URL =
-  "https://ibuprofen-undertake-unsecured.ngrok-free.dev";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getUsers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/api/users`, {
-      headers: {
-        "ngrok-skip-browser-warning": "true",
-      },
-    });
+    const response = await axios.get(`${API_URL}/api/users`);
 
     return response.data;
   } catch (error) {
