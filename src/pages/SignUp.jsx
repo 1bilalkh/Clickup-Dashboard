@@ -556,8 +556,7 @@ function SignUp() {
               textTransform: "none",
               fontSize: 15,
               fontWeight: 500,
-              backgroundColor: "black",
-              color: "#fff",
+              color: "#000",
               borderColor: "black",
               "&:hover": {
                 backgroundColor: "#222",

@@ -8,6 +8,8 @@ import { Box, useMediaQuery } from "@mui/material";
 
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Loading from "./common/Loading.jsx";
+import CircularIndeterminate from "./common/ApiLoading.jsx";
 const Profile = lazy(() => import("./pages/Profile.jsx"));
 
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
@@ -34,7 +36,13 @@ function DashboardLayout() {
   return (
     <>
       <TopBar />
-
+        <Box
+  sx={{
+    height: "80px",
+  }}
+>
+  Content
+</Box>
       <Box sx={{ display: "flex" }}>
         {isDesktop && <Sidebar />}
 
@@ -50,7 +58,13 @@ function DashboardLayout() {
             },
           }}
         >
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div>
+                <CircularIndeterminate />
+              </div>
+            }
+          >
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/Tasks" element={<Tasks />} />
@@ -80,7 +94,21 @@ function DashboardLayout() {
 function App() {
   const { isLoaded, isSignedIn } = useAuth();
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          px: 2,
+        }}
+      >
+        <Box>
+          <Loading />
+        </Box>
+      </Box>
+    );
   }
   return (
     <BrowserRouter>

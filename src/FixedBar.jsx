@@ -37,7 +37,7 @@ ElevationScroll.propTypes = {
 
 export default function ElevateAppBar(props) {
   return (
-    <AppBar>
+    <AppBar sx={{mb: '5'}}>
       <Toolbar>
         <Typography variant="h6" component="div">
           Scroll to elevate App bar

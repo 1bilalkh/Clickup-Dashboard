@@ -35,9 +35,6 @@ export default function ThemeWrapper({ children }) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box
-          style={{
-            marginTop: "70px"
-          }}
         >
           {children}
         </Box>
