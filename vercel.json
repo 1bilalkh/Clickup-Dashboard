@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/webhooks/clerk",
+      "destination": "/api/webhooks/clerk.js"
+    },
+    {
       "source": "/((?!api/|assets/).*)",
       "destination": "/index.html"
     }
