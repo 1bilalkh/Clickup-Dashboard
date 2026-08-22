@@ -10,9 +10,11 @@ router.post(
   async (req, res) => {
     try {
       const evt = await verifyWebhook(req);
+      console.log("WEBHOOK TYPE:", evt.type);
+console.log("IMAGE URL:", evt.data?.image_url);
 
       if (evt.type === "user.created") {
-        const { id, first_name, last_name, email_addresses } = evt.data;
+        const { id, first_name, last_name, email_addresses, image_url } = evt.data;
 
         const email =
           email_addresses?.[0]?.email_address?.toLowerCase();
@@ -33,6 +35,7 @@ router.post(
             name,
             email,
             role: "User",
+            imageUrl: image_url || "",
           },
           {
             new: true,

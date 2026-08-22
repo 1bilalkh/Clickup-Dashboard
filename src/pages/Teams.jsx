@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   Typography,
@@ -9,8 +8,12 @@ import {
   Button,
   Grid,
   Paper,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useQuery } from "@tanstack/react-query";
+import { getUsers } from "../services/api";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -19,36 +22,40 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import CustomButton from "../common/Button";
 
 function Teams() {
-  const [team, setTeam] = useState([
-    {
-      id: 1,
-      name: "Bilal Khan",
-      role: "Frontend Developer",
-      avatar: "https://i.pravatar.cc/150?img=3",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Ali Ahmed",
-      role: "UI/UX Designer",
-      avatar: "https://i.pravatar.cc/150?img=5",
-      status: "Active",
-    },
-    {
-      id: 3,
-      name: "Sara Malik",
-      role: "Project Manager",
-      avatar: "https://i.pravatar.cc/150?img=8",
-      status: "Offline",
-    },
-    {
-      id: 4,
-      name: "John Doe",
-      role: "UI/UX Developer",
-      avatar: "https://i.pravatar.cc/150?img=11",
-      status: "Active",
-    },
-  ]);
+  const {
+    data: team = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: getUsers,
+  });
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "300px",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Alert severity="error">
+        {error?.message || "Failed to load team members"}
+      </Alert>
+    );
+  }
+
+  
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
@@ -66,7 +73,7 @@ function Teams() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           {team.map((member) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={member._id}>
               <Card sx={{ backgroundColor: "#f9fafc", borderRadius: 2 }}>
                 <CardContent>
                   {/* Status */}
@@ -103,9 +110,12 @@ function Teams() {
                   {/* Top */}
                   <Box display="flex" alignItems="center" gap={2} mb={2}>
                     <Avatar
-                      src={member.avatar}
-                      sx={{ width: 56, height: 56 }}
-                    />
+  src={member.avatar}
+  alt={member.name}
+  sx={{ width: 56, height: 56 }}
+>
+  {member.name?.charAt(0).toUpperCase()}
+</Avatar>
 
                     <Box>
                       <Typography fontWeight="bold">{member.name}</Typography>
@@ -115,44 +125,7 @@ function Teams() {
                     </Box>
                   </Box>
 
-                  {/* Actions */}
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    sx={{ background: "#f3f4f6", p: 1, borderRadius: "8px" }}
-                  >
-                    <Typography
-                      variant="body2"
-                      fontWeight={700}
-                      color="text.secondary"
-                    >
-                      Actions
-                    </Typography>
-
-                    <Box display="flex">
-                      <IconButton sx={{ px: "6px" }}>
-                        <VisibilityIcon
-                          sx={{ fontSize: "18px", color: "text.secondary" }}
-                        />
-                      </IconButton>
-
-                      <IconButton sx={{ px: "6px" }}>
-                        <EditIcon
-                          sx={{ fontSize: "18px", color: "text.secondary" }}
-                        />
-                      </IconButton>
-
-                      <IconButton
-                        sx={{ px: "6px" }}
-                        onClick={() => handleDelete(member.id)}
-                      >
-                        <DeleteIcon
-                          sx={{ fontSize: "18px", color: "text.secondary" }}
-                        />
-                      </IconButton>
-                    </Box>
-                  </Box>
+                  
                   <CustomButton sx={{ mt: 3 }} fullWidth>
                     Learn More
                   </CustomButton>
