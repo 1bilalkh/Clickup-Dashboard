@@ -1,27 +1,30 @@
+import { useState } from "react";
+
 import {
   Box,
   Typography,
   Card,
   CardContent,
   Avatar,
-  IconButton,
   Button,
   Grid,
-  Paper,
   CircularProgress,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../services/api";
-
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import CustomButton from "../common/Button";
 
 function Teams() {
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [open, setOpen] = useState(false);
+
   const {
     data: team = [],
     isLoading,
@@ -31,6 +34,16 @@ function Teams() {
     queryKey: ["users"],
     queryFn: getUsers,
   });
+
+  const handleViewDetails = (member) => {
+    setSelectedUser(member);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedUser(null);
+  };
 
   if (isLoading) {
     return (
@@ -55,26 +68,21 @@ function Teams() {
     );
   }
 
-  
-
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: (theme.vars ?? theme).palette.text.secondary,
-    ...theme.applyStyles("dark", {
-      backgroundColor: "#1A2027",
-    }),
-  }));
-
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           {team.map((member) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={member._id}>
-              <Card sx={{ backgroundColor: "#f9fafc", borderRadius: 2 }}>
+            <Grid
+              size={{ xs: 12, sm: 6, md: 4 }}
+              key={member._id}
+            >
+              <Card
+                sx={{
+                  backgroundColor: "#f9fafc",
+                  borderRadius: 2,
+                }}
+              >
                 <CardContent>
                   {/* Status */}
                   <Box
@@ -91,43 +99,62 @@ function Teams() {
                       Status
                     </Typography>
 
-                    <Box
+                    <Chip
+                      label={member.status || "Active"}
+                      size="small"
                       sx={{
-                        px: 1.5,
-                        py: 0.5,
-                        borderRadius: 2,
-                        fontSize: "12px",
                         fontWeight: 600,
-                        bgcolor:
-                          member.status === "Active" ? "#e8f5e9" : "#fbe9e7",
+                        backgroundColor:
+                          member.status === "Offline"
+                            ? "#fbe9e7"
+                            : "#e8f5e9",
                         color:
-                          member.status === "Active" ? "#2e7d32" : "#d84315",
+                          member.status === "Offline"
+                            ? "#d84315"
+                            : "#2e7d32",
+                      }}
+                    />
+                  </Box>
+
+                  {/* User */}
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap={2}
+                    mb={2}
+                  >
+                    <Avatar
+                      src={member.imageUrl}
+                      alt={member.name}
+                      sx={{
+                        width: 56,
+                        height: 56,
                       }}
                     >
-                      {member.status}
-                    </Box>
-                  </Box>
-                  {/* Top */}
-                  <Box display="flex" alignItems="center" gap={2} mb={2}>
-                    <Avatar
-  src={member.avatar}
-  alt={member.name}
-  sx={{ width: 56, height: 56 }}
->
-  {member.name?.charAt(0).toUpperCase()}
-</Avatar>
+                      {member.name?.charAt(0).toUpperCase()}
+                    </Avatar>
 
                     <Box>
-                      <Typography fontWeight="bold">{member.name}</Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography fontWeight="bold">
+                        {member.name}
+                      </Typography>
+
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                      >
                         {member.role}
                       </Typography>
                     </Box>
                   </Box>
 
-                  
-                  <CustomButton sx={{ mt: 3 }} fullWidth>
-                    Learn More
+                  {/* View Details */}
+                  <CustomButton
+                    sx={{ mt: 3 }}
+                    fullWidth
+                    onClick={() => handleViewDetails(member)}
+                  >
+                    View Details
                   </CustomButton>
                 </CardContent>
               </Card>
@@ -135,6 +162,100 @@ function Teams() {
           ))}
         </Grid>
       </Box>
+
+      {/* Details Popup */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>
+          Team Member Details
+        </DialogTitle>
+
+        <DialogContent>
+          {selectedUser && (
+            <Box sx={{ textAlign: "center", pt: 2 }}>
+              <Avatar
+                src={selectedUser.imageUrl}
+                alt={selectedUser.name}
+                sx={{
+                  width: 80,
+                  height: 80,
+                  mx: "auto",
+                  mb: 2,
+                }}
+              >
+                {selectedUser.name?.charAt(0).toUpperCase()}
+              </Avatar>
+
+              <Typography
+                variant="h6"
+                fontWeight={700}
+              >
+                {selectedUser.name}
+              </Typography>
+
+              <Typography
+                color="text.secondary"
+                sx={{ mb: 3 }}
+              >
+                {selectedUser.role}
+              </Typography>
+
+              <Box sx={{ textAlign: "left" }}>
+                <Typography fontWeight={700}>
+                  Email
+                </Typography>
+
+                <Typography
+                  color="text.secondary"
+                  sx={{ mb: 2 }}
+                >
+                  {selectedUser.email}
+                </Typography>
+
+                <Typography fontWeight={700}>
+                  Status
+                </Typography>
+
+                <Box sx={{ mb: 2 }}>
+                  <Chip
+                    label={selectedUser.status || "Active"}
+                    size="small"
+                    sx={{
+                      fontWeight: 600,
+                      backgroundColor:
+                        selectedUser.status === "Offline"
+                          ? "#fbe9e7"
+                          : "#e8f5e9",
+                      color:
+                        selectedUser.status === "Offline"
+                          ? "#d84315"
+                          : "#2e7d32",
+                    }}
+                  />
+                </Box>
+
+                <Typography fontWeight={700}>
+                  User ID
+                </Typography>
+
+                <Typography color="text.secondary">
+                  {selectedUser._id || selectedUser.id}
+                </Typography>
+              </Box>
+            </Box>
+          )}
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={handleClose}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
