@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import userRoutes from "./routes/userRoutes.js";
-import clerkWebhook from "./routes/clerkWebhook.js";
 
 dotenv.config();
 
@@ -51,17 +50,6 @@ app.use(
 
     credentials: true,
   })
-);
-
-// =========================
-// Clerk Webhook
-// =========================
-// Vercel handles /api/
-// Express receives /webhooks/clerk
-app.use(
-  "/webhooks/clerk",
-  express.raw({ type: "application/json" }),
-  clerkWebhook
 );
 
 // =========================
