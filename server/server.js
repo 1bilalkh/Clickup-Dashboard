@@ -40,12 +40,15 @@ app.use(
 
       return callback(new Error("Not allowed by CORS"));
     },
+
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+
     allowedHeaders: [
       "Content-Type",
       "Authorization",
       "ngrok-skip-browser-warning",
     ],
+
     credentials: true,
   })
 );
@@ -53,8 +56,10 @@ app.use(
 // =========================
 // Clerk Webhook
 // =========================
+// Vercel handles /api/
+// Express receives /webhooks/clerk
 app.use(
-  "/api/webhooks/clerk",
+  "/webhooks/clerk",
   express.raw({ type: "application/json" }),
   clerkWebhook
 );
