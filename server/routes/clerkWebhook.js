@@ -10,11 +10,18 @@ router.post(
   async (req, res) => {
     try {
       const evt = await verifyWebhook(req);
+
       console.log("WEBHOOK TYPE:", evt.type);
-console.log("IMAGE URL:", evt.data?.image_url);
+      console.log("IMAGE URL:", evt.data?.image_url);
 
       if (evt.type === "user.created" || evt.type === "user.updated") {
-        const { id, first_name, last_name, email_addresses, image_url } = evt.data;
+        const {
+          id,
+          first_name,
+          last_name,
+          email_addresses,
+          image_url,
+        } = evt.data;
 
         const email =
           email_addresses?.[0]?.email_address?.toLowerCase();
@@ -27,6 +34,12 @@ console.log("IMAGE URL:", evt.data?.image_url);
             message: "User email not found",
           });
         }
+
+        console.log("🔥 BEFORE DB UPDATE");
+        console.log("EVENT:", evt.type);
+        console.log("CLERK ID:", id);
+        console.log("EMAIL:", email);
+        console.log("IMAGE URL:", image_url);
 
         const user = await User.findOneAndUpdate(
           { clerkId: id },
@@ -43,7 +56,9 @@ console.log("IMAGE URL:", evt.data?.image_url);
           }
         );
 
-        console.log("✅ Clerk user saved:", user.email);
+        console.log("🔥 AFTER DB UPDATE");
+        console.log("SAVED USER:", user.email);
+        console.log("SAVED IMAGE:", user.imageUrl);
       }
 
       res.status(200).json({
