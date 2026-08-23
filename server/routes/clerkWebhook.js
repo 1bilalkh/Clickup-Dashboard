@@ -13,7 +13,7 @@ router.post(
       console.log("WEBHOOK TYPE:", evt.type);
 console.log("IMAGE URL:", evt.data?.image_url);
 
-      if (evt.type === "user.created") {
+      if (evt.type === "user.created" || evt.type === "user.updated") {
         const { id, first_name, last_name, email_addresses, image_url } = evt.data;
 
         const email =
