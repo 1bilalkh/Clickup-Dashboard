@@ -16,8 +16,17 @@ export default async function handler(req, res) {
 
     const evt = await verifyWebhook(req);
 
-    if (evt.type === "user.created") {
-      const { id, first_name, last_name, email_addresses } = evt.data;
+    console.log("WEBHOOK TYPE:", evt.type);
+    console.log("IMAGE URL:", evt.data?.image_url);
+
+    if (evt.type === "user.created" || evt.type === "user.updated") {
+      const {
+        id,
+        first_name,
+        last_name,
+        email_addresses,
+        image_url,
+      } = evt.data;
 
       const email =
         email_addresses?.[0]?.email_address?.toLowerCase();
@@ -31,6 +40,12 @@ export default async function handler(req, res) {
         });
       }
 
+      console.log("🔥 BEFORE DB UPDATE");
+      console.log("EVENT:", evt.type);
+      console.log("CLERK ID:", id);
+      console.log("EMAIL:", email);
+      console.log("IMAGE URL:", image_url);
+
       const user = await User.findOneAndUpdate(
         { clerkId: id },
         {
@@ -38,6 +53,7 @@ export default async function handler(req, res) {
           name,
           email,
           role: "User",
+          imageUrl: image_url || "",
         },
         {
           new: true,
@@ -45,7 +61,9 @@ export default async function handler(req, res) {
         }
       );
 
-      console.log("✅ Clerk user saved:", user.email);
+      console.log("🔥 AFTER DB UPDATE");
+      console.log("SAVED USER:", user.email);
+      console.log("SAVED IMAGE:", user.imageUrl);
     }
 
     return res.status(200).json({
