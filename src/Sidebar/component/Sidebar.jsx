@@ -54,16 +54,12 @@ function Sidebar({ closeSidebar }) {
       children: [
         {
           id: 12,
-          text: "Task Employee",
-          path: "/TaskEmployee",
+          text: "Create Task",
+          path: "/CreateTask",
         },
-        {
-          id: 13,
-          text: "Task Manager",
-          path: "/TaskManager",
-        },
+       
       ],
-      path: "/tasks",
+      path: "/task",
     },
     {
       id: 3,
@@ -125,12 +121,12 @@ function Sidebar({ closeSidebar }) {
       id: 10,
       text: "Settings",
       icon: <SettingsOutlinedIcon />,
-      path: "/settings",
+      path: "/Settings",
     },
-    // { 
-    //   id: 11, 
-    //   text: "Logout", 
-    //   icon: <LogoutIcon />, 
+    // {
+    //   id: 11,
+    //   text: "Logout",
+    //   icon: <LogoutIcon />,
     //   action: () => signOut({ redirectUrl: "/signin" })
     // },
   ];
@@ -228,7 +224,7 @@ function Sidebar({ closeSidebar }) {
                 onClick={() =>
                   item.children ? handleToggle(item.id) : handleLinkClick()
                 }
-                selected={location.pathname.startsWith(item.path)}
+                selected={location.pathname === item.path}
                 sx={{
                   mx: 1,
                   my: 0.2,
@@ -238,6 +234,7 @@ function Sidebar({ closeSidebar }) {
 
                   "&.Mui-selected": {
                     bgcolor: "action.selected",
+
                     "& .MuiListItemIcon-root": {
                       color: "#6c5cf5",
                     },
@@ -250,7 +247,6 @@ function Sidebar({ closeSidebar }) {
                   primary={<Typography variant="body2">{item.text}</Typography>}
                 />
 
-                {/* Show arrow only if dropdown */}
                 {item.children &&
                   (openId === item.id ? <ExpandLess /> : <ExpandMore />)}
               </ListItemButton>
@@ -349,61 +345,49 @@ function Sidebar({ closeSidebar }) {
         <Divider />
 
         {/* BOTTOM MENU */}
-       <List sx={{ display: "flex", flexDirection: "column" }}>
+        <List sx={{ display: "flex", flexDirection: "column" }}>
+          {/* Settings */}
+          {bottomItems.map((item) => (
+            <ListItemButton
+              key={item.text}
+              component={Link}
+              to={item.path}
+              onClick={handleLinkClick}
+              sx={{
+                justifyContent: "flex-start",
+                display: "flex",
+                marginBottom: "8px",
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
 
-  {/* Settings */}
-  {bottomItems.map((item) => (
-    <ListItemButton
-      key={item.text}
-      component={Link}
-      to={item.path}
-      onClick={handleLinkClick}
-      sx={{
-        justifyContent: "flex-start",
-        display: "flex",
-        marginBottom: "8px",
-      }}
-    >
-      <ListItemIcon sx={{ minWidth: 36 }}>
-        {item.icon}
-      </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="body2">{item.text}</Typography>}
+              />
+            </ListItemButton>
+          ))}
 
-      <ListItemText
-        primary={
-          <Typography variant="body2">
-            {item.text}
-          </Typography>
-        }
-      />
-    </ListItemButton>
-  ))}
+          {/* Sign Out */}
+          <ListItemButton
+            onClick={() => {
+              handleLinkClick();
+              signOut({ redirectUrl: "/signin" });
+            }}
+            sx={{
+              justifyContent: "flex-start",
+              display: "flex",
+              marginBottom: "8px",
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 36 }}>
+              <LogoutIcon />
+            </ListItemIcon>
 
-  {/* Sign Out */}
-  <ListItemButton
-    onClick={() => {
-      handleLinkClick();
-      signOut({ redirectUrl: "/signin" });
-    }}
-    sx={{
-      justifyContent: "flex-start",
-      display: "flex",
-      marginBottom: "8px",
-    }}
-  >
-    <ListItemIcon sx={{ minWidth: 36 }}>
-      <LogoutIcon />
-    </ListItemIcon>
-
-    <ListItemText
-      primary={
-        <Typography variant="body2">
-          Sign Out
-        </Typography>
-      }
-    />
-  </ListItemButton>
-
-</List>
+            <ListItemText
+              primary={<Typography variant="body2">Sign Out</Typography>}
+            />
+          </ListItemButton>
+        </List>
       </Box>
     </>
   );

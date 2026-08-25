@@ -69,7 +69,7 @@ function DashboardBoxes() {
                   color="text.secondary"
                   fontWeight="600"
                 >
-                  Users
+                  Show All Users
                 </Typography>
               </span>
 

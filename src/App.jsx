@@ -11,9 +11,10 @@ import SignUp from "./pages/SignUp";
 import Loading from "./common/Loading.jsx";
 import CircularIndeterminate from "./common/ApiLoading.jsx";
 const Profile = lazy(() => import("./pages/Profile.jsx"));
-
+const Task = lazy(() => import("./pages/Task.jsx"));
+const Settings = lazy(() => import("./pages/settings.jsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
-const Tasks = lazy(() => import("./pages/Task.jsx"));
+const CreateTask = lazy(() => import("./pages/CreateTask.jsx"));
 const Calendar = lazy(() => import("./pages/Calendar.jsx"));
 const Project = lazy(() => import("./pages/Projects.jsx"));
 const Inbox = lazy(() => import("./pages/Inbox.jsx"));
@@ -22,8 +23,6 @@ const Teams = lazy(() => import("./pages/Teams.jsx"));
 const Forms = lazy(() => import("./pages/Forms.jsx"));
 const Invoice = lazy(() => import("./pages/invoice.jsx"));
 const PricePage = lazy(() => import("./pages/Price.jsx"));
-const TaskEmployee = lazy(() => import("./pages/TaskEmployee.jsx"));
-const TaskManager = lazy(() => import("./pages/TaskManager.jsx"));
 const Projectone = lazy(() => import("./pages/Projectone.jsx"));
 const Projecttwo = lazy(() => import("./pages/Projecttwo.jsx"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword.jsx"));
@@ -36,13 +35,17 @@ function DashboardLayout() {
   return (
     <>
       <TopBar />
-        <Box
-  sx={{
-    height: "80px",
-  }}
->
-  Content
-</Box>
+      <Box
+        sx={{
+         height: {
+            xs: '150px',
+            md: '75px',
+            lg: '75px',
+          },
+        }}
+      >
+        Content
+      </Box>
       <Box sx={{ display: "flex" }}>
         {isDesktop && <Sidebar />}
 
@@ -67,7 +70,8 @@ function DashboardLayout() {
           >
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/Tasks" element={<Tasks />} />
+              <Route path="/tasks" element={<Task />} />
+              <Route path="/CreateTask" element={<CreateTask />} />
               <Route path="/Calendar" element={<Calendar />} />
               <Route path="/Projects" element={<Project />} />
               <Route path="/Inbox" element={<Inbox />} />
@@ -76,11 +80,10 @@ function DashboardLayout() {
               <Route path="/Forms" element={<Forms />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/Price" element={<PricePage />} />
-              <Route path="/TaskEmployee" element={<TaskEmployee />} />
-              <Route path="/TaskManager" element={<TaskManager />} />
               <Route path="/Projectone" element={<Projectone />} />
               <Route path="/Projecttwo" element={<Projecttwo />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/BookConsultation" element={<BookConsultation />} />
               <Route path="/RegisterProgram" element={<RegisterProgram />} />
             </Routes>

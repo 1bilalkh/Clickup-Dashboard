@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import userRoutes from "./routes/userRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+
 
 dotenv.config();
 
@@ -14,6 +16,7 @@ dns.setServers([
 ]);
 
 const app = express();
+
 
 // =========================
 // CORS
@@ -61,6 +64,7 @@ app.use(express.json());
 // Routes
 // =========================
 app.use("/api/users", userRoutes);
+app.use("/api/tasks", taskRoutes);
 
 // =========================
 // Test CORS
