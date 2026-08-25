@@ -83,7 +83,7 @@ function DashboardLayout() {
               <Route path="/Projectone" element={<Projectone />} />
               <Route path="/Projecttwo" element={<Projecttwo />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/Settings" element={<Settings />} />
               <Route path="/BookConsultation" element={<BookConsultation />} />
               <Route path="/RegisterProgram" element={<RegisterProgram />} />
             </Routes>
