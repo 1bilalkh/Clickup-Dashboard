@@ -12,7 +12,7 @@ import Loading from "./common/Loading.jsx";
 import CircularIndeterminate from "./common/ApiLoading.jsx";
 const Profile = lazy(() => import("./pages/Profile.jsx"));
 const Task = lazy(() => import("./pages/Task.jsx"));
-const Settings = lazy(() => import("./pages/settings.jsx"));
+const Settings = lazy(() => import("./pages/Settings.jsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 const CreateTask = lazy(() => import("./pages/CreateTask.jsx"));
 const Calendar = lazy(() => import("./pages/Calendar.jsx"));
