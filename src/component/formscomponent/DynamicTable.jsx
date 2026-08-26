@@ -54,7 +54,7 @@ export default function TableComponentComplete() {
   ];
 
   return (
-    <Box sx={{ mt: 1 }} className="table-wrapper">
+    <Box sx={{ mt: 1, backgroundColor: "background.paper", }} className="table-wrapper">
       <Typography variant="h6" gutterBottom sx={{ pb: 2 }}>
         Project List
       </Typography>

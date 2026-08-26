@@ -1,3 +1,9 @@
+:root{
+  --bs-primary-rgb: 89, 85, 209;
+  --bs-bg-opacity: 1;
+}
+
+
 body {
   font-family: "Inter", sans-serif;
 }
@@ -67,4 +73,12 @@ body {
   margin-bottom: 10px;
   margin-top: 10;
   color: #673ab7;
+}
+.some{
+    background-image: url(./assets/welcome.gif);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden !important;
+    background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
 }

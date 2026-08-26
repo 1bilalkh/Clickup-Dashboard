@@ -45,10 +45,11 @@ function DashboardBoxes() {
             borderColor: "divider",
             borderRadius: 2,
             cursor: "pointer",
-            bgcolor: "#f4f7fe",
+            backgroundColor: "background.paper",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            color: "text.primary",
 
             "&:hover": {
               bgcolor: "action.hover",
@@ -66,7 +67,7 @@ function DashboardBoxes() {
               {/* Users information */}
               <span>
                 <Typography
-                  color="text.secondary"
+                  color="text.primary"
                   fontWeight="600"
                 >
                   Show All Users

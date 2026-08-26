@@ -136,14 +136,14 @@ function Dashboard() {
                     border: "1px solid",
                     borderColor: "divider",
                     borderRadius: 4,
-                    bgcolor: "#f4f9fd",
+                    backgroundColor: "background.paper",
                     mt: 3,
                   }}
                 >
                   <Typography
                     variant="h6"
                     fontWeight="600"
-                    sx={{ mb: 2, mt: 1 }}
+                    sx={{ mb: 2, mt: 1, color: "text.primary" }}
                   >
                     Recent Activity
                   </Typography>
@@ -158,7 +158,7 @@ function Dashboard() {
                   border: "1px solid",
                   borderColor: "divider",
                   borderRadius: 2,
-                  bgcolor: "#f4f9fd",
+                  backgroundColor: "background.paper",
                 }}
               >
                 <TableComponentComplete />
@@ -167,15 +167,15 @@ function Dashboard() {
             {/* end col md - 4 */}
             <Grid size={{ xs: 12, md: 4 }}>
               <Grid size={{ xs: 12, md: 12 }}>
-                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4 }}>
-                  <Typography variant="h6" sx={{ mb: 2 }}>
+                <Box sx={{border: "1px solid", backgroundColor: "background.paper", borderColor: "divider", p: 2, borderRadius: 4 }}>
+                  <Typography variant="h6" sx={{ mb: 2, color: "text.secondary"  }}>
                     Quick Actions
                   </Typography>
                   <QuickActions />
                 </Box>
               </Grid>
               <Grid size={{ xs: 12, md: 12 }}>
-                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2 }}>
+                <Box sx={{ backgroundColor: "background.default", p: 2, borderRadius: 4, mt: 2, border: "1px solid", borderColor: "divider" }}>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     My Schedules
                   </Typography>
@@ -183,7 +183,7 @@ function Dashboard() {
                 </Box>
               </Grid>
               <Grid size={{ xs: 12, md: 12 }}>
-                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2 }}>
+                <Box sx={{ backgroundColor: "background.default", p: 2, borderRadius: 4, mt: 2, border: "1px solid", borderColor: "divider"  }}>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     UpComing Meetings
                   </Typography>
@@ -191,7 +191,7 @@ function Dashboard() {
                 </Box>
               </Grid>
               <Grid size={{ xs: 12, md: 12 }}>
-                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2 }}>
+                <Box sx={{ backgroundColor: "background.default", p: 2, borderRadius: 4, mt: 2, border: "1px solid", borderColor: "divider" }}>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     UpComing Events
                   </Typography>
@@ -199,7 +199,7 @@ function Dashboard() {
                 </Box>
               </Grid>
               <Grid size={{ xs: 12, md: 12 }}>
-                <Box sx={{ bgcolor: "#f4f9fd", p: 2, borderRadius: 4, mt: 2 }}>
+                <Box sx={{ backgroundColor: "background.default", p: 2, borderRadius: 4, mt: 2, border: "1px solid", borderColor: "divider" }}>
                   <InnovationPerformance />
                 </Box>
               </Grid>

@@ -36,10 +36,10 @@ export default function AnimatedTabs() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <Box sx={{ background: "#fff", mt: 2, borderRadius: 4 }}>
+              <Box sx={{ backgroundColor: "background.paper", mt: 2, borderRadius: 4 }}>
                 <IdeasSubmissions />
               </Box>
-              <Box sx={{ background: "#fff", mt: 2, borderRadius: 4 }}>
+              <Box sx={{ backgroundColor: "background.paper", mt: 2, borderRadius: 4 }}>
                 <IdeasSubmissions />
               </Box>
             </motion.div>

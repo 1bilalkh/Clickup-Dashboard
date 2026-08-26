@@ -10,7 +10,7 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import { Button } from "@mui/material";
 
 const Item = styled("div")(({ theme }) => ({
-  backgroundColor: "#e8eff7",
+  backgroundColor: "background.paper",
   border: "1px solid",
   borderColor: "#ced7e0",
   padding: "1px 6px",
@@ -39,7 +39,7 @@ export default function Display() {
               height: 50,
               m: 2,
               borderRadius: "50%",
-              backgroundColor: "#ffff",
+              backgroundColor: "background.paper",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -111,7 +111,9 @@ export default function Display() {
             display: "flex",
             mt: 2,
             justifyContent: "space-between",
-            bgcolor: "#f3f4f6",
+            backgroundColor: "background.paper",
+            border: "1px solid",
+            borderColor: "divider",
             flexDirection: {
               xs: "column",
               sm: "column",

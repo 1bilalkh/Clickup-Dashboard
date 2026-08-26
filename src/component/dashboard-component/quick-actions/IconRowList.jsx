@@ -6,37 +6,56 @@ export default function IconRowList({ items = [] }) {
       {items.map((item, index) => (
         <Box
           key={index}
-          sx={{
+          sx={(theme) => ({
             flex: 1,
             display: "flex",
             alignItems: "center",
             p: 1,
             borderRadius: 2,
-            backgroundColor: "#ffffff",
+            background:
+              theme.palette.mode === "light"
+                ? "linear-gradient(to right, rgb(255, 255, 255), rgb(224, 247, 255))"
+                : "linear-gradient(to right, rgb(18, 18, 18), rgb(20, 45, 55))",
+            color: "text.primary",
             cursor: "pointer",
             transition: "0.3s",
             "&:hover": {
-              backgroundColor: "#f3f4f6",
+              backgroundColor: "background.primary",
               boxShadow: 3,
+              color: "text.primary",
               transform: "translateY(-2px)",
             },
-          }}
+          })}
           onClick={item.onClick}
         >
           {/* Left Icon */}
           <Box
-            sx={{
-              width: 30,
-              height: 30,
-              borderRadius: "4px",
-              backgroundColor: "#f0f0f2",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              mr: 1,
-              color: "#747980",
-              fill: "#747980",
-            }}
+            sx={(theme) => ({
+  width: 30,
+  height: 30,
+  borderRadius: "4px",
+
+  backgroundColor:
+    theme.palette.mode === "light"
+      ? "#f0f0f2"
+      : "#2a2a2a",
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  mr: 1,
+
+  fill:
+    theme.palette.mode === "light"
+      ? "#ffffff"
+      : "#000",
+
+  color: "text.secondary",
+
+  "&:hover": {
+    color: "text.primary",
+  },
+})}
           >
             {item.leftIcon}
           </Box>

@@ -41,6 +41,7 @@ function DashboardLayout() {
             xs: '150px',
             md: '75px',
             lg: '75px',
+            // md: 'auto'
           },
         }}
       >

@@ -6,6 +6,7 @@ import {
   ListItemText,
   Divider,
   Typography,
+  useTheme 
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { GlobalStyles } from "@mui/material";
@@ -31,7 +32,9 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 
 function Sidebar({ closeSidebar }) {
+  const theme = useTheme();
   const location = useLocation();
+   
 
   const [openId, setOpenId] = useState(null);
   const { signOut } = useClerk();
@@ -136,11 +139,16 @@ function Sidebar({ closeSidebar }) {
     if (closeSidebar) closeSidebar(); // Close sidebar only on link click
   };
   const sidebarWidth = 250;
+  
 
   return (
     <>
       <Box
         sx={{
+          background:
+          theme.palette.mode === "light"
+            ? "linear-gradient(to right, rgb(255, 255, 255), rgb(224, 247, 255))"
+            : "linear-gradient(to right, rgb(18, 18, 18), rgb(20, 45, 55))",
           width: sidebarWidth,
           display: "flex",
           position: {
@@ -154,8 +162,9 @@ function Sidebar({ closeSidebar }) {
           transition: "0.3s",
           zIndex: 1200,
           flexDirection: "column",
-          borderRight: "1px solid #ddd",
-          background: "linear-gradient(to right, #ffffff, #e0f7ff)",
+          borderRight: "1px solid",
+          borderColor: "divider",
+          backgroundColor: "background.paper",
           color: "text.primary",
           top: 0,
           overflowY: "auto",
@@ -167,8 +176,8 @@ function Sidebar({ closeSidebar }) {
           mt: {
             xs: 0,
             sm: 0,
-            md: "88px",
-            lg: "88px",
+            md: "110px",
+            lg: "110px",
           },
           ml: {
             xs: 0,
@@ -336,7 +345,7 @@ function Sidebar({ closeSidebar }) {
           <Typography
             variant="h6"
             fontWeight={800}
-            sx={{ display: "flex", alignItems: "center", color: "#0068a7" }}
+            sx={{ display: "flex", alignItems: "center", color: "text.primary", }}
           >
             2,450
           </Typography>
