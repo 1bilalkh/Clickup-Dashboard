@@ -2,7 +2,7 @@ import { Box, useTheme } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { useQuery } from "@tanstack/react-query";
 
-const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function SparklineChart() {
   const theme = useTheme();
@@ -24,13 +24,12 @@ export default function SparklineChart() {
       return response.json();
     },
 
-    // Refresh every 30 seconds
     refetchInterval: 30000,
   });
 
-  // ==========================================
-  // SORT LOGIN ACTIVITY BY LOGIN TIME
-  // ==========================================
+  // -----------------------------
+  // SORT LOGIN DATA
+  // -----------------------------
 
   const sortedActivity = [...loginActivity]
     .filter((item) => item.loginAt)
@@ -40,9 +39,9 @@ export default function SparklineChart() {
         new Date(b.loginAt).getTime()
     );
 
-  // ==========================================
-  // GROUP LOGINS BY HOUR
-  // ==========================================
+  // -----------------------------
+  // GROUP BY HOUR
+  // -----------------------------
 
   const hourlyActivity = {};
 
@@ -58,145 +57,101 @@ export default function SparklineChart() {
       (hourlyActivity[hour] || 0) + 1;
   });
 
-  // ==========================================
-  // CONVERT TO ARRAY
-  // ==========================================
-
   const activityEntries = Object.entries(hourlyActivity);
 
-  // ==========================================
+  // -----------------------------
   // CHART DATA
-  // ==========================================
+  // -----------------------------
 
-  let chartData;
-  let labels;
+  let labels = [];
+  let chartData = [];
 
   if (activityEntries.length >= 2) {
-    labels = activityEntries.map(
-      ([hour]) => hour
-    );
+    labels = activityEntries.map(([hour]) => hour);
 
     chartData = activityEntries.map(
       ([, count]) => count
     );
   } else if (activityEntries.length === 1) {
-    labels = [
-      "",
-      activityEntries[0][0],
-    ];
+    labels = ["", activityEntries[0][0]];
 
-    chartData = [
-      0,
-      activityEntries[0][1],
-    ];
+    chartData = [0, activityEntries[0][1]];
   } else {
-    // Fallback when there is no login data
-    labels = [
-      "",
-      "",
-      "",
-      "",
-      "",
-    ];
+    // Empty dashboard chart
+    labels = ["", "", "", "", ""];
 
-    chartData = [
-      1,
-      2,
-      1,
-      3,
-      2,
-    ];
+    chartData = [1, 2, 1, 3, 2];
   }
 
-  // ==========================================
-  // MAX VALUE
-  // ==========================================
+  const maxValue = Math.max(...chartData, 1);
 
-  const maxValue = Math.max(
-    ...chartData,
-    1
-  );
-
-  // ==========================================
+  // -----------------------------
   // LOADING
-  // ==========================================
+  // -----------------------------
 
   if (isLoading) {
     return (
       <Box
         sx={{
           width: "100%",
-          height: 90,
+          height: 70,
         }}
       />
     );
   }
 
-  // ==========================================
+  // -----------------------------
   // ERROR
-  // ==========================================
+  // -----------------------------
 
   if (isError) {
     return (
       <Box
         sx={{
           width: "100%",
-          height: 90,
+          height: 70,
         }}
       />
     );
   }
 
-  // ==========================================
+  // -----------------------------
   // CHART
-  // ==========================================
+  // -----------------------------
 
   return (
     <Box
       sx={{
         width: "100%",
-        height: 60,
-        position: "relative",
+        height: 70,
+        minWidth: 0,
         overflow: "hidden",
       }}
     >
       <LineChart
-        height={90}
+        width={undefined}
+        height={70}
         series={[
-  {
-    id: "loginActivity",
-    data: chartData,
-    curve: "natural",
-    showMark: false,
-    color: theme.palette.primary.main,
+          {
+            id: "loginActivity",
+            data: chartData,
+            curve: "natural",
+            showMark: false,
+            color: theme.palette.primary.main,
 
-    valueFormatter: (value) =>
-      `${value} ${value === 1 ? "login" : "logins"}`,
-  },
-]}
-
-        // ======================================
-        // X AXIS
-        // ======================================
-
+            valueFormatter: (value) =>
+              `${value} ${
+                value === 1 ? "login" : "logins"
+              }`,
+          },
+        ]}
         xAxis={[
           {
             scaleType: "point",
             data: labels,
-
-            // Completely hide axis
             position: "none",
-
-            // Don't show X value in tooltip
-            // because we want a clean tooltip
-            hideTooltip: false,
           },
         ]}
-
-        // ======================================
-        // Y AXIS
-        // ======================================
-
         yAxis={[
           {
             min: 0,
@@ -204,78 +159,25 @@ export default function SparklineChart() {
             position: "none",
           },
         ]}
-
-        // ======================================
-        // NO GRID
-        // ======================================
-
         grid={{
           horizontal: false,
           vertical: false,
         }}
-
-        // ======================================
-        // SPACING
-        // ======================================
-
         margin={{
-          top: 6,
-          bottom: 8,
-          left: 2,
-          right: 2,
+          top: 5,
+          bottom: 5,
+          left: 0,
+          right: 0,
         }}
-
-        // ======================================
-        // NO LEGEND
-        // ======================================
-
         hideLegend
-
-        // ======================================
-        // MUI X CHARTS v8 TOOLTIP
-        // ======================================
-
         slotProps={{
           tooltip: {
             trigger: "axis",
-
-            // Tooltip styling
-            sx: {
-              "& .MuiChartsTooltip-paper": {
-                borderRadius: "10px",
-                backgroundColor:
-                  theme.palette.background.paper,
-                border: `1px solid ${theme.palette.divider}`,
-                boxShadow:
-                  theme.shadows[4],
-              },
-
-              "& .MuiChartsTooltip-labelCell": {
-                color:
-                  theme.palette.text.secondary,
-                fontSize: "11px",
-              },
-
-              "& .MuiChartsTooltip-valueCell": {
-                color:
-                  theme.palette.text.primary,
-                fontWeight: 600,
-                fontSize: "13px",
-              },
-            },
           },
         }}
-
-        // ======================================
-        // CHART STYLING
-        // ======================================
-
         sx={{
           width: "100%",
-
-          // ------------------------------------
-          // THIN SMOOTH LINE
-          // ------------------------------------
+          maxWidth: "100%",
 
           "& .MuiLineElement-root": {
             strokeWidth: 2,
@@ -283,34 +185,17 @@ export default function SparklineChart() {
             strokeLinejoin: "round",
           },
 
-          
-          // ------------------------------------
-          // HIDE AXES
-          // ------------------------------------
-
           "& .MuiChartsAxis-root": {
             display: "none",
           },
-
-          // ------------------------------------
-          // HIDE GRID
-          // ------------------------------------
 
           "& .MuiChartsGrid-line": {
             display: "none",
           },
 
-          // ------------------------------------
-          // HIDE MARKS / DOTS
-          // ------------------------------------
-
           "& .MuiMarkElement-root": {
             display: "none",
           },
-
-          // ------------------------------------
-          // HIDE AXIS HIGHLIGHT LINE
-          // ------------------------------------
 
           "& .MuiChartsAxisHighlight-root": {
             display: "none",
