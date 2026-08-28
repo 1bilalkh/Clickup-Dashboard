@@ -10,79 +10,69 @@ import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../../api/usersApi";
 import { useState } from "react";
 
+const API_URL = "http://localhost:5000";
+
 function DashboardBoxes() {
   const [openUsersModal, setOpenUsersModal] = useState(false);
+
+  // =========================
+  // USERS
+  // =========================
   const {
     data: users = [],
-    isLoading,
-    isError,
-    error,
+    isLoading: usersLoading,
+    isError: usersError,
   } = useQuery({
     queryKey: ["users"],
     queryFn: getUsers,
     staleTime: 5 * 60 * 1000,
   });
 
-  // Loading state
-  if (isLoading) {
-    return <Typography>Loading users...</Typography>;
-  }
-
-  // Error state
-  if (isError) {
-    return (
-      <Typography color="error">
-        Failed to load users: {error?.message}
-      </Typography>
-    );
-  }
-
-  const API_URL = "http://localhost:5000";
-
+  // =========================
+  // CONSULTATIONS
+  // =========================
   const {
     data: consultationData,
     isLoading: consultationLoading,
-      } = useQuery({
+    isError: consultationError,
+  } = useQuery({
     queryKey: ["consultationCount"],
-
     queryFn: async () => {
       const response = await fetch(
         `${API_URL}/api/consultations/count`
       );
 
       if (!response.ok) {
-        throw new Error(
-          "Failed to fetch consultation count"
-        );
+        throw new Error("Failed to fetch consultation count");
       }
 
       return response.json();
     },
-
     refetchInterval: 30000,
   });
 
-  const consultationCount =
-    consultationData?.count ?? 0;
+  const consultationCount = consultationData?.count ?? 0;
 
-  // Success
   return (
     <>
       <Grid container spacing={2}>
-        <Grid size={{ xs: 12, sm: 12, md: 3 }}>
+
+        {/* =========================
+            USERS BOX
+        ========================= */}
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <Box
             sx={{
               p: 2,
-              height: "auto",
               border: "1px solid",
               borderColor: "divider",
               borderRadius: 2,
-              cursor: "pointer",
               backgroundColor: "background.paper",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               color: "text.primary",
+              cursor: "pointer",
 
               "&:hover": {
                 bgcolor: "action.hover",
@@ -93,7 +83,6 @@ function DashboardBoxes() {
               onClick={() => setOpenUsersModal(true)}
               sx={{
                 display: "block",
-                cursor: "pointer",
               }}
             >
               <Box
@@ -103,54 +92,55 @@ function DashboardBoxes() {
                   justifyContent: "space-between",
                 }}
               >
-                {/* Users information */}
-                <span>
-                  <Typography color="text.primary" fontWeight="600">
-                    Show All Users
-                  </Typography>
-                </span>
+                <Typography
+                  color="text.primary"
+                  fontWeight={600}
+                >
+                  Show All Users
+                </Typography>
 
-                {/* User icon */}
-                <span>
-                  <span className="icon_circle">
-                    <Badge
-                      color="secondary"
-                      overlap="circular"
-                      badgeContent={users.length}
-                      sx={{
-                        "& .MuiBadge-badge": {
-                          top: "-9px",
-                          right: 5,
-                        },
-                      }}
-                    >
-                      <Person3OutlinedIcon />
-                    </Badge>
-                  </span>
-                </span>
+                <Box className="icon_circle">
+                  <Badge
+                    color="secondary"
+                    overlap="circular"
+                    badgeContent={
+                      usersLoading ? "..." : users.length
+                    }
+                    sx={{
+                      "& .MuiBadge-badge": {
+                        top: "-9px",
+                        right: 5,
+                      },
+                    }}
+                  >
+                    <Person3OutlinedIcon />
+                  </Badge>
+                </Box>
               </Box>
             </Box>
 
-            {/* Chart */}
-            <Box sx={{ width: "100%" }}>
+            <Box sx={{ width: "100%", mt: 2 }}>
               <SparklineChart />
             </Box>
           </Box>
         </Grid>
-        <Grid size={{ xs: 12, sm: 12, md: 3 }}>
+
+        {/* =========================
+            CONSULTATION BOX
+        ========================= */}
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <Box
             sx={{
               p: 2,
-              height: "auto",
               border: "1px solid",
               borderColor: "divider",
               borderRadius: 2,
-              cursor: "pointer",
               backgroundColor: "background.paper",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               color: "text.primary",
+              cursor: "pointer",
 
               "&:hover": {
                 bgcolor: "action.hover",
@@ -158,56 +148,57 @@ function DashboardBoxes() {
             }}
           >
             <Box
-              onClick={() => setOpenUsersModal(true)}
               sx={{
-                display: "block",
-                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
+              <Typography
+                color="text.primary"
+                fontWeight={600}
               >
-                {/* Users information */}
-                <span>
-                  <Typography color="text.primary" fontWeight="600">
-                   All Consultations
-                  </Typography>
-                </span>
+                All Consultations
+              </Typography>
 
-                {/* User icon */}
-                <span>
-                  <span className="icon_circle">
-                    <Badge
-                      color="secondary"
-                      overlap="circular"
-                      badgeContent={consultationLoading ? "..." : consultationCount}
-                      sx={{
-                        "& .MuiBadge-badge": {
-                          top: "-9px",
-                          right: 5,
-                        },
-                      }}
-                    >
-                     <EventAvailableIcon />
-                    </Badge>
-                  </span>
-                </span>
+              <Box className="icon_circle">
+                <Badge
+                  color="secondary"
+                  overlap="circular"
+                  badgeContent={
+                    consultationLoading
+                      ? "..."
+                      : consultationError
+                      ? 0
+                      : consultationCount
+                  }
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      top: "-9px",
+                      right: 5,
+                    },
+                  }}
+                >
+                  <EventAvailableIcon />
+                </Badge>
               </Box>
             </Box>
 
-            {/* Chart */}
-            <Box sx={{ width: "100%" }}>
+            <Box sx={{ width: "100%", mt: 2 }}>
               <SparklineChart />
             </Box>
           </Box>
         </Grid>
+
       </Grid>
 
-      <Modal open={openUsersModal} onClose={() => setOpenUsersModal(false)}>
+      {/* =========================
+          USERS MODAL
+      ========================= */}
+      <Modal
+        open={openUsersModal}
+        onClose={() => setOpenUsersModal(false)}
+      >
         <Box
           sx={{
             position: "absolute",
@@ -227,7 +218,7 @@ function DashboardBoxes() {
             outline: "none",
           }}
         >
-          {/* Modal Header */}
+          {/* Header */}
 
           <Box
             sx={{
@@ -237,24 +228,44 @@ function DashboardBoxes() {
               mb: 2,
             }}
           >
-            <Typography variant="h6" fontWeight={600} color="text.primary">
+            <Typography
+              variant="h6"
+              fontWeight={600}
+              color="text.primary"
+            >
               All Users
             </Typography>
 
-            <IconButton onClick={() => setOpenUsersModal(false)}>
+            <IconButton
+              onClick={() => setOpenUsersModal(false)}
+            >
               <CloseIcon />
             </IconButton>
           </Box>
 
-          {/* Users */}
+          {/* User List */}
 
           <Box>
-            {users.length === 0 ? (
-              <Typography color="text.secondary">No users found.</Typography>
+            {usersError ? (
+              <Typography color="error">
+                Failed to load users.
+              </Typography>
+            ) : usersLoading ? (
+              <Typography color="text.secondary">
+                Loading users...
+              </Typography>
+            ) : users.length === 0 ? (
+              <Typography color="text.secondary">
+                No users found.
+              </Typography>
             ) : (
               users.map((user) => (
                 <Box
-                  key={user._id || user.clerkId || user.email}
+                  key={
+                    user._id ||
+                    user.clerkId ||
+                    user.email
+                  }
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -265,6 +276,8 @@ function DashboardBoxes() {
                     backgroundColor: "action.hover",
                   }}
                 >
+                  {/* Avatar */}
+
                   <Box
                     sx={{
                       width: 40,
@@ -276,22 +289,37 @@ function DashboardBoxes() {
                       backgroundColor: "primary.main",
                       color: "primary.contrastText",
                       fontWeight: 600,
+                      flexShrink: 0,
                     }}
                   >
-                    {(user.name || user.firstName || user.email || "U")
+                    {(
+                      user.name ||
+                      user.firstName ||
+                      user.email ||
+                      "U"
+                    )
                       .charAt(0)
                       .toUpperCase()}
                   </Box>
 
+                  {/* Information */}
+
                   <Box>
-                    <Typography fontWeight={600} color="text.primary">
+                    <Typography
+                      fontWeight={600}
+                      color="text.primary"
+                    >
                       {user.name ||
-                        `${user.firstName || ""} ${user.lastName || ""
-                          }`.trim() ||
+                        `${user.firstName || ""} ${
+                          user.lastName || ""
+                        }`.trim() ||
                         "Unnamed User"}
                     </Typography>
 
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                    >
                       {user.email || "No email"}
                     </Typography>
                   </Box>
