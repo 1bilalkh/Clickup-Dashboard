@@ -2,8 +2,10 @@ import { Box, Typography, TextField, Button, MenuItem } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import CustomButton from "../common/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function BookConsultation() {
+ 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,7 +27,6 @@ export default function BookConsultation() {
     console.log(formData);
     alert("Consultation booked successfully!");
   };
-
   return (
     <Box sx={{ flexGrow: 1, p: 4, background: "#f6f9fc" }}>
       <form onSubmit={handleSubmit}>

@@ -24,9 +24,11 @@ const Price = ({ low, price }) => {
           p: 3,
           height: "100%",
           display: "flex",
+          gap: '5',
           border: 1,
           borderRadius: 4,
           borderColor: "#c1c2c5",
+          color: "text.primary",
           flexDirection: { xs: "column", sm: "column", md: "column" },
         }}
       >
@@ -36,7 +38,7 @@ const Price = ({ low, price }) => {
             variant="h6"
             sx={{
               fontWeight: 600,
-              color: "#212529",
+             color: "text.primary",
               mb: 0.5,
               textAlign: "center",
             }}
@@ -68,7 +70,7 @@ const Price = ({ low, price }) => {
               sx={{
                 fontSize: 36,
                 fontWeight: 700,
-                color: "#212529",
+               color: "text.primary",
                 textAlign: "center",
               }}
             >
@@ -112,8 +114,8 @@ const Price = ({ low, price }) => {
               spacing={1.5}
               alignItems="center"
             >
-              <CheckIcon sx={{ color: "#0554F2", fontSize: 20 }} />
-              <Typography sx={{ fontSize: 14, color: "#212529" }}>
+              <CheckIcon sx={{ color: "text.primary", fontSize: 20 }} />
+              <Typography sx={{ fontSize: 14, color: "text.primary", }}>
                 {item}
               </Typography>
             </Stack>

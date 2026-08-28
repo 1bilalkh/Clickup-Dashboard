@@ -63,7 +63,7 @@ export default function WelcomeSection() {
               width: 50,
               height: 50,
               borderRadius: "50%",
-              backgroundColor: "#ffff",
+               backgroundColor: "background.paper",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",

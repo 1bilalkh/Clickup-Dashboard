@@ -28,6 +28,7 @@ const Projecttwo = lazy(() => import("./pages/Projecttwo.jsx"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword.jsx"));
 const BookConsultation = lazy(() => import("./pages/BookConsultation.jsx"));
 const RegisterProgram = lazy(() => import("./pages/RegisterProgram.jsx"));
+import LoginTracker from "./LoginTracker";
 
 function DashboardLayout() {
   const isDesktop = useMediaQuery("(min-width:900px)");
@@ -97,6 +98,7 @@ function DashboardLayout() {
 
 function App() {
   const { isLoaded, isSignedIn } = useAuth();
+
   if (!isLoaded) {
     return (
       <Box
@@ -114,6 +116,7 @@ function App() {
       </Box>
     );
   }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -126,7 +129,14 @@ function App() {
         <Route
           path="/*"
           element={
-            isSignedIn ? <DashboardLayout /> : <Navigate to="/signin" replace />
+            isSignedIn ? (
+              <>
+                <LoginTracker />
+                <DashboardLayout />
+              </>
+            ) : (
+              <Navigate to="/signin" replace />
+            )
           }
         />
       </Routes>

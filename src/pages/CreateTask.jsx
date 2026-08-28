@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -37,6 +37,12 @@ function CreateTask() {
   });
 
   // -----------------------------
+  // Users state
+  // -----------------------------
+  const [users, setUsers] = useState([]);
+  const [usersLoading, setUsersLoading] = useState(true);
+
+  // -----------------------------
   // Loading state
   // -----------------------------
   const [loading, setLoading] = useState(false);
@@ -46,6 +52,39 @@ function CreateTask() {
   // -----------------------------
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
+
+  // -----------------------------
+  // Fetch users
+  // -----------------------------
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setUsersLoading(true);
+
+        const response = await fetch(
+          "http://localhost:5000/api/users"
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+
+        const data = await response.json();
+
+        console.log("Users loaded:", data);
+
+        setUsers(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load users:", error);
+
+        setUsers([]);
+      } finally {
+        setUsersLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   // -----------------------------
   // Handle input changes
@@ -157,12 +196,6 @@ function CreateTask() {
         </Box>
 
         {/* -------------------------------- */}
-        {/* Page Header */}
-        {/* -------------------------------- */}
-
-       
-
-        {/* -------------------------------- */}
         {/* Main Card */}
         {/* -------------------------------- */}
 
@@ -268,18 +301,35 @@ function CreateTask() {
                   name="assignee"
                   value={task.assignee}
                   onChange={handleChange}
+                  disabled={usersLoading}
                 >
                   <MenuItem value="">
                     Unassigned
                   </MenuItem>
 
-                  <MenuItem value="Muhammad Bilal Khan">
-                    Muhammad Bilal Khan
-                  </MenuItem>
+                  {users.map((user) => {
+                    const userName =
+                      user.name ||
+                      `${user.firstName || ""} ${
+                        user.lastName || ""
+                      }`.trim() ||
+                      user.email ||
+                      "Unnamed User";
 
-                  <MenuItem value="Team Member">
-                    Team Member
-                  </MenuItem>
+                    const userValue =
+                      user.email ||
+                      user.clerkId ||
+                      user._id;
+
+                    return (
+                      <MenuItem
+                        key={user._id || user.clerkId || user.email}
+                        value={userValue}
+                      >
+                        {userName}
+                      </MenuItem>
+                    );
+                  })}
                 </TextField>
 
                 {/* Status */}

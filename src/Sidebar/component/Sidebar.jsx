@@ -57,8 +57,8 @@ function Sidebar({ closeSidebar }) {
       children: [
         {
           id: 12,
-          text: "Create Task",
-          path: "/CreateTask",
+          text: "Our Task",
+          path: "/tasks",
         },
        
       ],
@@ -91,28 +91,27 @@ function Sidebar({ closeSidebar }) {
   ];
 
   const menuItemsCenter = [
-    { id: 5, text: "Inbox", icon: <MailOutlinedIcon />, path: "/inbox" },
-    { id: 6, text: "AI", icon: <AttractionsOutlinedIcon />, path: "/ai" },
+    { id: 5, text: "AI", icon: <AttractionsOutlinedIcon />, path: "/ai" },
     {
-      id: 7,
+      id: 6,
       text: "Teams",
       icon: <PeopleOutlineOutlinedIcon />,
       path: "/teams",
     },
+    // {
+    //   id: 7,
+    //   text: "Forms",
+    //   icon: <IntegrationInstructionsOutlinedIcon />,
+    //   path: "/forms",
+    // },
     {
       id: 8,
-      text: "Forms",
-      icon: <IntegrationInstructionsOutlinedIcon />,
-      path: "/forms",
-    },
-    {
-      id: 9,
       text: "Invoice",
       icon: <DescriptionOutlinedIcon />,
       path: "/invoice",
     },
     {
-      id: 10,
+      id: 9,
       text: "Price",
       icon: <AttachMoneyIcon />,
       path: "/Price",
