@@ -1,5 +1,6 @@
 import { Box, Grid, Typography, Modal, IconButton } from "@mui/material";
 import Person3OutlinedIcon from "@mui/icons-material/Person3Outlined";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import Badge from "@mui/material/Badge";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -35,6 +36,34 @@ function DashboardBoxes() {
       </Typography>
     );
   }
+
+  const API_URL = "http://localhost:5000";
+
+  const {
+    data: consultationData,
+    isLoading: consultationLoading,
+      } = useQuery({
+    queryKey: ["consultationCount"],
+
+    queryFn: async () => {
+      const response = await fetch(
+        `${API_URL}/api/consultations/count`
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Failed to fetch consultation count"
+        );
+      }
+
+      return response.json();
+    },
+
+    refetchInterval: 30000,
+  });
+
+  const consultationCount =
+    consultationData?.count ?? 0;
 
   // Success
   return (
@@ -96,6 +125,74 @@ function DashboardBoxes() {
                       }}
                     >
                       <Person3OutlinedIcon />
+                    </Badge>
+                  </span>
+                </span>
+              </Box>
+            </Box>
+
+            {/* Chart */}
+            <Box sx={{ width: "100%" }}>
+              <SparklineChart />
+            </Box>
+          </Box>
+        </Grid>
+        <Grid size={{ xs: 12, sm: 12, md: 3 }}>
+          <Box
+            sx={{
+              p: 2,
+              height: "auto",
+              border: "1px solid",
+              borderColor: "divider",
+              borderRadius: 2,
+              cursor: "pointer",
+              backgroundColor: "background.paper",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              color: "text.primary",
+
+              "&:hover": {
+                bgcolor: "action.hover",
+              },
+            }}
+          >
+            <Box
+              onClick={() => setOpenUsersModal(true)}
+              sx={{
+                display: "block",
+                cursor: "pointer",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                {/* Users information */}
+                <span>
+                  <Typography color="text.primary" fontWeight="600">
+                   All Consultations
+                  </Typography>
+                </span>
+
+                {/* User icon */}
+                <span>
+                  <span className="icon_circle">
+                    <Badge
+                      color="secondary"
+                      overlap="circular"
+                      badgeContent={consultationLoading ? "..." : consultationCount}
+                      sx={{
+                        "& .MuiBadge-badge": {
+                          top: "-9px",
+                          right: 5,
+                        },
+                      }}
+                    >
+                     <EventAvailableIcon />
                     </Badge>
                   </span>
                 </span>
@@ -189,9 +286,8 @@ function DashboardBoxes() {
                   <Box>
                     <Typography fontWeight={600} color="text.primary">
                       {user.name ||
-                        `${user.firstName || ""} ${
-                          user.lastName || ""
-                        }`.trim() ||
+                        `${user.firstName || ""} ${user.lastName || ""
+                          }`.trim() ||
                         "Unnamed User"}
                     </Typography>
 

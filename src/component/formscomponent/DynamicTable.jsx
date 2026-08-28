@@ -1,68 +1,133 @@
 import React from "react";
+import { Box, Typography, Chip } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import TanStackDataTable from "./FormTable";
-import { Box, Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
+
+const API_URL = "http://localhost:5000";
 
 export default function TableComponentComplete() {
-  const data = [
-    { name: "John", email: "john@example.com", role: "Admin" },
-    { name: "Sarah", email: "sarah@example.com", role: "User" },
-    { name: "Mike", email: "mike@example.com", role: "Manager" },
-    { name: "Anna", email: "anna@example.com", role: "User" },
-    { name: "Paul", email: "paul@example.com", role: "Admin" },
-    { name: "Tom", email: "tom@example.com", role: "Manager" },
-  ];
+ const {
+  data: registrations = [],
+  isLoading,
+  isError,
+  error,
+} = useQuery({
+  queryKey: ["registrations"],
+  queryFn: async () => {
+    const response = await fetch(
+      `${API_URL}/api/registrations`
+    );
 
-  const columns = [
-    {
-      accessorKey: "name",
-      header: "Name",
-      cell: (info) => info.getValue(),
-      enableSorting: true,
-    },
-    {
-      accessorKey: "email",
-      header: "Email",
-      cell: (info) => info.getValue(),
-      enableSorting: true,
-    },
-    {
-      accessorKey: "role",
-      header: "Role",
-      cell: (info) => info.getValue(),
-      enableSorting: true,
-    },
-    {
-      header: "Actions",
-      cell: ({ row }) => (
-        <Button
-          sx={{
-            background: "linear-gradient(45deg, #2196F3 30%, #0D47A1 90%)",
-            color: "#fff",
-            px: 5,
-            py: "2px 3px",
-            borderRadius: 2,
-          }}
-          variant="contained"
-          size="small"
-          onClick={() => alert(`Edit ${row.original.name}`)}
-        >
-          Edit
-        </Button>
-      ),
-    },
-  ];
+    if (!response.ok) {
+      throw new Error("Failed to fetch registrations");
+    }
+
+    return response.json();
+  },
+});
+
+  if (isLoading) {
+    return <Typography>Loading registrations...</Typography>;
+  }
+
+if (isError) {
+  console.error("Registration query error:", error);
 
   return (
-    <Box sx={{ mt: 1, backgroundColor: "background.paper", }} className="table-wrapper">
-      <Typography variant="h6" gutterBottom sx={{ pb: 2 }}>
-        Project List
+    <Box sx={{ mt: 1 }}>
+      <Typography color="error">
+        Failed to load registrations: {error?.message}
       </Typography>
-      <TanStackDataTable
-        columns={columns}
-        data={data}
-        sx={{ borderRadius: 2 }}
-      />
     </Box>
   );
 }
+
+  return (
+  <Box
+    sx={{
+      mt: 1,
+      backgroundColor: "background.paper",
+    }}
+  >
+    <Typography
+      variant="h6"
+      sx={{ mb: 2 }}
+    >
+      Registered Programs
+    </Typography>
+
+    <TanStackDataTable
+      columns={[
+        {
+          accessorKey: "name",
+          header: "Name",
+          enableSorting: true,
+        },
+        {
+          accessorKey: "program",
+          header: "Program",
+          enableSorting: true,
+        },
+        {
+          accessorKey: "programType",
+          header: "Type",
+          enableSorting: true,
+        },
+        {
+          accessorKey: "startDate",
+          header: "Start Date",
+          enableSorting: true,
+          cell: (info) => {
+            const value = info.getValue();
+
+            return value
+              ? new Date(value).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })
+              : "-";
+          },
+        },
+        {
+          accessorKey: "preferredTime",
+          header: "Time",
+          enableSorting: true,
+        },
+       {
+  accessorKey: "status",
+  header: "Status",
+  enableSorting: true,
+
+  cell: (info) => {
+    const status = info.getValue();
+
+    return (
+      <Chip
+        label={status}
+        size="small"
+        sx={{
+          fontWeight: 600,
+          borderRadius: 2,
+        }}
+        color={
+          status === "Active"
+            ? "success"
+            : status === "Pending"
+            ? "warning"
+            : status === "Completed"
+            ? "info"
+            : "default"
+        }
+      />
+    );
+  },
+},
+      ]}
+      data={registrations}
+      sx={{
+        borderRadius: 2,
+      }}
+    />
+  </Box>
+)}

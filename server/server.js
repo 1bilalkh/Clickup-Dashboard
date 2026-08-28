@@ -7,6 +7,8 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
+import consultationRoutes from "./routes/consultationRoutes.js";
+import registrationRoutes from "./routes/registrationRoutes.js";
 
 
 dotenv.config();
@@ -67,6 +69,8 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/login", loginRoutes);
+app.use("/api/consultations", consultationRoutes);
+app.use("/api/registrations", registrationRoutes);
 
 // =========================
 // Test CORS
