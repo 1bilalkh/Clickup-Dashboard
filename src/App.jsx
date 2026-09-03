@@ -23,12 +23,12 @@ const Teams = lazy(() => import("./pages/Teams.jsx"));
 const Forms = lazy(() => import("./pages/Forms.jsx"));
 const Invoice = lazy(() => import("./pages/invoice.jsx"));
 const PricePage = lazy(() => import("./pages/Price.jsx"));
-const Projectone = lazy(() => import("./pages/Projectone.jsx"));
-const Projecttwo = lazy(() => import("./pages/Projecttwo.jsx"));
+const Projecttwo = lazy(() => import("./pages/Projects.jsx"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword.jsx"));
 const BookConsultation = lazy(() => import("./pages/BookConsultation.jsx"));
 const RegisterProgram = lazy(() => import("./pages/RegisterProgram.jsx"));
 import LoginTracker from "./LoginTracker";
+import ProjectDetails from "./pages/ProjectDetails";
 
 function DashboardLayout() {
   const isDesktop = useMediaQuery("(min-width:900px)");
@@ -82,12 +82,11 @@ function DashboardLayout() {
               <Route path="/Forms" element={<Forms />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/Price" element={<PricePage />} />
-              <Route path="/Projectone" element={<Projectone />} />
-              <Route path="/Projecttwo" element={<Projecttwo />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/Settings" element={<Settings />} />
               <Route path="/BookConsultation" element={<BookConsultation />} />
               <Route path="/RegisterProgram" element={<RegisterProgram />} />
+              <Route path="/projects/:projectId" element={<ProjectDetails />} />
             </Routes>
           </Suspense>
         </Box>

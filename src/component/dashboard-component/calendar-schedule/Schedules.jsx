@@ -7,6 +7,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 export default function Schedules() {
   return (
     <Card className="schedule" sx={{ borderRadius: 3, boxShadow: 3 }}>
+      
       <CardContent>
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}

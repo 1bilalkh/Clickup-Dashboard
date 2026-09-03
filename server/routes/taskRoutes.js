@@ -45,36 +45,47 @@ router.post("/", async (req, res) => {
 // =====================================================
 // UPDATE TASK
 // =====================================================
-router.put("/:id", async (req, res) => {
+// =====================================================
+// GET TASKS BY PROJECT
+// =====================================================
+router.get("/project/:projectId", async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const tasks = await Task.find({
+      project: req.params.projectId,
+    }).sort({ createdAt: -1 });
 
-    if (!task) {
-      return res.status(404).json({
-        message: "Task not found",
-      });
-    }
-
-    res.status(200).json({
-      message: "Task updated successfully",
-      task,
-    });
+    res.status(200).json(tasks);
   } catch (error) {
-    console.error("Update task error:", error);
+    console.error("Get project tasks error:", error);
 
     res.status(500).json({
-      message: "Failed to update task",
+      message: "Failed to fetch project tasks",
       error: error.message,
     });
   }
 });
+
+
+// =====================================================
+// GET TASKS BY PROJECT
+// =====================================================
+router.get("/project/:projectId", async (req, res) => {
+  try {
+    const tasks = await Task.find({
+      project: req.params.projectId,
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.error("Get project tasks error:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch project tasks",
+      error: error.message,
+    });
+  }
+});
+
 
 // =====================================================
 // DELETE TASK

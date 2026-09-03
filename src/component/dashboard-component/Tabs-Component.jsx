@@ -39,9 +39,6 @@ export default function AnimatedTabs() {
               <Box sx={{ backgroundColor: "background.paper", mt: 2, borderRadius: 4 }}>
                 <IdeasSubmissions />
               </Box>
-              <Box sx={{ backgroundColor: "background.paper", mt: 2, borderRadius: 4 }}>
-                <IdeasSubmissions />
-              </Box>
             </motion.div>
           )}
 

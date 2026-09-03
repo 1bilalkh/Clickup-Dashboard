@@ -21,7 +21,8 @@ import UpcomingEvents from "../component/dashboard-component/upcomingevents/Upco
 import InnovationPerformance from "../component/dashboard-component/innovation/InnovationPerformance.jsx";
 import CustomButton from "../common/Button.jsx";
 import { useNavigate } from "react-router-dom";
-import { getUsers } from "../services/api";
+//import { getUsers } from "../services/api";
+import { useQuery } from "@tanstack/react-query";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -35,26 +36,37 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Dashboard() {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const data = await getUsers();
 
-        console.log("Users from Express:", data);
+ 
+  const API_URL = "http://localhost:5000";
 
-        setUsers(data.users);
-      } catch (error) {
-        console.error("API Error:", error);
-      } finally {
-        setLoading(false);
+  const {
+    data: registrationCountData,
+    isLoading: registrationCountLoading,
+  } = useQuery({
+    queryKey: ["registrationCount"],
+
+    queryFn: async () => {
+      const response = await fetch(
+        `${API_URL}/api/registrations/count`
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Failed to fetch registration count"
+        );
       }
-    };
 
-    fetchUsers();
-  }, []);
+      return response.json();
+    },
+
+    refetchInterval: 30000,
+  });
+
+  const registrationCount =
+    registrationCountData?.count ?? 0;
   return (
     <>
       <Box>
@@ -78,7 +90,7 @@ function Dashboard() {
               to fit your exact needs.
             </Typography>
           </Box>
-          
+
 
           <Box
             sx={{
@@ -104,6 +116,28 @@ function Dashboard() {
               onClick={() => navigate("/RegisterProgram")}
             >
               Register Program
+
+              <Box
+                component="span"
+                sx={{
+                  ml: 1,
+                  minWidth: 24,
+                  height: 24,
+                  px: 0.8,
+                  borderRadius: "50%",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "error.main",
+                  color: "error.contrastText",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                }}
+              >
+                {registrationCountLoading
+                  ? "..."
+                  : registrationCount}
+              </Box>
             </CustomButton>
           </Box>
         </Box>
@@ -167,8 +201,8 @@ function Dashboard() {
             {/* end col md - 4 */}
             <Grid size={{ xs: 12, md: 4 }}>
               <Grid size={{ xs: 12, md: 12 }}>
-                <Box sx={{border: "1px solid", backgroundColor: "background.paper", borderColor: "divider", p: 2, borderRadius: 4 }}>
-                  <Typography variant="h6" sx={{ mb: 2, color: "text.secondary"  }}>
+                <Box sx={{ border: "1px solid", backgroundColor: "background.paper", borderColor: "divider", p: 2, borderRadius: 4 }}>
+                  <Typography variant="h6" sx={{ mb: 2, color: "text.secondary" }}>
                     Quick Actions
                   </Typography>
                   <QuickActions />
@@ -183,7 +217,7 @@ function Dashboard() {
                 </Box>
               </Grid>
               <Grid size={{ xs: 12, md: 12 }}>
-                <Box sx={{ backgroundColor: "background.default", p: 2, borderRadius: 4, mt: 2, border: "1px solid", borderColor: "divider"  }}>
+                <Box sx={{ backgroundColor: "background.default", p: 2, borderRadius: 4, mt: 2, border: "1px solid", borderColor: "divider" }}>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     UpComing Meetings
                   </Typography>

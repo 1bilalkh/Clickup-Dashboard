@@ -37,4 +37,19 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/count", async (req, res) => {
+  try {
+    const count = await Registration.countDocuments();
+
+    res.json({ count });
+  } catch (error) {
+    console.error("Registration count error:", error);
+
+    res.status(500).json({
+      message: "Failed to get registration count",
+    });
+  }
+});
+
+
 export default router;

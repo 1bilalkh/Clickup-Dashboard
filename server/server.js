@@ -9,6 +9,7 @@ import taskRoutes from "./routes/taskRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
 import consultationRoutes from "./routes/consultationRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
 
 
 dotenv.config();
@@ -71,6 +72,7 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/consultations", consultationRoutes);
 app.use("/api/registrations", registrationRoutes);
+app.use("/api/projects", projectRoutes);
 
 // =========================
 // Test CORS
@@ -79,6 +81,7 @@ app.get("/test-cors", (req, res) => {
   res.json({
     message: "CORS is working",
   });
+  
 });
 
 console.log("🔵 Starting server...");

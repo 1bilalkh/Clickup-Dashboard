@@ -1,4 +1,11 @@
-import { Box, Grid, Typography, Modal, IconButton } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  Modal,
+  IconButton,
+} from "@mui/material";
+
 import Person3OutlinedIcon from "@mui/icons-material/Person3Outlined";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import Badge from "@mui/material/Badge";
@@ -13,76 +20,129 @@ import { useState } from "react";
 const API_URL = "http://localhost:5000";
 
 function DashboardBoxes() {
-  const [openUsersModal, setOpenUsersModal] = useState(false);
+  // ==========================================
+  // STATE
+  // ==========================================
 
-  // =========================
-  // USERS
-  // =========================
+  const [openUsersModal, setOpenUsersModal] =
+    useState(false);
+
+  // ==========================================
+  // USERS QUERY
+  // ==========================================
+
   const {
     data: users = [],
     isLoading: usersLoading,
     isError: usersError,
+    error: usersErrorData,
   } = useQuery({
     queryKey: ["users"],
     queryFn: getUsers,
     staleTime: 5 * 60 * 1000,
   });
 
-  // =========================
-  // CONSULTATIONS
-  // =========================
+  // ==========================================
+  // CONSULTATION QUERY
+  // ==========================================
+
   const {
     data: consultationData,
     isLoading: consultationLoading,
     isError: consultationError,
   } = useQuery({
     queryKey: ["consultationCount"],
+
     queryFn: async () => {
       const response = await fetch(
         `${API_URL}/api/consultations/count`
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch consultation count");
+        throw new Error(
+          "Failed to fetch consultation count"
+        );
       }
 
       return response.json();
     },
+
     refetchInterval: 30000,
   });
 
-  const consultationCount = consultationData?.count ?? 0;
+  // ==========================================
+  // CONSULTATION COUNT
+  // ==========================================
+
+  const consultationCount =
+    consultationData?.count ?? 0;
+
+  // ==========================================
+  // LOADING
+  // ==========================================
+
+  if (usersLoading) {
+    return (
+      <Typography>
+        Loading users...
+      </Typography>
+    );
+  }
+
+  // ==========================================
+  // ERROR
+  // ==========================================
+
+  if (usersError) {
+    return (
+      <Typography color="error">
+        Failed to load users:{" "}
+        {usersErrorData?.message}
+      </Typography>
+    );
+  }
+
+  // ==========================================
+  // DASHBOARD
+  // ==========================================
 
   return (
     <>
       <Grid container spacing={2}>
 
-        {/* =========================
-            USERS BOX
-        ========================= */}
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        {/* =====================================
+            ALL USERS
+        ===================================== */}
+
+        <Grid size={{ xs: 12, sm: 12, md: 3 }}>
           <Box
             sx={{
               p: 2,
+              height: "auto",
               border: "1px solid",
               borderColor: "divider",
               borderRadius: 2,
+              cursor: "pointer",
               backgroundColor: "background.paper",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               color: "text.primary",
-              cursor: "pointer",
 
               "&:hover": {
                 bgcolor: "action.hover",
               },
             }}
           >
+            {/* Header */}
+
             <Box
-              onClick={() => setOpenUsersModal(true)}
+              onClick={() =>
+                setOpenUsersModal(true)
+              }
               sx={{
                 display: "block",
+                cursor: "pointer",
               }}
             >
               <Box
@@ -92,6 +152,8 @@ function DashboardBoxes() {
                   justifyContent: "space-between",
                 }}
               >
+                {/* Title */}
+
                 <Typography
                   color="text.primary"
                   fontWeight={600}
@@ -99,118 +161,155 @@ function DashboardBoxes() {
                   Show All Users
                 </Typography>
 
-                <Box className="icon_circle">
-                  <Badge
-                    color="secondary"
-                    overlap="circular"
-                    badgeContent={
-                      usersLoading ? "..." : users.length
-                    }
-                    sx={{
-                      "& .MuiBadge-badge": {
-                        top: "-9px",
-                        right: 5,
-                      },
-                    }}
-                  >
-                    <Person3OutlinedIcon />
-                  </Badge>
+                {/* Icon */}
+
+                <Box>
+                  <Box className="icon_circle">
+                    <Badge
+                      color="secondary"
+                      overlap="circular"
+                      badgeContent={users.length}
+                      sx={{
+                        "& .MuiBadge-badge": {
+                          top: "-9px",
+                          right: 5,
+                        },
+                      }}
+                    >
+                      <Person3OutlinedIcon />
+                    </Badge>
+                  </Box>
                 </Box>
               </Box>
             </Box>
 
-            <Box sx={{ width: "100%", mt: 2 }}>
+            {/* Chart */}
+
+            <Box
+              sx={{
+                width: "100%",
+              }}
+            >
               <SparklineChart />
             </Box>
           </Box>
         </Grid>
 
-        {/* =========================
-            CONSULTATION BOX
-        ========================= */}
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        {/* =====================================
+            ALL CONSULTATIONS
+        ===================================== */}
+
+        <Grid size={{ xs: 12, sm: 12, md: 3 }}>
           <Box
             sx={{
               p: 2,
+              height: "auto",
               border: "1px solid",
               borderColor: "divider",
               borderRadius: 2,
+              cursor: "pointer",
               backgroundColor: "background.paper",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               color: "text.primary",
-              cursor: "pointer",
 
               "&:hover": {
                 bgcolor: "action.hover",
               },
             }}
           >
+            {/* Header */}
+
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                display: "block",
+                cursor: "pointer",
               }}
             >
-              <Typography
-                color="text.primary"
-                fontWeight={600}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
               >
-                All Consultations
-              </Typography>
+                {/* Title */}
 
-              <Box className="icon_circle">
-                <Badge
-                  color="secondary"
-                  overlap="circular"
-                  badgeContent={
-                    consultationLoading
-                      ? "..."
-                      : consultationError
-                      ? 0
-                      : consultationCount
-                  }
-                  sx={{
-                    "& .MuiBadge-badge": {
-                      top: "-9px",
-                      right: 5,
-                    },
-                  }}
+                <Typography
+                  color="text.primary"
+                  fontWeight={600}
                 >
-                  <EventAvailableIcon />
-                </Badge>
+                  All Consultations
+                </Typography>
+
+                {/* Icon */}
+
+                <Box>
+                  <Box className="icon_circle">
+                    <Badge
+                      color="secondary"
+                      overlap="circular"
+                      badgeContent={
+                        consultationLoading
+                          ? "..."
+                          : consultationError
+                          ? "!"
+                          : consultationCount
+                      }
+                      sx={{
+                        "& .MuiBadge-badge": {
+                          top: "-9px",
+                          right: 5,
+                        },
+                      }}
+                    >
+                      <EventAvailableIcon />
+                    </Badge>
+                  </Box>
+                </Box>
               </Box>
             </Box>
 
-            <Box sx={{ width: "100%", mt: 2 }}>
+            {/* Chart */}
+
+            <Box
+              sx={{
+                width: "100%",
+              }}
+            >
               <SparklineChart />
             </Box>
           </Box>
         </Grid>
-
       </Grid>
 
-      {/* =========================
+      {/* ========================================
           USERS MODAL
-      ========================= */}
+      ======================================== */}
+
       <Modal
         open={openUsersModal}
-        onClose={() => setOpenUsersModal(false)}
+        onClose={() =>
+          setOpenUsersModal(false)
+        }
       >
         <Box
           sx={{
             position: "absolute",
             top: "50%",
             left: "50%",
-            transform: "translate(-50%, -50%)",
+            transform:
+              "translate(-50%, -50%)",
+
             width: {
               xs: "90%",
               sm: 500,
             },
+
             maxHeight: "80vh",
             overflowY: "auto",
+
             bgcolor: "background.paper",
             borderRadius: 3,
             boxShadow: 24,
@@ -218,13 +317,16 @@ function DashboardBoxes() {
             outline: "none",
           }}
         >
-          {/* Header */}
+          {/* ====================================
+              MODAL HEADER
+          ==================================== */}
 
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent:
+                "space-between",
               mb: 2,
             }}
           >
@@ -237,24 +339,20 @@ function DashboardBoxes() {
             </Typography>
 
             <IconButton
-              onClick={() => setOpenUsersModal(false)}
+              onClick={() =>
+                setOpenUsersModal(false)
+              }
             >
               <CloseIcon />
             </IconButton>
           </Box>
 
-          {/* User List */}
+          {/* ====================================
+              USERS
+          ==================================== */}
 
           <Box>
-            {usersError ? (
-              <Typography color="error">
-                Failed to load users.
-              </Typography>
-            ) : usersLoading ? (
-              <Typography color="text.secondary">
-                Loading users...
-              </Typography>
-            ) : users.length === 0 ? (
+            {users.length === 0 ? (
               <Typography color="text.secondary">
                 No users found.
               </Typography>
@@ -273,7 +371,8 @@ function DashboardBoxes() {
                     p: 1.5,
                     mb: 1,
                     borderRadius: 2,
-                    backgroundColor: "action.hover",
+                    backgroundColor:
+                      "action.hover",
                   }}
                 >
                   {/* Avatar */}
@@ -282,14 +381,21 @@ function DashboardBoxes() {
                     sx={{
                       width: 40,
                       height: 40,
+                      minWidth: 40,
                       borderRadius: "50%",
+
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "primary.main",
-                      color: "primary.contrastText",
+                      justifyContent:
+                        "center",
+
+                      backgroundColor:
+                        "primary.main",
+
+                      color:
+                        "primary.contrastText",
+
                       fontWeight: 600,
-                      flexShrink: 0,
                     }}
                   >
                     {(
@@ -302,12 +408,17 @@ function DashboardBoxes() {
                       .toUpperCase()}
                   </Box>
 
-                  {/* Information */}
+                  {/* User Information */}
 
-                  <Box>
+                  <Box
+                    sx={{
+                      minWidth: 0,
+                    }}
+                  >
                     <Typography
                       fontWeight={600}
                       color="text.primary"
+                      noWrap
                     >
                       {user.name ||
                         `${user.firstName || ""} ${
@@ -319,8 +430,10 @@ function DashboardBoxes() {
                     <Typography
                       variant="body2"
                       color="text.secondary"
+                      noWrap
                     >
-                      {user.email || "No email"}
+                      {user.email ||
+                        "No email"}
                     </Typography>
                   </Box>
                 </Box>
