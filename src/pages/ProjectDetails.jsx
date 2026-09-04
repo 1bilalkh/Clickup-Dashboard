@@ -56,7 +56,7 @@ const ProjectDetails = () => {
   // ==========================================
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/projects/${projectId}`)
+    fetch(`${API_URL}/api/projects/${projectId}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Project not found");
